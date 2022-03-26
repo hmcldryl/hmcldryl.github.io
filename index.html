@@ -11,68 +11,56 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900" rel="stylesheet">
-	<link href="img/favicon.png" rel="shortcut icon" />
 
 	<title>hmcldryl</title>
+	<link href="img/favicon.png" rel="shortcut icon" />
+
+	<style>
+		body {
+			font-family: 'Montserrat', sans-serif !important;
+		}
+	</style>
 </head>
 
 <body>
-	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">HMCLDRYL</a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			<div class="navbar-nav">
-			  <a class="nav-link active" aria-current="page" href="#">Home</a>
-			  <a class="nav-link" href="#">About Me</a>
-			  <a class="nav-link" href="#">Contact</a>
-			</div>
-		  </div>
-		</div>
-	  </nav>
-	<div class="container">
-		<!--- HERO HEADER --->
-		<div class="row">
-			<div class="col-md-12">
-				<div class="container">
-					<h1 class="display-1"> DARYLL HOMECILLO </h1>
-					<h1 class="display-6"> I am a mobile app developer and graphics designer. </h1>
-					<h1 class="display-6 text-muted"> I work with love. </h1>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">HMCLDRYL</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+						<a class="nav-link" href="#">Blog</a>
+						<a class="nav-link" href="#">Gallery</a>
+						<a class="nav-link" href="#">Portfolio</a>
+					</div>
 				</div>
 			</div>
-		</div>
-		<!--- THE END HERO HEADER --->
-
-		<!--- ABOUT --->
-		<div class="row">
-			<div class="col-md-6 col-xs-12">
-				<div class="lg-col-bg">
-					<h1 class="display-4">About me</h1>
-					<h1 class="display-4 text-muted"> My name is Daryll Homecillo. I am a mobile app developer and graphics
+		</nav>
+		<!--- HERO HEADER --->
+		<div class="container col-xxl-8 px-4 py-5">
+			<div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+				<div class="col-10 col-sm-8 col-lg-6">
+					<img src="img/covers/portrait.jpg" class="rounded d-block mx-lg-auto img-fluid" alt="" width="500"
+						height="500" loading="lazy">
+				</div>
+				<div class="col-lg-6">
+					<h1 class="display-5 lh-1 mb-3">DARYLL HOMECILLO</h1>
+					<p class="lead"> My name is Daryll Homecillo. I am a mobile app developer and graphics
 						designer based in Puerto Princesa City. <br> I develop mobile apps for business and
 						entertainment as well as create designs for tarpaulins, T-shirts, lanyards, mugs, bags, and
-						other items.<br><br>
-					</h1>
-					<p>
-						<b>Capabilities</b><br>
-						Mobile App Development<br>
-						Graphics Design<br>
-						Computer Hardware<br>
-						Networking
-					</p>
+						other items.</p>
 				</div>
 			</div>
-
-			<div class="col-md-6 col-xs-12">
-				<div class="lg-col">
-					<img src="img/covers/portrait.jpg" alt="" class="rounded">
-				</div>
-			</div>
-
 		</div>
+	</header>
 
+	<div class="container">
 		<!--- HERO HEADER WORK SLIDER --->
 		<div class="row">
 			<div class="col-md-12 xs-col-12">
@@ -237,21 +225,41 @@
 				</div>
 			</div>
 		</div>
-		<!--- FOOTER --->
-		<div class="container">
-			<div class="row">
-				<div class="footer-bg">
-					<div class="col-md-4 col-xs-12">
-						<h1 div class="tfv"> Thanks for visiting! </h1>
-						<a href="mailto:#jhomecillo@psu.palawan.edu.ph">
-							<div class="ftr-lnk"> Say hello </div>
-						</a>
-					</div>
-				</div>
+	</div>
+
+	<!--- FOOTER --->
+	<footer class="pt-4 my-md-5 pt-md-5 border-top">
+		<div class="row">
+			<div class="col-12 col-md">
+				<img class="mb-2" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19">
+				<small class="d-block mb-3 text-muted">© 2022</small>
+			</div>
+			<div class="col-6 col-md">
+				<h5>HMCLDRYL</h5>
+				<ul class="list-unstyled text-small">
+					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Home</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Blog</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Gallery</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Portfolio</a></li>
+				</ul>
+			</div>
+			<div class="col-6 col-md">
+				<h5>Contact Me</h5>
+				<ul class="list-unstyled text-small">
+					<li class="mb-1"><a class="link-secondary text-decoration-none"
+							href="mailto:#jhomecillo@psu.palawan.edu.ph">Email</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none"
+							href="https://www.facebook.com/hmcldryl">Facebook</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none"
+							href="https://www.twitter.com/hmcldryl">Twitter</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none"
+							href="https://www.instagram.com/hmcldryl">Instagram</a></li>
+					<li class="mb-1"><a class="link-secondary text-decoration-none"
+							href="https://www.github.com/hmcldryl">Github</a></li>
+				</ul>
 			</div>
 		</div>
-		<!--- THE END FOOTER --->
-	</div>
+	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
