@@ -40,7 +40,7 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="index.html">
-					<img src="img/daryll.jpg" alt="" width="24" height="24"
+					<img src="img/daryll.jpg" alt="" width="40" height="40"
 						class="rounded d-inline-block align-text-top">
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -62,15 +62,17 @@
 			<div class="row py-lg-5">
 				<div class="col-lg-6 col-md-8 mx-auto">
 					<h1 class="display-5 fw-light">Gallery</h1>
-					<p class="lead text-muted">Under Construction
+					<p class="lead text-muted">I treasure memories. This gallery shows some of the captured moments of
+						my life through photos.
 					</p>
 				</div>
 			</div>
 		</section>
 	</header>
 
-	<main>
-
+	<main class="px-4 py-5 bg-light">
+		<div id="feed" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+		</div>
 	</main>
 
 	<footer class="bg-dark px-4 py-5">
@@ -135,6 +137,58 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+		import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+		import {
+			collection,
+			query,
+			orderBy,
+			limit,
+			getDocs,
+		} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyBnlhFGHxT_FixRmSSpnV4sr-R-xo3abdY",
+			authDomain: "hmcldryl.firebaseapp.com",
+			projectId: "hmcldryl",
+			storageBucket: "hmcldryl.appspot.com",
+			messagingSenderId: "824727602905",
+			appId: "1:824727602905:web:b30d750e949ea7bc2d20c8",
+			measurementId: "G-RVR57X86NL",
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+
+		const q = query(
+			collection(db, "hmcldryl/gallery/posts"),
+			orderBy("timestamp", "desc"),
+			limit(10)
+		);
+
+		const querySnapshot = await getDocs(q);
+		querySnapshot.forEach((doc) => {
+			loadPost(doc.data());
+		});
+
+		function loadPost(data) {
+			let feed = document.getElementById("feed");
+			let post = document.createElement("div");
+			let postCard = document.createElement("div");
+
+			post.id = "post";
+			post.className = "col";
+
+			postCard.className = "card shadow-sm";
+			postCard.innerHTML = '<img src="' + data.photoUrl + '" alt="" class="card-img-top">';
+
+			post.appendChild(postCard);
+
+			feed.appendChild(post);
+		}
+	</script>
 </body>
 
 </html>
