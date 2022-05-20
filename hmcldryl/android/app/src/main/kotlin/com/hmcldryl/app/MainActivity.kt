@@ -1,4 +1,4 @@
-package com.hmcldryl.hmcldryl
+package com.hmcldryl.app
 
 import io.flutter.embedding.android.FlutterActivity
 

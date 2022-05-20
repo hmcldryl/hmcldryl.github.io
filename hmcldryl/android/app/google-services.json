@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "824727602905",
+    "project_id": "hmcldryl",
+    "storage_bucket": "hmcldryl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824727602905:android:43cceeb1b914b1412d20c8",
+        "android_client_info": {
+          "package_name": "com.hmcldryl.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824727602905-pcf7c7jkre1mujqqn7v08a8oqkhpqs0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD16b0JDAiOu0uYZRt1pZBq2aNvXvWRRps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824727602905-pcf7c7jkre1mujqqn7v08a8oqkhpqs0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
