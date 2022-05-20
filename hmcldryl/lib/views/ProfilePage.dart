@@ -12,8 +12,8 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Profile"),
+          leading: BackButton(),
         ),
-        drawer: NavigationDrawer(),
         body: Center(child: Text("Profile Page")));
   }
 }

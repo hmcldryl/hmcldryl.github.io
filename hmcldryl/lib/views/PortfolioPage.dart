@@ -12,8 +12,8 @@ class PortfolioPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Portfolio"),
+          leading: BackButton(),
         ),
-        drawer: NavigationDrawer(),
         body: Center(child: Text("Portfolio Page")));
   }
 }

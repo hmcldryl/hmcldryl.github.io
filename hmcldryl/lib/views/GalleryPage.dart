@@ -12,8 +12,8 @@ class GalleryPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Gallery"),
+          leading: BackButton(),
         ),
-        drawer: NavigationDrawer(),
         body: Center(child: Text("Gallery Page")));
   }
 }
