@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/NavigationDrawer.dart';
-
 class GalleryPage extends StatelessWidget {
   const GalleryPage({Key? key}) : super(key: key);
 

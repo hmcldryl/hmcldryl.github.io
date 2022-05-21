@@ -19,7 +19,7 @@ class NavigationDrawer extends StatelessWidget {
               icon: Icon(FontAwesomeIcons.house),
               text: "Home",
               onTap: () {
-                Navigator.pushNamed(context, PageRoutes.home);
+                Navigator.pop(context);
               }),
           _createDrawerTile(
               icon: Icon(FontAwesomeIcons.solidUser),
