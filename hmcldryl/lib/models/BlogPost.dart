@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BlogPost {
-  String? title;
-  String? content;
-  Timestamp? timestamp;
+  String title;
+  String content;
+  Timestamp timestamp;
 
-  BlogPost();
+  BlogPost(this.title, this.content, this.timestamp);
 
   BlogPost.fromSnapshot(snapshot)
       : title = snapshot.data()['title'],

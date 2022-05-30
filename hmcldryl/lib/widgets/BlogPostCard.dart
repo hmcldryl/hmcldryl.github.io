@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:hmcldryl/models/BlogPost.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BlogPostCard extends StatelessWidget {
   final BlogPost post;
@@ -16,13 +15,9 @@ class BlogPostCard extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Text(post.title!),
-                  Html(data: post.content),
-                  Text(timeago.format(post.timestamp!.toDate()))
-                ],
-              )
+              Text(post.title),
+              Text(post.content),
+              Text(timeago.format(post.timestamp.toDate()))
             ],
           ),
         ),

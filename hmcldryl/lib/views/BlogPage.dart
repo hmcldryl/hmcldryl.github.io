@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hmcldryl/models/BlogPost.dart';
+import 'package:hmcldryl/widgets/BlogPostCard.dart';
 
 class BlogPage extends StatelessWidget {
   BlogPage({Key? key}) : super(key: key);
@@ -13,15 +14,13 @@ class BlogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Blog"),
-        leading: BackButton(),
+        title: const Text("Blog"),
+        leading: const BackButton(),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
         itemBuilder: (context, int index) {
-          if (index.isOdd) return Divider();
-
-          return Text("$index");
+          return BlogPostCard(_blogPostList[index] as BlogPost);
         },
       ),
     );
