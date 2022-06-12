@@ -164,8 +164,7 @@
 
 		const q = query(
 			collection(db, "hmcldryl/gallery/posts"),
-			orderBy("timestamp", "desc"),
-			limit(10)
+			orderBy("timestamp", "desc")
 		);
 
 		const querySnapshot = await getDocs(q);
