@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/SMPC2/Documents/GitHub/hmcldryl.github.io/hmcldryl/android/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/SMPC2/Documents/GitHub/hmcldryl.github.io/hmcldryl/android/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/SMPC2/Documents/GitHub/hmcldryl.github.io/hmcldryl/android/app/src/main/res/layout/header_layout.xml" value="0.253125" />
+        <entry key="..\:/Users/SMPC2/Documents/GitHub/hmcldryl.github.io/hmcldryl/android/app/src/main/res/layout/header_navigation_drawer.xml" value="0.4" />
+        <entry key="..\:/Users/SMPC2/Documents/GitHub/hmcldryl.github.io/hmcldryl/android/app/src/main/res/menu/navigation_drawer.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
