@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.hmcldryl.app.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_blog"
+        android:name="com.hmcldryl.app.ui.blog.BlogFragment"
+        android:label="@string/menu_blog"
+        tools:layout="@layout/fragment_blog" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.hmcldryl.app.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_portfolio"
+        android:name="com.hmcldryl.app.ui.portfolio.PortfolioFragment"
+        android:label="@string/menu_portfolio"
+        tools:layout="@layout/fragment_portfolio" />
+</navigation>
