@@ -27,6 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hmcldryl.app.databinding.ActivityNewBlogPostBinding;
 import com.hmcldryl.app.system.models.BlogPost;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+
 public class NewBlogPostActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
@@ -258,6 +261,12 @@ public class NewBlogPostActivity extends AppCompatActivity {
     }
 
     private void addBlogPost() {
+        final ACProgressFlower dialog = new ACProgressFlower.Builder(NewBlogPostActivity.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(getResources().getColor(R.color.white))
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
+
         String title = binding.inputTitle.getText().toString();
         String content = binding.richEditor.getHtml();
 
@@ -274,9 +283,11 @@ public class NewBlogPostActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
+                            dialog.dismiss();
                             Toast.makeText(NewBlogPostActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
+                            dialog.dismiss();
                             Toast.makeText(NewBlogPostActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
