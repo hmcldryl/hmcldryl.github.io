@@ -1,7 +1,7 @@
 import { GAME_CONFIG } from '@/constants/gameConfig';
-import { COLORS } from '@/constants/colors';
 import { AnimationState } from '@/types/game';
 import { InputManager } from '../core/InputManager';
+import { SpriteAnimator } from '../rendering/SpriteAnimator';
 
 export class Player {
   // Screen position (fixed on left side)
@@ -11,24 +11,57 @@ export class Player {
   // World position (increases as player moves right)
   public worldX: number = 0;
 
-  // Dimensions
-  public width: number;
-  public height: number;
+  // Dimensions (based on sprite size - using cycling as reference)
+  public width: number = 260;  // Cycling frame: 260 (idle: 249)
+  public height: number = 267; // Max height: 267 (idle: 267, cycling: 264)
+
+  // Display scale (to fit game size)
+  private scale: number = 0.35; // Adjust this to make character bigger/smaller
 
   // Velocity
   public velocityX: number = 0;
   public velocityY: number = 0;
 
-  // Animation state
+  // Animation
   public currentAnimation: AnimationState = 'idle';
-  private animationFrame: number = 0;
-  private frameTimer: number = 0;
+  private spriteAnimator: SpriteAnimator;
 
   constructor() {
     this.screenX = GAME_CONFIG.PLAYER_SCREEN_X;
     this.screenY = GAME_CONFIG.PLAYER_GROUND_Y;
-    this.width = GAME_CONFIG.PLAYER_WIDTH;
-    this.height = GAME_CONFIG.PLAYER_HEIGHT;
+    this.spriteAnimator = new SpriteAnimator();
+  }
+
+  public initializeSprites(
+    idleSprite: HTMLImageElement,
+    cyclingSprite: HTMLImageElement
+  ): void {
+    // Idle animation config
+    // Image: 1494x1602 pixels, 6x6 grid = 249x267 per frame
+    const idleConfig = {
+      frameWidth: 249,
+      frameHeight: 267,
+      columns: 6,
+      rows: 6,
+      totalFrames: 36,
+      frameRate: 12, // 12 FPS for smooth animation (adjust as needed)
+    };
+
+    // Cycling animation config
+    // Image: 1560x1584 pixels, 6x6 grid = 260x264 per frame
+    const cyclingConfig = {
+      frameWidth: 260,
+      frameHeight: 264,
+      columns: 6,
+      rows: 6,
+      totalFrames: 36,
+      frameRate: 12,
+    };
+
+    this.spriteAnimator.addAnimation('idle', idleSprite, idleConfig);
+    this.spriteAnimator.addAnimation('cycling', cyclingSprite, cyclingConfig);
+
+    console.log('✓ Player sprites initialized (idle: 249x267, cycling: 260x264)');
   }
 
   public update(deltaTime: number, input: InputManager): void {
@@ -50,95 +83,25 @@ export class Player {
       this.currentAnimation = 'idle';
     }
 
-    // Update animation frame
-    this.updateAnimation(deltaTime);
-  }
-
-  private updateAnimation(deltaTime: number): void {
-    // Simple animation timer
-    // In Phase 4, this will cycle through sprite frames
-    this.frameTimer += deltaTime;
-    if (this.frameTimer >= 200) {
-      // 5 FPS for animation
-      this.animationFrame = (this.animationFrame + 1) % 4;
-      this.frameTimer = 0;
-    }
+    // Update sprite animation
+    this.spriteAnimator.setAnimation(this.currentAnimation);
+    this.spriteAnimator.update(deltaTime);
   }
 
   public render(ctx: CanvasRenderingContext2D): void {
-    // For Phase 1, render as a simple colored rectangle (placeholder)
-    // This will be replaced with sprite rendering in Phase 4
+    // Calculate render position (sprite is centered at player position)
+    const renderX = this.screenX - (this.width * this.scale) / 2 + 24;
+    const renderY = this.screenY - (this.height * this.scale) + 64;
 
-    // Draw character body
-    ctx.fillStyle = COLORS.characterShirt;
-    ctx.fillRect(
-      Math.floor(this.screenX),
-      Math.floor(this.screenY),
-      this.width,
-      this.height
-    );
-
-    // Draw head
-    ctx.fillStyle = COLORS.characterSkin;
-    ctx.fillRect(
-      Math.floor(this.screenX + 12),
-      Math.floor(this.screenY - 20),
-      24,
-      20
-    );
-
-    // Draw bike frame (simple representation)
-    ctx.fillStyle = COLORS.bikeFrame;
-    ctx.fillRect(
-      Math.floor(this.screenX + 5),
-      Math.floor(this.screenY + this.height - 20),
-      38,
-      4
-    );
-
-    // Draw bike wheels (simple circles)
-    ctx.fillStyle = COLORS.bikeWheel;
-    // Front wheel
-    ctx.beginPath();
-    ctx.arc(
-      Math.floor(this.screenX + 35),
-      Math.floor(this.screenY + this.height - 10),
-      8,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-
-    // Back wheel with simple animation
-    ctx.beginPath();
-    ctx.arc(
-      Math.floor(this.screenX + 10),
-      Math.floor(this.screenY + this.height - 10),
-      8,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-
-    // Add a simple animation indicator
-    if (this.currentAnimation === 'cycling') {
-      // Draw a small line to show wheel rotation
-      ctx.strokeStyle = COLORS.white;
-      ctx.lineWidth = 2;
-      const angle = (this.frameTimer / 200) * Math.PI * 2;
-      const wheelX = Math.floor(this.screenX + 35);
-      const wheelY = Math.floor(this.screenY + this.height - 10);
-      ctx.beginPath();
-      ctx.moveTo(wheelX, wheelY);
-      ctx.lineTo(
-        wheelX + Math.cos(angle) * 6,
-        wheelY + Math.sin(angle) * 6
-      );
-      ctx.stroke();
-    }
+    // Render sprite
+    this.spriteAnimator.render(ctx, renderX, renderY, this.scale);
   }
 
   public getWorldX(): number {
     return this.worldX;
+  }
+
+  public isSpritesLoaded(): boolean {
+    return this.spriteAnimator.isAnimationLoaded();
   }
 }
