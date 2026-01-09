@@ -3,12 +3,14 @@ import { COLORS } from '@/constants/colors';
 import { InputManager } from './InputManager';
 import { AssetLoader } from './AssetLoader';
 import { Player } from '../entities/Player';
+import { ParallaxBackground } from '../rendering/ParallaxBackground';
 
 export class GameEngine {
   private ctx: CanvasRenderingContext2D;
   private inputManager: InputManager;
   private assetLoader: AssetLoader;
   private player: Player;
+  private parallaxBackground: ParallaxBackground;
   private lastTime: number = 0;
   private animationFrameId: number | null = null;
   private isRunning: boolean = false;
@@ -20,6 +22,7 @@ export class GameEngine {
     this.inputManager = new InputManager();
     this.assetLoader = new AssetLoader();
     this.player = new Player();
+    this.parallaxBackground = new ParallaxBackground();
     this.visibilityChangeHandler = this.handleVisibilityChange.bind(this);
   }
 
@@ -47,7 +50,7 @@ export class GameEngine {
   }
 
   private async loadAssets(): Promise<void> {
-    console.log('Loading player sprites...');
+    console.log('Loading player sprites and backgrounds...');
 
     // Define sprite paths
     const spritePaths = [
@@ -55,13 +58,52 @@ export class GameEngine {
       '/assets/sprites/player/cycling.png',
     ];
 
-    // Load all sprites
-    const [idleSprite, cyclingSprite] = await this.assetLoader.preloadAssets(
-      spritePaths
-    );
+    // Define background paths
+    const backgroundPaths = [
+      '/assets/backgrounds/sky.png',
+      '/assets/backgrounds/buildings-distant.png',
+      '/assets/backgrounds/buildings-close.png',
+      '/assets/backgrounds/street-details.png',
+      '/assets/backgrounds/road.png',
+      '/assets/backgrounds/sidewalk.png',
+    ];
+
+    // Load all assets
+    const allPaths = [...spritePaths, ...backgroundPaths];
+    const [
+      idleSprite,
+      cyclingSprite,
+      skyBg,
+      buildingsDistantBg,
+      buildingsCloseBg,
+      streetDetailsBg,
+      roadBg,
+      sidewalkBg,
+    ] = await this.assetLoader.preloadAssets(allPaths);
 
     // Initialize player sprites
     this.player.initializeSprites(idleSprite, cyclingSprite);
+
+    // Initialize parallax layers (from back to front)
+    // Sky - static background (speed factor 0)
+    this.parallaxBackground.addLayer(skyBg, 0, 0, false);
+
+    // Distant buildings - very slow parallax (speed factor 0.1)
+    this.parallaxBackground.addLayer(buildingsDistantBg, 0.1, 100, true);
+
+    // Close buildings - moderate parallax (speed factor 0.3)
+    this.parallaxBackground.addLayer(buildingsCloseBg, 0.3, 150, true);
+
+    // Street details (lamps, trees) - faster parallax (speed factor 0.6)
+    this.parallaxBackground.addLayer(streetDetailsBg, 0.6, 250, true);
+
+    // Sidewalk - moves with camera (speed factor 1.0)
+    this.parallaxBackground.addLayer(sidewalkBg, 1.0, 400, true);
+
+    // Road - also moves with camera (speed factor 1.0)
+    this.parallaxBackground.addLayer(roadBg, 1.0, 450, true);
+
+    console.log(`✓ Loaded ${this.parallaxBackground.getLayerCount()} parallax layers`);
   }
 
   public start(): void {
@@ -94,6 +136,7 @@ export class GameEngine {
     this.stop();
     this.inputManager.cleanup();
     this.assetLoader.clear();
+    this.parallaxBackground.clear();
     document.removeEventListener('visibilitychange', this.visibilityChangeHandler);
     console.log('Game cleaned up');
   }
@@ -140,19 +183,20 @@ export class GameEngine {
     // Update player
     this.player.update(deltaTime, this.inputManager);
 
-    // Camera will be added in Phase 2
-    // World objects will be updated in Phase 2
+    // Update parallax camera position based on player's world position
+    this.parallaxBackground.updateCamera(this.player.getWorldX());
   }
 
   private render(): void {
     // Clear canvas
     this.clearCanvas();
 
-    // Draw background
-    this.drawBackground();
-
-    // Draw ground line (simple for Phase 1)
-    this.drawGround();
+    // Draw parallax background (replaces old gradient background)
+    this.parallaxBackground.render(
+      this.ctx,
+      this.ctx.canvas.width,
+      this.ctx.canvas.height
+    );
 
     // Draw player
     this.player.render(this.ctx);
