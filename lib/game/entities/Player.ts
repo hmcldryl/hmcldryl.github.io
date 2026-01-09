@@ -16,7 +16,7 @@ export class Player {
   public height: number = 267; // Max height: 267 (idle: 267, cycling: 264)
 
   // Display scale (to fit game size)
-  private scale: number = 0.35; // Adjust this to make character bigger/smaller
+  private scale: number = 0.7; // Adjust this to make character bigger/smaller
 
   // Velocity
   public velocityX: number = 0;

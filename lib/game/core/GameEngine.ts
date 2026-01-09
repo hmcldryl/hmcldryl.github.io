@@ -97,11 +97,11 @@ export class GameEngine {
     // Street details (lamps, trees) - faster parallax (speed factor 0.6)
     this.parallaxBackground.addLayer(streetDetailsBg, 0.6, 250, true);
 
-    // Road - moves with camera (speed factor 1.0)
-    this.parallaxBackground.addLayer(roadBg, 1.0, 400, true);
+    // Sidewalk - moves with camera (speed factor 1.0)
+    this.parallaxBackground.addLayer(sidewalkBg, 1.0, 400, true);
 
-    // Sidewalk - also moves with camera (speed factor 1.0)
-    this.parallaxBackground.addLayer(sidewalkBg, 1.0, 450, true);
+    // Road - also moves with camera (speed factor 1.0)
+    this.parallaxBackground.addLayer(roadBg, 1.0, 450, true);
 
     console.log(`✓ Loaded ${this.parallaxBackground.getLayerCount()} parallax layers`);
   }
