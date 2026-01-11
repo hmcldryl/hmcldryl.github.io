@@ -4,6 +4,7 @@ import { InputManager } from './InputManager';
 import { AssetLoader } from './AssetLoader';
 import { Player } from '../entities/Player';
 import { ParallaxBackground } from '../rendering/ParallaxBackground';
+import { GameStateManager } from '../GameState';
 
 export class GameEngine {
   private ctx: CanvasRenderingContext2D;
@@ -11,6 +12,7 @@ export class GameEngine {
   private assetLoader: AssetLoader;
   private player: Player;
   private parallaxBackground: ParallaxBackground;
+  private stateManager: GameStateManager;
   private lastTime: number = 0;
   private animationFrameId: number | null = null;
   private isRunning: boolean = false;
@@ -23,6 +25,7 @@ export class GameEngine {
     this.assetLoader = new AssetLoader();
     this.player = new Player();
     this.parallaxBackground = new ParallaxBackground();
+    this.stateManager = new GameStateManager();
     this.visibilityChangeHandler = this.handleVisibilityChange.bind(this);
   }
 
@@ -180,11 +183,15 @@ export class GameEngine {
     // Update input manager
     this.inputManager.update();
 
-    // Update player
-    this.player.update(deltaTime, this.inputManager);
-
-    // Update parallax camera position based on player's world position
-    this.parallaxBackground.updateCamera(this.player.getWorldX());
+    // Only update player when in playing state
+    if (this.stateManager.getState() === 'playing') {
+      this.player.update(deltaTime, this.inputManager);
+      // Update parallax camera position based on player's world position
+      this.parallaxBackground.updateCamera(this.player.getWorldX());
+    } else {
+      // On title screen, just update player animation (idle state)
+      this.player.update(deltaTime, this.inputManager);
+    }
   }
 
   private render(): void {
@@ -269,5 +276,13 @@ export class GameEngine {
 
   public getPlayer(): Player {
     return this.player;
+  }
+
+  public getInputManager(): InputManager {
+    return this.inputManager;
+  }
+
+  public getStateManager(): GameStateManager {
+    return this.stateManager;
   }
 }

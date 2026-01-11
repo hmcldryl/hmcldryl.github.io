@@ -1,14 +1,21 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useGameCanvas } from '@/lib/hooks/useGameCanvas';
 import { GameEngine } from '@/lib/game/core/GameEngine';
+import { GameProvider } from '@/lib/contexts/GameContext';
+import { GameState } from '@/lib/game/GameState';
 
-export function GameCanvas() {
+interface GameCanvasProps {
+  fullScreen?: boolean;
+}
+
+export function GameCanvas({ fullScreen = true }: GameCanvasProps) {
   const { canvasRef, getContext } = useGameCanvas();
   const gameEngineRef = useRef<GameEngine | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [gameState, setGameState] = useState<GameState>('title');
 
   useEffect(() => {
     let mounted = true;
@@ -56,8 +63,30 @@ export function GameCanvas() {
     };
   }, [getContext]);
 
-  return (
-    <div className="w-full h-screen flex items-center justify-center bg-black">
+  // Sync React state with GameEngine state
+  useEffect(() => {
+    const engine = gameEngineRef.current;
+    if (!engine) return;
+
+    const stateManager = engine.getStateManager();
+    const unsubscribe = stateManager.subscribe((newState) => {
+      setGameState(newState);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [gameEngineRef.current]);
+
+  const handleSetGameState = useCallback((newState: GameState) => {
+    const engine = gameEngineRef.current;
+    if (!engine) return;
+
+    engine.getStateManager().setState(newState);
+  }, []);
+
+  const content = (
+    <>
       {isLoading && (
         <div className="absolute z-10 text-white text-center">
           <div className="text-2xl mb-4">Loading...</div>
@@ -77,9 +106,30 @@ export function GameCanvas() {
       )}
       <canvas
         ref={canvasRef}
-        className="game-canvas"
+        className={fullScreen ? "game-canvas" : "w-full h-full block"}
+        style={!fullScreen ? { imageRendering: 'pixelated' } : undefined}
         aria-label="Interactive portfolio game"
       />
-    </div>
+    </>
+  );
+
+  return (
+    <GameProvider
+      value={{
+        gameEngine: gameEngineRef.current,
+        gameState,
+        setGameState: handleSetGameState,
+      }}
+    >
+      {fullScreen ? (
+        <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
+          {content}
+        </div>
+      ) : (
+        <div className="relative w-full h-full">
+          {content}
+        </div>
+      )}
+    </GameProvider>
   );
 }

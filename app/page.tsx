@@ -1,5 +1,5 @@
-import { GameCanvas } from './components/game/GameCanvas';
+import { GameContainer } from './components/game/GameContainer';
 
 export default function Home() {
-  return <GameCanvas />;
+  return <GameContainer />;
 }

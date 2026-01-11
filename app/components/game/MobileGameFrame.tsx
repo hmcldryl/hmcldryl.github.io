@@ -1,0 +1,155 @@
+'use client';
+
+import { useState, useCallback, useEffect } from 'react';
+import { GameCanvas } from './GameCanvas';
+import { DecorativeFrame } from './DecorativeFrame';
+import { TopControls } from './controls/TopControls';
+import { DirectionalControls } from './controls/DirectionalControls';
+import { TitleScreen } from './TitleScreen';
+import { useGameControls } from '@/lib/hooks/useGameControls';
+import { useGameContext } from '@/lib/contexts/GameContext';
+import { GameState } from '@/lib/game/GameState';
+import { Orientation } from '@/lib/hooks/useOrientation';
+
+interface MobileGameFrameProps {
+  orientation: Orientation;
+}
+
+export function MobileGameFrame({ orientation }: MobileGameFrameProps) {
+  if (orientation === 'portrait') {
+    return <MobilePortraitLayout />;
+  } else {
+    return <MobileLandscapeLayout />;
+  }
+}
+
+function MobilePortraitLayout() {
+  const { isMuted, handleQuit, handleMute, handleShare } = useGameControls();
+  const { gameEngine } = useGameContext();
+  const [gameState, setGameState] = useState<GameState>('title');
+
+  // Sync React state with GameEngine state
+  useEffect(() => {
+    if (!gameEngine) return;
+
+    const stateManager = gameEngine.getStateManager();
+    const unsubscribe = stateManager.subscribe((newState) => {
+      setGameState(newState);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [gameEngine]);
+
+  const handlePlay = useCallback(() => {
+    if (!gameEngine) return;
+
+    // Enable input
+    gameEngine.getInputManager().enable();
+
+    // Set game state to playing
+    gameEngine.getStateManager().setState('playing');
+  }, [gameEngine]);
+
+  return (
+    <div className="w-full h-screen flex flex-col" style={{ backgroundColor: '#eeeeee' }}>
+      {/* Game area - takes available space minus controls */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="relative w-full max-w-full" style={{ aspectRatio: '16/9' }}>
+          <div className="relative w-full h-full">
+            <GameCanvas fullScreen={false} />
+            <DecorativeFrame />
+
+            {/* Title screen overlay */}
+            {gameState === 'title' && <TitleScreen onPlay={handlePlay} />}
+
+            {/* Top-right controls visible in playing state */}
+            {gameState === 'playing' && (
+              <div className="absolute top-2 right-2 z-20">
+                <TopControls
+                  onQuit={handleQuit}
+                  onMute={handleMute}
+                  onShare={handleShare}
+                  isMuted={isMuted}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Controls area - fixed at bottom */}
+      {gameState === 'playing' && (
+        <div className="flex justify-center items-center p-4 bg-gray-800">
+          <DirectionalControls />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MobileLandscapeLayout() {
+  const { isMuted, handleQuit, handleMute, handleShare } = useGameControls();
+  const { gameEngine } = useGameContext();
+  const [gameState, setGameState] = useState<GameState>('title');
+
+  // Sync React state with GameEngine state
+  useEffect(() => {
+    if (!gameEngine) return;
+
+    const stateManager = gameEngine.getStateManager();
+    const unsubscribe = stateManager.subscribe((newState) => {
+      setGameState(newState);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [gameEngine]);
+
+  const handlePlay = useCallback(() => {
+    if (!gameEngine) return;
+
+    // Enable input
+    gameEngine.getInputManager().enable();
+
+    // Set game state to playing
+    gameEngine.getStateManager().setState('playing');
+  }, [gameEngine]);
+
+  return (
+    <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
+      {/* Minimal padding for frame, max screen usage */}
+      <div className="relative h-full p-2" style={{ aspectRatio: '16/9' }}>
+        <div className="relative w-full h-full">
+          <GameCanvas fullScreen={false} />
+          <DecorativeFrame />
+
+          {/* Title screen */}
+          {gameState === 'title' && <TitleScreen onPlay={handlePlay} />}
+
+          {/* Controls overlay when playing */}
+          {gameState === 'playing' && (
+            <>
+              {/* Top-right controls */}
+              <div className="absolute top-2 right-2 z-20">
+                <TopControls
+                  onQuit={handleQuit}
+                  onMute={handleMute}
+                  onShare={handleShare}
+                  isMuted={isMuted}
+                />
+              </div>
+
+              {/* Bottom-center directional controls */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20">
+                <DirectionalControls />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
