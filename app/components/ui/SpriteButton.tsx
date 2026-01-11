@@ -11,6 +11,8 @@ interface SpriteButtonProps {
   onTouchEnd?: () => void;
   ariaLabel: string;
   size?: number;
+  width?: number;
+  height?: number;
 }
 
 export function SpriteButton({
@@ -22,8 +24,14 @@ export function SpriteButton({
   onTouchEnd,
   ariaLabel,
   size = 64,
+  width,
+  height,
 }: SpriteButtonProps) {
   const [buttonState, setButtonState] = useState<'normal' | 'hover' | 'pressed'>('normal');
+
+  // Use width/height if provided, otherwise use size for both
+  const buttonWidth = width ?? size;
+  const buttonHeight = height ?? size;
 
   const handleMouseEnter = () => {
     if (buttonState !== 'pressed') {
@@ -58,12 +66,13 @@ export function SpriteButton({
   };
 
   const handleClick = () => {
+    console.log('SpriteButton clicked, onClick:', onClick);
     onClick?.();
   };
 
   return (
     <button
-      className="relative cursor-pointer border-none bg-transparent p-0 m-0"
+      className="relative cursor-pointer border-none bg-transparent p-0 m-0 pointer-events-auto"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseDown={handleMouseDown}
@@ -73,13 +82,14 @@ export function SpriteButton({
       onClick={handleClick}
       aria-label={ariaLabel}
       style={{
-        width: `${size}px`,
-        height: `${size}px`,
+        width: `${buttonWidth}px`,
+        height: `${buttonHeight}px`,
         backgroundImage: `url(${spriteBasePath}_${buttonState}.png)`,
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         imageRendering: 'pixelated',
+        outline: 'none',
       }}
     />
   );

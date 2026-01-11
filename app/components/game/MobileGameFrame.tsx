@@ -43,13 +43,19 @@ function MobilePortraitLayout() {
   }, [gameEngine]);
 
   const handlePlay = useCallback(() => {
-    if (!gameEngine) return;
+    console.log('[Portrait] handlePlay called, gameEngine:', gameEngine);
+    if (!gameEngine) {
+      console.log('[Portrait] No gameEngine available');
+      return;
+    }
 
+    console.log('[Portrait] Enabling input and setting state to playing');
     // Enable input
     gameEngine.getInputManager().enable();
 
     // Set game state to playing
     gameEngine.getStateManager().setState('playing');
+    console.log('[Portrait] State set to playing');
   }, [gameEngine]);
 
   return (
@@ -109,13 +115,19 @@ function MobileLandscapeLayout() {
   }, [gameEngine]);
 
   const handlePlay = useCallback(() => {
-    if (!gameEngine) return;
+    console.log('[Landscape] handlePlay called, gameEngine:', gameEngine);
+    if (!gameEngine) {
+      console.log('[Landscape] No gameEngine available');
+      return;
+    }
 
+    console.log('[Landscape] Enabling input and setting state to playing');
     // Enable input
     gameEngine.getInputManager().enable();
 
     // Set game state to playing
     gameEngine.getStateManager().setState('playing');
+    console.log('[Landscape] State set to playing');
   }, [gameEngine]);
 
   return (

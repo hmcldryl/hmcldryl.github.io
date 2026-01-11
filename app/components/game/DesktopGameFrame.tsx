@@ -30,13 +30,19 @@ export function DesktopGameFrame() {
   }, [gameEngine]);
 
   const handlePlay = useCallback(() => {
-    if (!gameEngine) return;
+    console.log('handlePlay called, gameEngine:', gameEngine);
+    if (!gameEngine) {
+      console.log('No gameEngine available');
+      return;
+    }
 
+    console.log('Enabling input and setting state to playing');
     // Enable input
     gameEngine.getInputManager().enable();
 
     // Set game state to playing
     gameEngine.getStateManager().setState('playing');
+    console.log('State set to playing');
   }, [gameEngine]);
 
   return (
