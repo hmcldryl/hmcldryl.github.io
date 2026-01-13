@@ -23,8 +23,16 @@ export function DirectionalControls() {
     gameEngine?.getInputManager().setVirtualDirection('right', false);
   }, [gameEngine]);
 
+  const handleJumpDown = useCallback(() => {
+    gameEngine?.getInputManager().setVirtualDirection('up', true);
+  }, [gameEngine]);
+
+  const handleJumpUp = useCallback(() => {
+    gameEngine?.getInputManager().setVirtualDirection('up', false);
+  }, [gameEngine]);
+
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-end">
       <SpriteButton
         spriteBasePath="/assets/ui/controls/arrow_left"
         onMouseDown={handleLeftDown}
@@ -33,6 +41,16 @@ export function DirectionalControls() {
         onTouchEnd={handleLeftUp}
         ariaLabel="Move left"
         size={64}
+      />
+      <SpriteButton
+        spriteBasePath="/assets/ui/controls/jump"
+        onMouseDown={handleJumpDown}
+        onMouseUp={handleJumpUp}
+        onTouchStart={handleJumpDown}
+        onTouchEnd={handleJumpUp}
+        ariaLabel="Jump"
+        width={128}
+        height={64}
       />
       <SpriteButton
         spriteBasePath="/assets/ui/controls/arrow_right"

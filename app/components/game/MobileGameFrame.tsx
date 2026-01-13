@@ -120,7 +120,7 @@ function MobilePortraitLayout({
 
       {/* Controls area - fixed at bottom */}
       {gameState === 'playing' && (
-        <div className="flex justify-center items-center p-4 bg-gray-800">
+        <div className="flex justify-start items-center p-4 bg-gray-800">
           <DirectionalControls />
         </div>
       )}
@@ -184,8 +184,8 @@ function MobileLandscapeLayout({
                 />
               </div>
 
-              {/* Bottom-center directional controls */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20">
+              {/* Bottom-left directional controls */}
+              <div className="absolute bottom-2 left-2 z-20">
                 <DirectionalControls />
               </div>
             </>

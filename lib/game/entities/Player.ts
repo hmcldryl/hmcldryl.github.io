@@ -30,7 +30,7 @@ export class Player {
   private isBunnyHopping: boolean = false;
   private previousFrame: number = 0;
   private jumpHeight: number = 0; // Current vertical offset from ground during jump
-  private readonly MAX_JUMP_HEIGHT: number = 180; // Maximum jump height in pixels
+  private readonly MAX_JUMP_HEIGHT: number = 140; // Maximum jump height in pixels
 
   constructor() {
     this.screenX = GAME_CONFIG.PLAYER_SCREEN_X;
@@ -90,6 +90,15 @@ export class Player {
       // Detect animation completion: when frame cycles back to 0 from 17
       if (currentFrame === 0 && this.previousFrame === 17) {
         this.isBunnyHopping = false;
+        this.jumpHeight = 0; // Reset jump height when landing
+      } else {
+        // Calculate jump height based on animation progress (parabolic curve)
+        // 18 total frames, peak at frame 9
+        const totalFrames = 18;
+        const progress = currentFrame / totalFrames;
+        // Use sine curve for smooth jump arc (0 -> 1 -> 0)
+        const jumpProgress = Math.sin(progress * Math.PI);
+        this.jumpHeight = jumpProgress * this.MAX_JUMP_HEIGHT;
       }
       this.previousFrame = currentFrame;
     }
@@ -98,6 +107,7 @@ export class Player {
     if (!this.isBunnyHopping && input.isJump()) {
       this.isBunnyHopping = true;
       this.previousFrame = 0;
+      this.jumpHeight = 0;
       this.currentAnimation = 'bunny_hop';
     }
 
@@ -145,8 +155,9 @@ export class Player {
     }
 
     // Calculate render position (sprite is centered at player position)
+    // Apply jump height offset to move sprite up during jump
     const renderX = this.screenX - (renderWidth * this.scale) / 2 + 24;
-    const renderY = this.screenY - (renderHeight * this.scale) + yOffset;
+    const renderY = this.screenY - (renderHeight * this.scale) + yOffset - this.jumpHeight;
 
     // Render sprite
     this.spriteAnimator.render(ctx, renderX, renderY, this.scale);
@@ -178,8 +189,9 @@ export class Player {
     }
 
     // Calculate actual render position (same as render method)
+    // Apply jump height offset so hitbox follows player during jump
     const renderX = this.screenX - (renderWidth * this.scale) / 2 + 24;
-    const renderY = this.screenY - (renderHeight * this.scale) + yOffset;
+    const renderY = this.screenY - (renderHeight * this.scale) + yOffset - this.jumpHeight;
 
     // Calculate scaled dimensions
     const scaledWidth = renderWidth * this.scale;
@@ -200,5 +212,9 @@ export class Player {
       width: hitboxWidth,
       height: hitboxHeight,
     };
+  }
+
+  public getJumpHeight(): number {
+    return this.jumpHeight;
   }
 }

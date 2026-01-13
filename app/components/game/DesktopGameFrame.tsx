@@ -44,9 +44,9 @@ export function DesktopGameFrame({
   }, [gameEngine]);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
-      {/* Changed h-full to h-[75vh] for 75% viewport height */}
-      <div className="relative h-[75vh] p-6" style={{ aspectRatio: '16/9' }}>
+    <div className="w-full flex items-center justify-center py-8" style={{ backgroundColor: '#eeeeee' }}>
+      {/* Game frame container - height-based sizing with aspect ratio */}
+      <div className="relative p-6" style={{ height: '70vh', aspectRatio: '16/9' }}>
         <div className="relative w-full h-full">
           <GameCanvas
             fullScreen={false}
@@ -74,8 +74,8 @@ export function DesktopGameFrame({
                 />
               </div>
 
-              {/* Bottom center directional controls - inside frame */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+              {/* Bottom left directional controls - inside frame */}
+              <div className="absolute bottom-4 left-4 z-20">
                 <DirectionalControls />
               </div>
             </>

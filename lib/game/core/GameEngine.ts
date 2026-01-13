@@ -318,11 +318,9 @@ export class GameEngine {
     // Draw score
     this.drawScore();
 
-    // Draw collision boxes (for debugging)
-    this.drawCollisionBoxes();
-
-    // Draw debug info
-    this.drawDebugInfo();
+    // Debug tools (commented out for production)
+    // this.drawCollisionBoxes();
+    // this.drawDebugInfo();
   }
 
   private clearCanvas(): void {
@@ -360,16 +358,16 @@ export class GameEngine {
   }
 
   private drawScore(): void {
-    // Draw score in top-right corner
+    // Draw score in center top of screen
     this.ctx.save();
     this.ctx.fillStyle = COLORS.white;
     this.ctx.font = 'bold 32px monospace';
-    this.ctx.textAlign = 'right';
+    this.ctx.textAlign = 'center'; // Center alignment
     this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
     this.ctx.lineWidth = 4;
 
     const scoreText = `Score: ${this.score}`;
-    const x = this.ctx.canvas.width - 20;
+    const x = this.ctx.canvas.width / 2; // Center of screen
     const y = 40;
 
     // Draw text with outline for better visibility
@@ -603,21 +601,19 @@ export class GameEngine {
   private checkCollisions(): void {
     // Get player bounds from Player class (moves with animation)
     const playerBounds = this.player.getBounds();
+    const isJumping = this.player.isJumping();
+    const jumpHeight = this.player.getJumpHeight();
 
-    // Check collision between player and each monster
-    for (const monster of this.monsters) {
-      if (!monster.isActive || monster.isDying()) continue;
+    // When jumping, skip monster collisions entirely
+    if (!isJumping) {
+      // Check collision between player and each monster (only when NOT jumping)
+      for (const monster of this.monsters) {
+        if (!monster.isActive || monster.isDying()) continue;
 
-      const monsterBounds = monster.getBounds();
+        const monsterBounds = monster.getBounds();
 
-      if (this.checkRectCollision(playerBounds, monsterBounds)) {
-        // If player is jumping, they kill the monster and get points
-        if (this.player.isJumping()) {
-          console.log('Player killed monster! +' + this.POINTS_MONSTER_KILL + ' points');
-          monster.die();
-          this.score += this.POINTS_MONSTER_KILL;
-        } else {
-          // Player got hit
+        if (this.checkRectCollision(playerBounds, monsterBounds)) {
+          // Player got hit by monster
           console.log('Player hit by monster!');
           monster.die();
           // You can add game over logic or health system here
@@ -626,10 +622,19 @@ export class GameEngine {
     }
 
     // Check collision between player and each pizza
+    const lowPizzaY = GAME_CONFIG.PLAYER_GROUND_Y - 40; // Ground level pizzas
+    const pizzaYTolerance = 20; // Tolerance for determining if pizza is "low"
+
     for (const pizza of this.pizzas) {
       if (!pizza.isActive || pizza.isCollected) continue;
 
       const pizzaBounds = pizza.getBounds();
+      const isPizzaLow = Math.abs(pizzaBounds.y - lowPizzaY) < pizzaYTolerance;
+
+      // Skip low pizzas when jumping
+      if (isJumping && isPizzaLow) {
+        continue; // Don't collect low pizzas while jumping
+      }
 
       if (this.checkRectCollision(playerBounds, pizzaBounds)) {
         console.log('Player collected pizza! +' + this.POINTS_PIZZA + ' points');
