@@ -1,63 +1,43 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { useGameCanvas } from '@/lib/hooks/useGameCanvas';
 import { GameEngine } from '@/lib/game/core/GameEngine';
+import { GameState } from '@/lib/game/GameState';
 
-export function GameCanvas() {
+interface GameCanvasProps {
+  fullScreen?: boolean;
+  gameEngine: GameEngine | null;
+  isLoading: boolean;
+  error: string | null;
+  gameState: GameState;
+  onEngineReady?: (engine: GameEngine, ctx: CanvasRenderingContext2D) => void;
+}
+
+export function GameCanvas({
+  fullScreen = true,
+  gameEngine,
+  isLoading,
+  error,
+  gameState,
+  onEngineReady
+}: GameCanvasProps) {
   const { canvasRef, getContext } = useGameCanvas();
-  const gameEngineRef = useRef<GameEngine | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
+  // Initialize canvas context and notify parent when ready
   useEffect(() => {
-    let mounted = true;
+    if (!onEngineReady) return;
 
-    async function initializeGame() {
-      try {
-        // Get canvas context
-        const ctx = getContext();
-        if (!ctx) {
-          throw new Error('Failed to get canvas context');
-        }
-
-        // Create game engine
-        const engine = new GameEngine(ctx);
-
-        // Initialize asynchronously (loads assets)
-        await engine.initialize();
-
-        // Only start if component is still mounted
-        if (mounted) {
-          engine.start();
-          gameEngineRef.current = engine;
-          setIsLoading(false);
-        } else {
-          engine.cleanup();
-        }
-      } catch (err) {
-        console.error('Failed to initialize game:', err);
-        if (mounted) {
-          setError(err instanceof Error ? err.message : 'Failed to load game');
-          setIsLoading(false);
-        }
-      }
+    const ctx = getContext();
+    if (ctx) {
+      // Notify parent that canvas is ready
+      const engine = new GameEngine(ctx);
+      onEngineReady(engine, ctx);
     }
+  }, [getContext, onEngineReady]);
 
-    initializeGame();
-
-    // Cleanup on unmount
-    return () => {
-      mounted = false;
-      if (gameEngineRef.current) {
-        gameEngineRef.current.cleanup();
-        gameEngineRef.current = null;
-      }
-    };
-  }, [getContext]);
-
-  return (
-    <div className="w-full h-screen flex items-center justify-center bg-black">
+  const content = (
+    <>
       {isLoading && (
         <div className="absolute z-10 text-white text-center">
           <div className="text-2xl mb-4">Loading...</div>
@@ -77,9 +57,29 @@ export function GameCanvas() {
       )}
       <canvas
         ref={canvasRef}
-        className="game-canvas"
+        className={fullScreen ? "game-canvas" : "w-full h-full block"}
+        style={!fullScreen ? {
+          imageRendering: 'pixelated',
+          pointerEvents: gameState === 'title' ? 'none' : 'auto'
+        } : {
+          pointerEvents: gameState === 'title' ? 'none' : 'auto'
+        }}
         aria-label="Interactive portfolio game"
       />
+    </>
+  );
+
+  if (fullScreen) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-full">
+      {content}
     </div>
   );
 }

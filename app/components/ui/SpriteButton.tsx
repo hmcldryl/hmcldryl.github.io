@@ -1,0 +1,96 @@
+'use client';
+
+import { useState } from 'react';
+
+interface SpriteButtonProps {
+  spriteBasePath: string;
+  onClick?: () => void;
+  onMouseDown?: () => void;
+  onMouseUp?: () => void;
+  onTouchStart?: () => void;
+  onTouchEnd?: () => void;
+  ariaLabel: string;
+  size?: number;
+  width?: number;
+  height?: number;
+}
+
+export function SpriteButton({
+  spriteBasePath,
+  onClick,
+  onMouseDown,
+  onMouseUp,
+  onTouchStart,
+  onTouchEnd,
+  ariaLabel,
+  size = 64,
+  width,
+  height,
+}: SpriteButtonProps) {
+  const [buttonState, setButtonState] = useState<'normal' | 'hover' | 'pressed'>('normal');
+
+  // Use width/height if provided, otherwise use size for both
+  const buttonWidth = width ?? size;
+  const buttonHeight = height ?? size;
+
+  const handleMouseEnter = () => {
+    if (buttonState !== 'pressed') {
+      setButtonState('hover');
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setButtonState('normal');
+  };
+
+  const handleMouseDown = () => {
+    setButtonState('pressed');
+    onMouseDown?.();
+  };
+
+  const handleMouseUp = () => {
+    setButtonState('hover');
+    onMouseUp?.();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setButtonState('pressed');
+    onTouchStart?.();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setButtonState('normal');
+    onTouchEnd?.();
+  };
+
+  const handleClick = () => {
+    console.log('SpriteButton clicked, onClick:', onClick);
+    onClick?.();
+  };
+
+  return (
+    <button
+      className="relative cursor-pointer border-none bg-transparent p-0 m-0 pointer-events-auto"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleClick}
+      aria-label={ariaLabel}
+      style={{
+        width: `${buttonWidth}px`,
+        height: `${buttonHeight}px`,
+        backgroundImage: `url(${spriteBasePath}_${buttonState}.png)`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        imageRendering: 'pixelated',
+        outline: 'none',
+      }}
+    />
+  );
+}

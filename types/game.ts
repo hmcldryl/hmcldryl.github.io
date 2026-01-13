@@ -20,7 +20,7 @@ export interface Viewport {
   height: number;
 }
 
-export type AnimationState = 'idle' | 'cycling' | 'jumping';
+export type AnimationState = 'idle' | 'cycling' | 'jumping' | 'bunny_hop';
 
 export type GameMode = 'start' | 'playing' | 'paused';
 

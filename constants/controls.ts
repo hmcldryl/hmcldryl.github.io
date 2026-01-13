@@ -3,7 +3,7 @@ export const CONTROLS = {
   // Movement
   MOVE_RIGHT: ['ArrowRight', 'd', 'D'],
   MOVE_LEFT: ['ArrowLeft', 'a', 'A'],
-  JUMP: ['ArrowUp', 'w', 'W', ' '], // Space bar for jump
+  JUMP: ['ArrowUp', 'w', 'W', ' '], // Space bar and W/Up for bunny hop
 
   // Actions
   INTERACT: ['e', 'E', 'Enter'],
