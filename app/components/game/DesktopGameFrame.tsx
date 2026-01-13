@@ -1,33 +1,31 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { GameCanvas } from './GameCanvas';
 import { TopControls } from './controls/TopControls';
 import { DirectionalControls } from './controls/DirectionalControls';
 import { DecorativeFrame } from './DecorativeFrame';
 import { TitleScreen } from './TitleScreen';
 import { useGameControls } from '@/lib/hooks/useGameControls';
-import { useGameContext } from '@/lib/contexts/GameContext';
+import { GameEngine } from '@/lib/game/core/GameEngine';
 import { GameState } from '@/lib/game/GameState';
 
-export function DesktopGameFrame() {
+interface DesktopGameFrameProps {
+  gameEngine: GameEngine | null;
+  isLoading: boolean;
+  error: string | null;
+  gameState: GameState;
+  onEngineReady: (engine: GameEngine, ctx: CanvasRenderingContext2D) => void;
+}
+
+export function DesktopGameFrame({
+  gameEngine,
+  isLoading,
+  error,
+  gameState,
+  onEngineReady
+}: DesktopGameFrameProps) {
   const { isMuted, handleQuit, handleMute, handleShare } = useGameControls();
-  const { gameEngine } = useGameContext();
-  const [gameState, setGameState] = useState<GameState>('title');
-
-  // Sync React state with GameEngine state
-  useEffect(() => {
-    if (!gameEngine) return;
-
-    const stateManager = gameEngine.getStateManager();
-    const unsubscribe = stateManager.subscribe((newState) => {
-      setGameState(newState);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [gameEngine]);
 
   const handlePlay = useCallback(() => {
     console.log('handlePlay called, gameEngine:', gameEngine);
@@ -50,7 +48,14 @@ export function DesktopGameFrame() {
       {/* Changed h-full to h-[75vh] for 75% viewport height */}
       <div className="relative h-[75vh] p-6" style={{ aspectRatio: '16/9' }}>
         <div className="relative w-full h-full">
-          <GameCanvas fullScreen={false} />
+          <GameCanvas
+            fullScreen={false}
+            gameEngine={gameEngine}
+            isLoading={isLoading}
+            error={error}
+            gameState={gameState}
+            onEngineReady={onEngineReady}
+          />
           <DecorativeFrame />
 
           {/* Title screen overlay */}

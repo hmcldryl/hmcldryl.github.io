@@ -1,89 +1,40 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useGameCanvas } from '@/lib/hooks/useGameCanvas';
 import { GameEngine } from '@/lib/game/core/GameEngine';
-import { GameProvider } from '@/lib/contexts/GameContext';
 import { GameState } from '@/lib/game/GameState';
 
 interface GameCanvasProps {
   fullScreen?: boolean;
+  gameEngine: GameEngine | null;
+  isLoading: boolean;
+  error: string | null;
+  gameState: GameState;
+  onEngineReady?: (engine: GameEngine, ctx: CanvasRenderingContext2D) => void;
 }
 
-export function GameCanvas({ fullScreen = true }: GameCanvasProps) {
+export function GameCanvas({
+  fullScreen = true,
+  gameEngine,
+  isLoading,
+  error,
+  gameState,
+  onEngineReady
+}: GameCanvasProps) {
   const { canvasRef, getContext } = useGameCanvas();
-  const gameEngineRef = useRef<GameEngine | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [gameState, setGameState] = useState<GameState>('title');
 
+  // Initialize canvas context and notify parent when ready
   useEffect(() => {
-    let mounted = true;
+    if (!onEngineReady) return;
 
-    async function initializeGame() {
-      try {
-        // Get canvas context
-        const ctx = getContext();
-        if (!ctx) {
-          throw new Error('Failed to get canvas context');
-        }
-
-        // Create game engine
-        const engine = new GameEngine(ctx);
-
-        // Initialize asynchronously (loads assets)
-        await engine.initialize();
-
-        // Only start if component is still mounted
-        if (mounted) {
-          engine.start();
-          gameEngineRef.current = engine;
-          setIsLoading(false);
-        } else {
-          engine.cleanup();
-        }
-      } catch (err) {
-        console.error('Failed to initialize game:', err);
-        if (mounted) {
-          setError(err instanceof Error ? err.message : 'Failed to load game');
-          setIsLoading(false);
-        }
-      }
+    const ctx = getContext();
+    if (ctx) {
+      // Notify parent that canvas is ready
+      const engine = new GameEngine(ctx);
+      onEngineReady(engine, ctx);
     }
-
-    initializeGame();
-
-    // Cleanup on unmount
-    return () => {
-      mounted = false;
-      if (gameEngineRef.current) {
-        gameEngineRef.current.cleanup();
-        gameEngineRef.current = null;
-      }
-    };
-  }, [getContext]);
-
-  // Sync React state with GameEngine state
-  useEffect(() => {
-    const engine = gameEngineRef.current;
-    if (!engine) return;
-
-    const stateManager = engine.getStateManager();
-    const unsubscribe = stateManager.subscribe((newState) => {
-      setGameState(newState);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [gameEngineRef.current]);
-
-  const handleSetGameState = useCallback((newState: GameState) => {
-    const engine = gameEngineRef.current;
-    if (!engine) return;
-
-    engine.getStateManager().setState(newState);
-  }, []);
+  }, [getContext, onEngineReady]);
 
   const content = (
     <>
@@ -107,29 +58,28 @@ export function GameCanvas({ fullScreen = true }: GameCanvasProps) {
       <canvas
         ref={canvasRef}
         className={fullScreen ? "game-canvas" : "w-full h-full block"}
-        style={!fullScreen ? { imageRendering: 'pixelated' } : undefined}
+        style={!fullScreen ? {
+          imageRendering: 'pixelated',
+          pointerEvents: gameState === 'title' ? 'none' : 'auto'
+        } : {
+          pointerEvents: gameState === 'title' ? 'none' : 'auto'
+        }}
         aria-label="Interactive portfolio game"
       />
     </>
   );
 
+  if (fullScreen) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
+        {content}
+      </div>
+    );
+  }
+
   return (
-    <GameProvider
-      value={{
-        gameEngine: gameEngineRef.current,
-        gameState,
-        setGameState: handleSetGameState,
-      }}
-    >
-      {fullScreen ? (
-        <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
-          {content}
-        </div>
-      ) : (
-        <div className="relative w-full h-full">
-          {content}
-        </div>
-      )}
-    </GameProvider>
+    <div className="relative w-full h-full">
+      {content}
+    </div>
   );
 }

@@ -35,11 +35,6 @@ export function DirectionalControls() {
         size={64}
       />
       <SpriteButton
-        spriteBasePath="/assets/ui/controls/play"
-        ariaLabel="Play/Pause"
-        size={64}
-      />
-      <SpriteButton
         spriteBasePath="/assets/ui/controls/arrow_right"
         onMouseDown={handleRightDown}
         onMouseUp={handleRightUp}

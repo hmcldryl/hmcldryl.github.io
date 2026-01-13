@@ -8,7 +8,7 @@ interface TitleScreenProps {
 
 export function TitleScreen({ onPlay }: TitleScreenProps) {
   return (
-    <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/50">
+    <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/50 pointer-events-none">
       {/* Title text */}
       <h1 className="text-4xl md:text-6xl font-pixel text-white mb-16 drop-shadow-lg text-center px-4">
         Dada's Ride Out
