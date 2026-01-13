@@ -22,32 +22,19 @@ export function useGameCanvas(): UseGameCanvasReturn {
       const container = canvas.parentElement;
       if (!container) return;
 
-      const aspectRatio = GAME_CONFIG.CANVAS_WIDTH / GAME_CONFIG.CANVAS_HEIGHT;
-
       // Get container dimensions
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
 
-      // Calculate canvas size maintaining aspect ratio
-      let width = containerWidth;
-      let height = width / aspectRatio;
+      // Set display size to fill container (CSS pixels)
+      canvas.style.width = `${containerWidth}px`;
+      canvas.style.height = `${containerHeight}px`;
 
-      // If height is too tall, constrain by height instead
-      if (height > containerHeight) {
-        height = containerHeight;
-        width = height * aspectRatio;
-      }
-
-      // Set display size (CSS pixels)
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      // Set actual canvas size (accounting for device pixel ratio)
-      const scale = window.devicePixelRatio || 1;
+      // Set actual canvas size (fixed internal resolution)
       canvas.width = GAME_CONFIG.CANVAS_WIDTH;
       canvas.height = GAME_CONFIG.CANVAS_HEIGHT;
 
-      // Scale context for device pixel ratio
+      // Scale context
       const ctx = canvas.getContext('2d');
       if (ctx) {
         // Reset transform

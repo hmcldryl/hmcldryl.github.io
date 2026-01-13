@@ -4,6 +4,8 @@ export class InputManager {
   private keys: Set<string> = new Set();
   private keyDownHandler: (e: KeyboardEvent) => void;
   private keyUpHandler: (e: KeyboardEvent) => void;
+  private virtualInput = { up: false, down: false, left: false, right: false };
+  private enabled: boolean = false;
 
   constructor() {
     this.keyDownHandler = this.handleKeyDown.bind(this);
@@ -51,24 +53,40 @@ export class InputManager {
     return keys.some((key) => this.keys.has(key));
   }
 
+  public setVirtualDirection(direction: 'up' | 'down' | 'left' | 'right', pressed: boolean): void {
+    this.virtualInput[direction] = pressed;
+  }
+
+  public enable(): void {
+    this.enabled = true;
+  }
+
+  public disable(): void {
+    this.enabled = false;
+  }
+
+  public isEnabled(): boolean {
+    return this.enabled;
+  }
+
   public isMoveRight(): boolean {
-    return this.isAnyKeyDown(CONTROLS.MOVE_RIGHT);
+    return this.enabled && (this.isAnyKeyDown(CONTROLS.MOVE_RIGHT) || this.virtualInput.right);
   }
 
   public isMoveLeft(): boolean {
-    return this.isAnyKeyDown(CONTROLS.MOVE_LEFT);
+    return this.enabled && (this.isAnyKeyDown(CONTROLS.MOVE_LEFT) || this.virtualInput.left);
   }
 
   public isJump(): boolean {
-    return this.isAnyKeyDown(CONTROLS.JUMP);
+    return this.enabled && (this.isAnyKeyDown(CONTROLS.JUMP) || this.virtualInput.up);
   }
 
   public isInteract(): boolean {
-    return this.isAnyKeyDown(CONTROLS.INTERACT);
+    return this.enabled && this.isAnyKeyDown(CONTROLS.INTERACT);
   }
 
   public isPause(): boolean {
-    return this.isAnyKeyDown(CONTROLS.PAUSE);
+    return this.enabled && this.isAnyKeyDown(CONTROLS.PAUSE);
   }
 
   public update(): void {
