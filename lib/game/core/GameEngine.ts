@@ -653,6 +653,12 @@ export class GameEngine {
     );
   }
 
+  public setMuted(muted: boolean): void {
+    if (this.bgm) {
+      this.bgm.muted = muted;
+    }
+  }
+
   public getPlayer(): Player {
     return this.player;
   }
