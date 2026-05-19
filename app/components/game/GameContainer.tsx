@@ -29,7 +29,7 @@ export function GameContainer() {
   }, []);
 
   // Handle engine initialization from canvas
-  const handleEngineReady = useCallback(async (engine: GameEngine, ctx: CanvasRenderingContext2D) => {
+  const handleEngineReady = useCallback(async (engine: GameEngine, _ctx: CanvasRenderingContext2D) => {
     if (engineInitializedRef.current) return;
     engineInitializedRef.current = true;
 

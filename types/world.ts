@@ -5,7 +5,7 @@ export interface PortfolioContent {
   type: ContentType;
   title: string;
   description: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ContentZoneData {

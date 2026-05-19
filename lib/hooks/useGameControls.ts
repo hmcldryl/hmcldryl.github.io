@@ -26,7 +26,7 @@ export function useGameControls() {
           title: 'Check out this game!',
           url: window.location.href,
         });
-      } catch (err) {
+      } catch {
         console.log('Share cancelled');
       }
     } else {

@@ -602,7 +602,6 @@ export class GameEngine {
     // Get player bounds from Player class (moves with animation)
     const playerBounds = this.player.getBounds();
     const isJumping = this.player.isJumping();
-    const jumpHeight = this.player.getJumpHeight();
 
     // When jumping, skip monster collisions entirely
     if (!isJumping) {
@@ -644,7 +643,10 @@ export class GameEngine {
     }
   }
 
-  private checkRectCollision(rect1: any, rect2: any): boolean {
+  private checkRectCollision(
+    rect1: { x: number; y: number; width: number; height: number },
+    rect2: { x: number; y: number; width: number; height: number }
+  ): boolean {
     return (
       rect1.x < rect2.x + rect2.width &&
       rect1.x + rect1.width > rect2.x &&

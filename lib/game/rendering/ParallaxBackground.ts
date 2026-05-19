@@ -88,7 +88,7 @@ export class ParallaxBackground {
     layerOffset: number,
     yOffset: number,
     canvasWidth: number,
-    canvasHeight: number
+    _canvasHeight: number
   ): void {
     const imageWidth = image.width;
     const imageHeight = image.height;
@@ -111,7 +111,7 @@ export class ParallaxBackground {
     layerOffset: number,
     yOffset: number,
     canvasWidth: number,
-    canvasHeight: number
+    _canvasHeight: number
   ): void {
     const imageWidth = image.width;
     const imageHeight = image.height;

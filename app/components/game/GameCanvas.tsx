@@ -16,7 +16,7 @@ interface GameCanvasProps {
 
 export function GameCanvas({
   fullScreen = true,
-  gameEngine,
+  gameEngine: _gameEngine,
   isLoading,
   error,
   gameState,
