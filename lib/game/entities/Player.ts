@@ -26,6 +26,9 @@ export class Player {
   public currentAnimation: AnimationState = 'idle';
   private spriteAnimator: SpriteAnimator;
 
+  // Direction
+  private facingLeft: boolean = false;
+
   // Bunny hop state
   private isBunnyHopping: boolean = false;
   private previousFrame: number = 0;
@@ -115,12 +118,14 @@ export class Player {
     if (!this.isBunnyHopping) {
       // Handle horizontal movement
       if (input.isMoveRight()) {
+        this.facingLeft = false;
         this.velocityX = GAME_CONFIG.BIKE_SPEED;
         this.currentAnimation = 'cycling';
         // Increase world position
         this.worldX += this.velocityX * (deltaTime / 1000);
       } else if (input.isMoveLeft() && this.worldX > 0) {
         // Allow moving left only if not at the start
+        this.facingLeft = true;
         this.velocityX = -GAME_CONFIG.BIKE_SPEED;
         this.currentAnimation = 'cycling';
         this.worldX += this.velocityX * (deltaTime / 1000);
@@ -159,8 +164,16 @@ export class Player {
     const renderX = this.screenX - (renderWidth * this.scale) / 2 + 24;
     const renderY = this.screenY - (renderHeight * this.scale) + yOffset - this.jumpHeight;
 
-    // Render sprite
-    this.spriteAnimator.render(ctx, renderX, renderY, this.scale);
+    // Render sprite (flip canvas horizontally when facing left)
+    if (this.facingLeft) {
+      ctx.save();
+      ctx.translate(renderX + renderWidth * this.scale, 0);
+      ctx.scale(-1, 1);
+      this.spriteAnimator.render(ctx, 0, renderY, this.scale);
+      ctx.restore();
+    } else {
+      this.spriteAnimator.render(ctx, renderX, renderY, this.scale);
+    }
   }
 
   public getWorldX(): number {

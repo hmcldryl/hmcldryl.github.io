@@ -39,7 +39,7 @@ export function DirectionalControls() {
         onTouchStart={handleLeftDown}
         onTouchEnd={handleLeftUp}
         ariaLabel="Move left"
-        size={64}
+        size={48}
       >
         ◄
       </SpriteButton>
@@ -49,8 +49,8 @@ export function DirectionalControls() {
         onTouchStart={handleJumpDown}
         onTouchEnd={handleJumpUp}
         ariaLabel="Jump"
-        width={128}
-        height={64}
+        width={96}
+        height={48}
       >
         ▲
       </SpriteButton>
@@ -60,7 +60,7 @@ export function DirectionalControls() {
         onTouchStart={handleRightDown}
         onTouchEnd={handleRightUp}
         ariaLabel="Move right"
-        size={64}
+        size={48}
       >
         ►
       </SpriteButton>

@@ -70,8 +70,8 @@ canvas {
 }
 
 .pixel-icon-button {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -83,7 +83,7 @@ canvas {
   image-rendering: pixelated;
   background: #c4a870;
   color: #2a1a0a;
-  font-size: 18px;
+  font-size: 14px;
   box-shadow:
     0 0 0 4px #2a1a0a,
     inset 3px 3px 0 0 #e8d4a0,
