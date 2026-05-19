@@ -3,28 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #2d2d2d;
+  --foreground: #cccccc;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* Pixel art rendering - disable antialiasing for crisp pixels */
 canvas {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -36,10 +28,9 @@ canvas {
 .game-canvas {
   display: block;
   margin: 0 auto;
-  background: #eeeeee;
+  background: #1a1a1a;
 }
 
-/* Pixel art font styling */
 .pixel-text {
   font-family: var(--font-press-start), 'Press Start 2P', monospace;
   -webkit-font-smoothing: none;
@@ -47,7 +38,6 @@ canvas {
   font-smooth: never;
 }
 
-/* Pixel art borders for UI elements */
 .pixel-border {
   border: 4px solid #3e2723;
   box-shadow:
@@ -56,7 +46,6 @@ canvas {
   image-rendering: pixelated;
 }
 
-/* Utility classes for game UI */
 .pixel-button {
   @apply pixel-border pixel-text;
   background: #f5f5dc;
@@ -80,35 +69,45 @@ canvas {
     2px 2px 0 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Icon button styles */
 .pixel-icon-button {
-  @apply pixel-border;
-  width: 48px;
-  height: 48px;
-  background: #f5f5dc;
-  cursor: pointer;
-  transition: transform 0.1s;
-  user-select: none;
-  display: flex;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  border: none;
+  outline: none;
+  image-rendering: pixelated;
+  background: #c4a870;
+  color: #2a1a0a;
+  font-size: 18px;
+  box-shadow:
+    0 0 0 4px #2a1a0a,
+    inset 3px 3px 0 0 #e8d4a0,
+    inset -3px -3px 0 0 #6a4c28,
+    3px 3px 0 0 rgba(0, 0, 0, 0.5);
 }
-
 .pixel-icon-button:hover {
-  transform: translate(-2px, -2px);
+  background: #d4b880;
   box-shadow:
-    0 0 0 2px #8b6f47 inset,
-    6px 6px 0 0 rgba(0, 0, 0, 0.3);
+    0 0 0 4px #2a1a0a,
+    inset 3px 3px 0 0 #f4e4b0,
+    inset -3px -3px 0 0 #7a5c38,
+    3px 3px 0 0 rgba(0, 0, 0, 0.5);
 }
-
 .pixel-icon-button:active {
-  transform: translate(2px, 2px);
+  background: #b49860;
   box-shadow:
-    0 0 0 2px #8b6f47 inset,
-    2px 2px 0 0 rgba(0, 0, 0, 0.3);
+    0 0 0 4px #2a1a0a,
+    inset 3px 3px 0 0 #6a4c28,
+    inset -3px -3px 0 0 #e8d4a0,
+    1px 1px 0 0 rgba(0, 0, 0, 0.5);
+  transform: translate(2px, 2px);
 }
 
-/* Virtual D-pad button styles */
 .virtual-control-button {
   @apply pixel-border;
   width: 64px;
@@ -126,4 +125,251 @@ canvas {
 .virtual-control-button:active {
   background: rgba(245, 245, 220, 1);
   transform: scale(0.95);
+}
+
+/* ===== 16-bit Pixel Control Buttons ===== */
+
+.pixel-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-press-start), 'Press Start 2P', monospace;
+  font-size: 24px;
+  image-rendering: pixelated;
+  background: #c4a870;
+  color: #2a1a0a;
+  box-shadow:
+    0 0 0 4px #2a1a0a,
+    inset 4px 4px 0 0 #e8d4a0,
+    inset -4px -4px 0 0 #6a4c28,
+    4px 4px 0 0 rgba(0, 0, 0, 0.5);
+}
+.pixel-ctrl-btn:hover {
+  background: #d4b880;
+  box-shadow:
+    0 0 0 4px #2a1a0a,
+    inset 4px 4px 0 0 #f4e4b0,
+    inset -4px -4px 0 0 #7a5c38,
+    4px 4px 0 0 rgba(0, 0, 0, 0.5);
+}
+.pixel-ctrl-btn:active,
+.pixel-ctrl-btn.is-pressed {
+  background: #b49860;
+  box-shadow:
+    0 0 0 4px #2a1a0a,
+    inset 4px 4px 0 0 #6a4c28,
+    inset -4px -4px 0 0 #e8d4a0,
+    2px 2px 0 0 rgba(0, 0, 0, 0.5);
+  transform: translate(2px, 2px);
+}
+
+.pixel-ctrl-btn-play {
+  background: #3c9828;
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: 2px;
+  box-shadow:
+    0 0 0 4px #0e2808,
+    inset 4px 4px 0 0 #70cc50,
+    inset -4px -4px 0 0 #1e5010,
+    6px 6px 0 0 rgba(0, 0, 0, 0.5);
+}
+.pixel-ctrl-btn-play:hover {
+  background: #4caa38;
+  box-shadow:
+    0 0 0 4px #0e2808,
+    inset 4px 4px 0 0 #84dc64,
+    inset -4px -4px 0 0 #2a6018,
+    6px 6px 0 0 rgba(0, 0, 0, 0.5);
+}
+.pixel-ctrl-btn-play:active,
+.pixel-ctrl-btn-play.is-pressed {
+  background: #2c7818;
+  box-shadow:
+    0 0 0 4px #0e2808,
+    inset 4px 4px 0 0 #1e5010,
+    inset -4px -4px 0 0 #70cc50,
+    2px 2px 0 0 rgba(0, 0, 0, 0.5);
+  transform: translate(4px, 4px);
+}
+
+/* ===== Flash Game Site Theme ===== */
+
+.flash-site {
+  background: #2d2d2d;
+  color: #cccccc;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.flash-nav-link {
+  color: #bbbbbb;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: Verdana, Arial, sans-serif;
+}
+.flash-nav-link:hover { color: #ff9900; }
+
+.flash-cat-link {
+  color: #888888;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: Verdana, Arial, sans-serif;
+}
+.flash-cat-link:hover { color: #ff9900; }
+
+.flash-btn-orange {
+  background: linear-gradient(to bottom, #f07010, #b83c00);
+  color: #ffffff;
+  border: 1px solid #903000;
+  border-bottom-width: 2px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 4px 10px;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: Verdana, Arial, sans-serif;
+  line-height: 1.4;
+}
+.flash-btn-orange:hover { background: linear-gradient(to bottom, #ff8020, #cc4800); }
+.flash-btn-orange:active { background: linear-gradient(to bottom, #b83c00, #f07010); }
+
+.flash-btn-blue {
+  background: linear-gradient(to bottom, #3377cc, #1155aa);
+  color: #ffffff;
+  border: 1px solid #224488;
+  border-bottom-width: 2px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 4px 10px;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: Verdana, Arial, sans-serif;
+  line-height: 1.4;
+}
+.flash-btn-blue:hover { background: linear-gradient(to bottom, #4488dd, #2266bb); }
+.flash-btn-blue:active { background: linear-gradient(to bottom, #1155aa, #3377cc); }
+
+.flash-panel {
+  border: 1px solid #444444;
+  overflow: hidden;
+}
+
+.flash-panel-header {
+  background: linear-gradient(to bottom, #383838, #282828);
+  border-bottom: 2px solid #e8660a;
+  color: #ff9900;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 10px;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+.flash-panel-body {
+  background: #1e1e1e;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: #bbbbbb;
+  line-height: 1.7;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+.flash-tag {
+  display: inline-block;
+  background: #333333;
+  border: 1px solid #555555;
+  color: #999999;
+  font-size: 10px;
+  padding: 2px 7px;
+  cursor: pointer;
+  font-family: Verdana, Arial, sans-serif;
+  text-decoration: none;
+}
+.flash-tag:hover {
+  background: #3d3d3d;
+  color: #ff9900;
+  border-color: #e8660a;
+}
+
+.flash-kbd {
+  background: #3a3a3a;
+  border: 1px solid #666666;
+  border-bottom: 2px solid #888888;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  display: inline-block;
+}
+
+.flash-comment-item {
+  padding: 10px 12px;
+  border-bottom: 1px solid #2e2e2e;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: #1e1e1e;
+}
+.flash-comment-item:last-child { border-bottom: none; }
+
+.flash-username {
+  color: #e8660a;
+  font-weight: bold;
+  font-size: 11px;
+  text-decoration: none;
+  font-family: Verdana, Arial, sans-serif;
+}
+.flash-username:hover {
+  text-decoration: underline;
+  color: #ff9900;
+}
+
+.flash-link {
+  color: #e8660a;
+  text-decoration: none;
+}
+.flash-link:hover {
+  text-decoration: underline;
+  color: #ff9900;
+}
+
+.flash-input {
+  background: #1a1a1a;
+  border: 1px solid #555555;
+  border-bottom: 2px solid #333333;
+  color: #cccccc;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 11px;
+  padding: 4px 8px;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+}
+.flash-input:focus {
+  border-color: #e8660a;
+  border-bottom-color: #c04000;
 }

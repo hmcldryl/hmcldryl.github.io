@@ -34,16 +34,16 @@ export function DirectionalControls() {
   return (
     <div className="flex gap-4 items-end">
       <SpriteButton
-        spriteBasePath="/assets/ui/controls/arrow_left"
         onMouseDown={handleLeftDown}
         onMouseUp={handleLeftUp}
         onTouchStart={handleLeftDown}
         onTouchEnd={handleLeftUp}
         ariaLabel="Move left"
         size={64}
-      />
+      >
+        ◄
+      </SpriteButton>
       <SpriteButton
-        spriteBasePath="/assets/ui/controls/jump"
         onMouseDown={handleJumpDown}
         onMouseUp={handleJumpUp}
         onTouchStart={handleJumpDown}
@@ -51,16 +51,19 @@ export function DirectionalControls() {
         ariaLabel="Jump"
         width={128}
         height={64}
-      />
+      >
+        ▲
+      </SpriteButton>
       <SpriteButton
-        spriteBasePath="/assets/ui/controls/arrow_right"
         onMouseDown={handleRightDown}
         onMouseUp={handleRightUp}
         onTouchStart={handleRightDown}
         onTouchEnd={handleRightUp}
         ariaLabel="Move right"
         size={64}
-      />
+      >
+        ►
+      </SpriteButton>
     </div>
   );
 }

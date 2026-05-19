@@ -85,7 +85,7 @@ function MobilePortraitLayout({
   }, [gameEngine]);
 
   return (
-    <div className="w-full h-screen flex flex-col" style={{ backgroundColor: '#eeeeee' }}>
+    <div className="w-full h-screen flex flex-col" style={{ backgroundColor: '#1a1a1a' }}>
       {/* Game area - takes available space minus controls */}
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="relative w-full max-w-full" style={{ aspectRatio: '16/9' }}>
@@ -154,7 +154,7 @@ function MobileLandscapeLayout({
   }, [gameEngine]);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#eeeeee' }}>
+    <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#1a1a1a' }}>
       {/* Minimal padding for frame, max screen usage */}
       <div className="relative h-full p-2" style={{ aspectRatio: '16/9' }}>
         <div className="relative w-full h-full">

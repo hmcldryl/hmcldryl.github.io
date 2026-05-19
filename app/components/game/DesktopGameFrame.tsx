@@ -44,7 +44,7 @@ export function DesktopGameFrame({
   }, [gameEngine]);
 
   return (
-    <div className="w-full flex items-center justify-center py-8" style={{ backgroundColor: '#eeeeee' }}>
+    <div className="w-full flex items-center justify-center py-8" style={{ backgroundColor: '#1a1a1a' }}>
       {/* Game frame container - height-based sizing with aspect ratio */}
       <div className="relative p-6" style={{ height: '70vh', aspectRatio: '16/9' }}>
         <div className="relative w-full h-full">
