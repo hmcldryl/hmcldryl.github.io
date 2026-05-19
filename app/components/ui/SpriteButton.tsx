@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 interface SpriteButtonProps {
-  spriteBasePath: string;
+  children: React.ReactNode;
   onClick?: () => void;
   onMouseDown?: () => void;
   onMouseUp?: () => void;
@@ -13,10 +13,11 @@ interface SpriteButtonProps {
   size?: number;
   width?: number;
   height?: number;
+  variant?: 'default' | 'play';
 }
 
 export function SpriteButton({
-  spriteBasePath,
+  children,
   onClick,
   onMouseDown,
   onMouseUp,
@@ -26,71 +27,61 @@ export function SpriteButton({
   size = 64,
   width,
   height,
+  variant = 'default',
 }: SpriteButtonProps) {
-  const [buttonState, setButtonState] = useState<'normal' | 'hover' | 'pressed'>('normal');
+  const [isPressed, setIsPressed] = useState(false);
 
-  // Use width/height if provided, otherwise use size for both
   const buttonWidth = width ?? size;
   const buttonHeight = height ?? size;
 
-  const handleMouseEnter = () => {
-    if (buttonState !== 'pressed') {
-      setButtonState('hover');
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setButtonState('normal');
-  };
-
   const handleMouseDown = () => {
-    setButtonState('pressed');
+    setIsPressed(true);
     onMouseDown?.();
   };
 
   const handleMouseUp = () => {
-    setButtonState('hover');
+    setIsPressed(false);
     onMouseUp?.();
+  };
+
+  const handleMouseLeave = () => {
+    if (isPressed) {
+      setIsPressed(false);
+      onMouseUp?.();
+    }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
-    setButtonState('pressed');
+    setIsPressed(true);
     onTouchStart?.();
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     e.preventDefault();
-    setButtonState('normal');
+    setIsPressed(false);
     onTouchEnd?.();
   };
 
-  const handleClick = () => {
-    console.log('SpriteButton clicked, onClick:', onClick);
-    onClick?.();
-  };
+  const classNames = [
+    'pixel-ctrl-btn',
+    variant === 'play' ? 'pixel-ctrl-btn-play' : '',
+    isPressed ? 'is-pressed' : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <button
-      className="relative cursor-pointer border-none bg-transparent p-0 m-0 pointer-events-auto"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={classNames}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      onClick={handleClick}
+      onClick={onClick}
       aria-label={ariaLabel}
-      style={{
-        width: `${buttonWidth}px`,
-        height: `${buttonHeight}px`,
-        backgroundImage: `url(${spriteBasePath}_${buttonState}.png)`,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        imageRendering: 'pixelated',
-        outline: 'none',
-      }}
-    />
+      style={{ width: `${buttonWidth}px`, height: `${buttonHeight}px` }}
+    >
+      {children}
+    </button>
   );
 }
