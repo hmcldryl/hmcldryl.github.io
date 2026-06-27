@@ -13,9 +13,10 @@ import {
   type Skill,
   type Project,
   type Experience,
+  type AccountLink,
 } from "@/lib/firestore";
 
-type Tab = "info" | "skills" | "projects" | "experience";
+type Tab = "info" | "skills" | "projects" | "experience" | "accounts";
 
 const COLOR_OPTIONS = ["primary", "secondary", "tertiary"] as const;
 const SIZE_OPTIONS = ["big", "small", "wide", "other"] as const;
@@ -296,6 +297,67 @@ function ExperienceRow({
   );
 }
 
+// ─── Account link row ─────────────────────────────────────────────────────────
+
+function AccountLinkRow({
+  link,
+  idx,
+  total,
+  onChange,
+  onMove,
+  onDelete,
+}: {
+  link: AccountLink;
+  idx: number;
+  total: number;
+  onChange: (idx: number, updated: AccountLink) => void;
+  onMove: (idx: number, dir: -1 | 1) => void;
+  onDelete: (idx: number) => void;
+}) {
+  const upd = (field: keyof AccountLink, val: string | null) =>
+    onChange(idx, { ...link, [field]: val });
+
+  return (
+    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="font-mono text-[11px] text-on-surface-variant">LINK #{idx + 1}</span>
+        <div className="flex gap-2">
+          <button onClick={() => onMove(idx, -1)} disabled={idx === 0} className="text-on-surface-variant hover:text-primary disabled:opacity-30 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">arrow_upward</span>
+          </button>
+          <button onClick={() => onMove(idx, 1)} disabled={idx === total - 1} className="text-on-surface-variant hover:text-primary disabled:opacity-30 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
+          </button>
+          <button onClick={() => onDelete(idx)} className="text-error hover:brightness-125 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Platform">
+          <input className={inputCls} value={link.platform} onChange={(e) => upd("platform", e.target.value)} placeholder="e.g. Steam, Nintendo Switch" />
+        </Field>
+        <Field label="Handle / Username / Friend Code">
+          <input className={inputCls} value={link.handle} onChange={(e) => upd("handle", e.target.value)} placeholder="e.g. hmcldryl or SW-1234-5678-9012" />
+        </Field>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Field label="URL (optional)">
+          <input className={inputCls} value={link.url ?? ""} placeholder="https://..." onChange={(e) => upd("url", e.target.value || null)} />
+        </Field>
+        <Field label="Icon (Material Symbols)">
+          <input className={inputCls} value={link.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. sports_esports" />
+        </Field>
+        <Field label="Color">
+          <select className={selectCls} value={link.color} onChange={(e) => upd("color", e.target.value)}>
+            {COLOR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </Field>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main dashboard ──────────────────────────────────────────────────────────
 
 export default function Dashboard() {
@@ -410,11 +472,35 @@ export default function Dashboard() {
       }
     );
 
+  // ── Account link helpers ──
+  const updateAccountLink = (idx: number, updated: AccountLink) =>
+    setData((d) => d && { ...d, accountLinks: d.accountLinks.map((l, i) => (i === idx ? updated : l)) });
+  const moveAccountLink = (idx: number, dir: -1 | 1) =>
+    setData((d) => {
+      if (!d) return d;
+      const arr = [...d.accountLinks];
+      [arr[idx], arr[idx + dir]] = [arr[idx + dir], arr[idx]];
+      return { ...d, accountLinks: arr };
+    });
+  const deleteAccountLink = (idx: number) =>
+    setData((d) => d && { ...d, accountLinks: d.accountLinks.filter((_, i) => i !== idx) });
+  const addAccountLink = () =>
+    setData((d) =>
+      d && {
+        ...d,
+        accountLinks: [
+          ...d.accountLinks,
+          { platform: "New Platform", handle: "", url: null, icon: "link", color: "primary" },
+        ],
+      }
+    );
+
   const TABS: { id: Tab; label: string; icon: string }[] = [
     { id: "info", label: "Personal Info", icon: "person" },
     { id: "skills", label: "Arsenal", icon: "swords" },
     { id: "projects", label: "Quest Log", icon: "task_alt" },
     { id: "experience", label: "Experience", icon: "military_tech" },
+    { id: "accounts", label: "Accounts", icon: "manage_accounts" },
   ];
 
   if (!ready || !data) {
@@ -637,6 +723,40 @@ export default function Dashboard() {
                     onChange={updateExp}
                     onMove={moveExp}
                     onDelete={deleteExp}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Accounts */}
+          {tab === "accounts" && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="font-display text-2xl font-bold text-on-surface">Accounts ({data.accountLinks.length})</h2>
+                <button
+                  onClick={addAccountLink}
+                  className="flex items-center gap-2 bg-surface-container-high border border-outline-variant/30 text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] py-2 px-4 rounded-lg hover:border-primary hover:text-primary transition-all"
+                >
+                  <span className="material-symbols-outlined text-[16px]">add</span>
+                  ADD ACCOUNT
+                </button>
+              </div>
+              <div className="glass-panel rounded-xl p-4 border border-secondary/20 mb-2">
+                <p className="font-mono text-[11px] text-secondary">
+                  Leave URL empty for accounts with no link (e.g. Nintendo Switch friend codes).
+                </p>
+              </div>
+              <div className="space-y-4">
+                {data.accountLinks.map((link, idx) => (
+                  <AccountLinkRow
+                    key={`${idx}-${link.platform}`}
+                    link={link}
+                    idx={idx}
+                    total={data.accountLinks.length}
+                    onChange={updateAccountLink}
+                    onMove={moveAccountLink}
+                    onDelete={deleteAccountLink}
                   />
                 ))}
               </div>

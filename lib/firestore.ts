@@ -12,6 +12,7 @@ export type PersonalInfo = typeof rawData.personalInfo;
 export type Skill = (typeof rawData.skills)[0];
 export type Project = (typeof rawData.projects)[0];
 export type Experience = (typeof rawData.experience)[0];
+export type AccountLink = (typeof rawData.accountLinks)[0];
 export type PortfolioData = typeof rawData;
 
 const NOOP: Unsubscribe = () => {};

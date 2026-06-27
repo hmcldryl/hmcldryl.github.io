@@ -91,6 +91,36 @@
       "accentColor": "tertiary"
     }
   ],
+  "accountLinks": [
+    {
+      "platform": "GitHub",
+      "handle": "hmcldryl",
+      "url": "https://github.com/hmcldryl",
+      "icon": "code",
+      "color": "primary"
+    },
+    {
+      "platform": "LinkedIn",
+      "handle": "hmcldryl",
+      "url": "https://linkedin.com/in/hmcldryl",
+      "icon": "person",
+      "color": "secondary"
+    },
+    {
+      "platform": "Steam",
+      "handle": "hmcldryl",
+      "url": "https://steamcommunity.com/id/hmcldryl",
+      "icon": "sports_esports",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Nintendo Switch",
+      "handle": "SW-XXXX-XXXX-XXXX",
+      "url": null,
+      "icon": "videogame_asset",
+      "color": "primary"
+    }
+  ],
   "experience": [
     {
       "role": "Software Engineer",
