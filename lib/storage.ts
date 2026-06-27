@@ -9,7 +9,7 @@ export async function uploadProfilePhoto(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
   form.append("upload_preset", uploadPreset);
-  form.append("public_id", "nexus_profile");
+  form.append("public_id", `nexus_profile_${Date.now()}`);
 
   const res = await fetch(
     `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
