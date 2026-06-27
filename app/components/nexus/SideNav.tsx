@@ -3,6 +3,7 @@ const NAV_LINKS = [
   { id: "arsenal", label: "Arsenal", icon: "swords" },
   { id: "quests", label: "Quests", icon: "task_alt" },
   { id: "experience", label: "Experience", icon: "military_tech" },
+  { id: "accounts", label: "Accounts", icon: "manage_accounts" },
   { id: "connect", label: "Connect", icon: "alternate_email" },
 ];
 

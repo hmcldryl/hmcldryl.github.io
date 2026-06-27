@@ -58,7 +58,7 @@ export function QuestSection() {
                   <span className="material-symbols-outlined text-[80px] text-primary">memory</span>
                 </div>
                 <div className="flex gap-2 mb-4 flex-wrap">
-                  {big.tags.map((t) => <Tag key={t} label={t} />)}
+                  {big.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
                 </div>
                 <h3 className="font-display text-2xl font-semibold text-on-surface mb-2">
                   {big.name}
@@ -95,7 +95,7 @@ export function QuestSection() {
                   <span className="material-symbols-outlined text-[80px] text-tertiary">smartphone</span>
                 </div>
                 <div className="flex gap-2 mb-4 flex-wrap">
-                  {small.tags.map((t) => <Tag key={t} label={t} />)}
+                  {small.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
                 </div>
                 <h3 className="font-display text-xl font-semibold text-on-surface mb-2">
                   {small.name}
@@ -133,7 +133,7 @@ export function QuestSection() {
                 </div>
                 <div className="max-w-2xl">
                   <div className="flex gap-2 mb-4 flex-wrap">
-                    {wide.tags.map((t) => <Tag key={t} label={t} />)}
+                    {wide.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
                   </div>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-on-surface mb-4">
                     {wide.name}
@@ -170,7 +170,7 @@ export function QuestSection() {
               <div className="absolute inset-0 glass-panel" />
               <div className="relative h-full p-8 flex flex-col justify-end min-h-[300px]">
                 <div className="flex gap-2 mb-4 flex-wrap">
-                  {project.tags.map((t) => <Tag key={t} label={t} />)}
+                  {project.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
                 </div>
                 <h3 className="font-display text-xl font-semibold text-on-surface mb-2">
                   {project.name}

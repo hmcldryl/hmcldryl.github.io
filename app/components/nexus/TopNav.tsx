@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { id: "arsenal", label: "Arsenal" },
   { id: "quests", label: "Quests" },
   { id: "experience", label: "Experience" },
+  { id: "accounts", label: "Accounts" },
   { id: "connect", label: "Connect" },
 ];
 

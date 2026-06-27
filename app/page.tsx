@@ -5,6 +5,7 @@ import { ArsenalSection } from "./components/nexus/ArsenalSection";
 import { QuestSection } from "./components/nexus/QuestSection";
 import { ExperienceSection } from "./components/nexus/ExperienceSection";
 import { ConnectSection } from "./components/nexus/ConnectSection";
+import { AccountLinksSection } from "./components/nexus/AccountLinksSection";
 
 function Footer() {
   return (
@@ -58,6 +59,7 @@ export default function Home() {
         <ArsenalSection />
         <QuestSection />
         <ExperienceSection />
+        <AccountLinksSection />
         <ConnectSection />
         <Footer />
       </main>
