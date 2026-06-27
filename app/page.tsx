@@ -49,19 +49,16 @@ function Footer() {
 export default function Home() {
   return (
     <div className="bg-background min-h-screen">
-      {/* Fixed navigation */}
       <TopNav />
       <SideNav />
-
-      {/* Main content — offset for side nav (desktop) and top nav */}
-      <main className="lg:pl-64 pt-20">
+      <main className="relative z-10 lg:pl-64 pt-20">
         <HeroSection />
-        <ArsenalSection />
-        <QuestSection />
-        <ExperienceSection />
-        <AccountLinksSection />
-        <ConnectSection />
-        <Footer />
+        <div data-reveal><ArsenalSection /></div>
+        <div data-reveal data-delay="1"><QuestSection /></div>
+        <div data-reveal><ExperienceSection /></div>
+        <div data-reveal data-delay="1"><AccountLinksSection /></div>
+        <div data-reveal><ConnectSection /></div>
+        <div data-reveal data-delay="2"><Footer /></div>
       </main>
     </div>
   );

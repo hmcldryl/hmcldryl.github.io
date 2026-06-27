@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
 import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
+import { RevealObserver } from "@/app/components/nexus/RevealObserver";
+import { BackgroundOrbs } from "@/app/components/nexus/BackgroundOrbs";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -48,6 +50,8 @@ export default function RootLayout({
       >
         <PortfolioProvider>
           <FaviconUpdater />
+          <RevealObserver />
+          <BackgroundOrbs />
           {children}
         </PortfolioProvider>
       </body>

@@ -49,24 +49,27 @@ export function HeroSection() {
   const lastName = rest.join(" ");
 
   return (
-    <section id="nexus" className="min-h-screen flex items-center px-5 md:px-margin-desktop py-24">
-      <div className="max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+    <section id="nexus" className="relative min-h-screen flex items-center px-5 md:px-margin-desktop py-24 overflow-hidden">
+      {/* Scanline idle overlay */}
+      <div className="scanlines absolute inset-0 z-0 opacity-40" aria-hidden="true" />
+
+      <div className="relative z-10 max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
         {/* Left: intro */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="inline-block py-1 px-3 border border-primary/30 rounded-full font-mono text-[12px] text-primary bg-primary/5 tracking-[0.05em]">
+          <div className="hero-entry hero-entry-1 inline-block py-1 px-3 border border-primary/30 rounded-full font-mono text-[12px] text-primary bg-primary/5 tracking-[0.05em] breathe">
             [ SYSTEM ACTIVE: V1.0.0 ]
           </div>
 
           <h1 className="font-display font-bold text-on-surface leading-none">
-            <span className="text-5xl md:text-7xl block">{firstName}</span>
-            <span className="text-5xl md:text-7xl block text-primary">{lastName}</span>
+            <span className="hero-entry hero-entry-2 text-5xl md:text-7xl block">{firstName}</span>
+            <span className="hero-entry hero-entry-3 text-5xl md:text-7xl block text-primary">{lastName}</span>
           </h1>
 
-          <p className="font-body text-lg text-on-surface-variant max-w-xl leading-relaxed">
+          <p className="hero-entry hero-entry-4 font-body text-lg text-on-surface-variant max-w-xl leading-relaxed">
             {personalInfo.bio}
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-2">
+          <div className="hero-entry hero-entry-5 flex flex-wrap gap-4 pt-2">
             <a
               href="#quests"
               className="bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-4 px-8 rounded-lg border border-transparent border-glow hover:brightness-110 active:scale-95 transition-all"
