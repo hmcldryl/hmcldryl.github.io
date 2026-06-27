@@ -22,7 +22,7 @@ export default function NexusLogin() {
     }
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        router.replace("/dashboard");
+        router.replace("/profile");
       } else {
         setChecking(false);
       }
@@ -37,7 +37,7 @@ export default function NexusLogin() {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      router.push("/profile");
     } catch {
       setError("Invalid credentials. Check email and password.");
     } finally {

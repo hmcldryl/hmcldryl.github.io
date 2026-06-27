@@ -12,7 +12,7 @@ function Footer() {
     <footer className="w-full py-12 border-t border-outline-variant/10">
       <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-margin-desktop max-w-container-max mx-auto gap-4">
         <div className="font-mono text-[12px] tracking-[0.1em] font-bold uppercase text-secondary">
-          NEXUS_SYSTEMS
+          JDH_SYSTEMS
         </div>
         <div className="font-mono text-[12px] text-on-surface-variant text-center">
           © {new Date().getFullYear()} John Daryl Homecillo // System.Access_Granted
