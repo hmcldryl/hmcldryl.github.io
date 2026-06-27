@@ -100,6 +100,11 @@ export function HeroSection() {
                 className="relative z-10 max-h-[480px] w-auto object-contain select-none"
                 style={{ filter: "drop-shadow(0 0 40px rgba(207,188,255,0.18))" }}
               />
+              {/* Bottom fade — blends photo into background */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-48 z-20 pointer-events-none"
+                style={{ background: "linear-gradient(to top, #050505 0%, #050505 15%, transparent 100%)" }}
+              />
             </div>
           ) : (
             <div className="relative group">
