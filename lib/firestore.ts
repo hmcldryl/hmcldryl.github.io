@@ -6,14 +6,66 @@ import {
   type Unsubscribe,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import rawData from "@/content/portfolio.json";
 
-export type PersonalInfo = typeof rawData.personalInfo;
-export type Skill = (typeof rawData.skills)[0];
-export type Project = (typeof rawData.projects)[0];
-export type Experience = (typeof rawData.experience)[0];
-export type AccountLink = (typeof rawData.accountLinks)[0];
-export type PortfolioData = typeof rawData;
+export type PersonalInfo = {
+  name: string;
+  tagline: string;
+  bio: string;
+  location: string;
+  email: string;
+  github: string;
+  linkedin: string;
+};
+
+export type Skill = {
+  name: string;
+  level: number;
+  color: string;
+  icon: string;
+  description: string;
+};
+
+export type Project = {
+  name: string;
+  description: string;
+  tags: string[];
+  link: string | null;
+  size: string;
+  accentColor: string;
+};
+
+export type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  color: string;
+  icon: string;
+};
+
+export type AccountLink = {
+  platform: string;
+  handle: string;
+  url: string | null;
+  icon: string;
+  color: string;
+};
+
+export type PortfolioData = {
+  personalInfo: PersonalInfo;
+  skills: Skill[];
+  projects: Project[];
+  experience: Experience[];
+  accountLinks: AccountLink[];
+};
+
+export const EMPTY_PORTFOLIO: PortfolioData = {
+  personalInfo: { name: "", tagline: "", bio: "", location: "", email: "", github: "", linkedin: "" },
+  skills: [],
+  projects: [],
+  experience: [],
+  accountLinks: [],
+};
 
 const NOOP: Unsubscribe = () => {};
 
@@ -24,10 +76,10 @@ function getDocRef() {
 
 export async function getPortfolioData(): Promise<PortfolioData> {
   const ref = getDocRef();
-  if (!ref) return rawData;
+  if (!ref) return EMPTY_PORTFOLIO;
   const snap = await getDoc(ref);
   if (snap.exists()) return snap.data() as PortfolioData;
-  return rawData;
+  return EMPTY_PORTFOLIO;
 }
 
 export async function setPortfolioData(data: PortfolioData): Promise<void> {
@@ -44,17 +96,6 @@ export function subscribeToPortfolio(
   return onSnapshot(ref, (snap) => {
     if (snap.exists()) {
       callback(snap.data() as PortfolioData);
-    } else {
-      callback(rawData);
     }
   });
-}
-
-export async function seedPortfolioIfEmpty(): Promise<void> {
-  const ref = getDocRef();
-  if (!ref) return;
-  const snap = await getDoc(ref);
-  if (!snap.exists()) {
-    await setDoc(ref, rawData);
-  }
 }

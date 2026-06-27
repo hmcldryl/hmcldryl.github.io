@@ -8,7 +8,6 @@ import { auth } from "@/lib/firebase";
 import {
   getPortfolioData,
   setPortfolioData,
-  seedPortfolioIfEmpty,
   type PortfolioData,
   type Skill,
   type Project,
@@ -480,7 +479,6 @@ export default function Dashboard() {
         return;
       }
       setReady(true);
-      await seedPortfolioIfEmpty();
       const current = await getPortfolioData();
       setData(current);
     });
