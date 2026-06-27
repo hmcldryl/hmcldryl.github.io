@@ -7,15 +7,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { subscribeToPortfolio, type PortfolioData } from "@/lib/firestore";
-import rawData from "@/content/portfolio.json";
+import { subscribeToPortfolio, type PortfolioData, EMPTY_PORTFOLIO } from "@/lib/firestore";
 
-// Static JSON is the initial state — no loading flash on first render.
-// Firestore subscription overwrites it with live data once the client connects.
-const PortfolioContext = createContext<PortfolioData>(rawData);
+const PortfolioContext = createContext<PortfolioData>(EMPTY_PORTFOLIO);
 
 export function PortfolioProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<PortfolioData>(rawData);
+  const [data, setData] = useState<PortfolioData>(EMPTY_PORTFOLIO);
 
   useEffect(() => {
     const unsubscribe = subscribeToPortfolio((live) => setData(live));

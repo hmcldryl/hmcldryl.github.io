@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
+import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -45,7 +46,10 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} font-body antialiased`}
       >
-        <PortfolioProvider>{children}</PortfolioProvider>
+        <PortfolioProvider>
+          <FaviconUpdater />
+          {children}
+        </PortfolioProvider>
       </body>
     </html>
   );

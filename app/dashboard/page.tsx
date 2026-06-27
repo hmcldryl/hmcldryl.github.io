@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { uploadProfilePhoto } from "@/lib/storage";
 import {
   getPortfolioData,
   setPortfolioData,
-  seedPortfolioIfEmpty,
   type PortfolioData,
   type Skill,
   type Project,
@@ -460,6 +460,72 @@ function AccountLinkRow({
   );
 }
 
+// ─── Photo upload ─────────────────────────────────────────────────────────────
+
+function PhotoUpload({
+  currentUrl,
+  onUpload,
+}: {
+  currentUrl?: string;
+  onUpload: (url: string) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.name.endsWith(".png") && file.type !== "image/png") {
+      setError("PNG only — upload a transparent .png file");
+      return;
+    }
+    setUploading(true);
+    setError("");
+    try {
+      const url = await uploadProfilePhoto(file);
+      onUpload(url);
+    } catch {
+      setError("Upload failed. Check Firebase Storage is enabled.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  return (
+    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+      <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-primary">Profile Photo</div>
+      <div className="flex items-center gap-6">
+        {/* Preview */}
+        <div className="relative w-24 h-24 rounded-xl bg-surface-container border border-outline-variant/30 overflow-hidden shrink-0 flex items-center justify-center">
+          {currentUrl ? (
+            <img src={currentUrl} alt="Profile" className="w-full h-full object-contain" />
+          ) : (
+            <span className="material-symbols-outlined text-[32px] text-on-surface-variant/30">person</span>
+          )}
+        </div>
+        {/* Controls */}
+        <div className="space-y-2 min-w-0">
+          <label className={`flex items-center gap-2 cursor-pointer ${inputCls} w-auto inline-flex px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-container-high text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] hover:border-primary hover:text-primary transition-all ${uploading ? "opacity-50 pointer-events-none" : ""}`}>
+            <span className="material-symbols-outlined text-[16px]">upload</span>
+            {uploading ? "UPLOADING..." : currentUrl ? "REPLACE PHOTO" : "UPLOAD PHOTO"}
+            <input type="file" accept=".png,image/png" className="hidden" onChange={handleFile} disabled={uploading} />
+          </label>
+          <p className="font-mono text-[10px] text-on-surface-variant/50">
+            Transparent PNG · chest-up · updates hero + favicon
+          </p>
+          {error && <p className="font-mono text-[10px] text-error">{error}</p>}
+        </div>
+      </div>
+      {currentUrl && (
+        <div className="font-mono text-[10px] text-on-surface-variant/40 truncate">
+          {currentUrl}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main dashboard ──────────────────────────────────────────────────────────
 
 export default function Dashboard() {
@@ -480,7 +546,6 @@ export default function Dashboard() {
         return;
       }
       setReady(true);
-      await seedPortfolioIfEmpty();
       const current = await getPortfolioData();
       setData(current);
     });
@@ -706,6 +771,13 @@ export default function Dashboard() {
           {tab === "info" && (
             <div className="space-y-6">
               <h2 className="font-display text-2xl font-bold text-on-surface">Personal Info</h2>
+
+              {/* Photo upload */}
+              <PhotoUpload
+                currentUrl={data.personalInfo.photoUrl}
+                onUpload={(url) => setData({ ...data, personalInfo: { ...data.personalInfo, photoUrl: url } })}
+              />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field label="Full Name">
                   <input className={inputCls} value={data.personalInfo.name}
