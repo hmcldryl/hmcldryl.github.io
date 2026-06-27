@@ -27,7 +27,14 @@ export function HeroSection() {
       const line = TERMINAL_LINES[i];
       const div = document.createElement("div");
       div.className = "flex gap-3 opacity-0 translate-y-1 transition-all duration-500";
-      div.innerHTML = `<span class="text-primary opacity-40">$</span><span class="${line.color}">${line.text}</span>`;
+      const prefix = document.createElement("span");
+      prefix.className = "text-primary opacity-40";
+      prefix.textContent = "$";
+      const text = document.createElement("span");
+      text.className = line.color;
+      text.textContent = line.text;
+      div.appendChild(prefix);
+      div.appendChild(text);
       if (cursor) terminal.insertBefore(div, cursor);
       requestAnimationFrame(() => div.classList.remove("opacity-0", "translate-y-1"));
       i++;

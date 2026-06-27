@@ -567,7 +567,7 @@ export default function Dashboard() {
               <div className="space-y-4">
                 {data.skills.map((skill, idx) => (
                   <SkillRow
-                    key={idx}
+                    key={`${idx}-${skill.name}`}
                     skill={skill}
                     idx={idx}
                     total={data.skills.length}
@@ -601,7 +601,7 @@ export default function Dashboard() {
               <div className="space-y-4">
                 {data.projects.map((project, idx) => (
                   <ProjectRow
-                    key={idx}
+                    key={`${idx}-${project.name}`}
                     project={project}
                     idx={idx}
                     total={data.projects.length}
@@ -630,7 +630,7 @@ export default function Dashboard() {
               <div className="space-y-4">
                 {data.experience.map((item, idx) => (
                   <ExperienceRow
-                    key={idx}
+                    key={`${idx}-${item.role}`}
                     item={item}
                     idx={idx}
                     total={data.experience.length}
