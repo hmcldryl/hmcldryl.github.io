@@ -24,19 +24,16 @@ function getXPData() {
 }
 
 export function SideNav() {
-  const { daysLeft, progress } = useMemo(() => getXPData(), []);
+  const { progress } = useMemo(() => getXPData(), []);
 
   return (
     <aside className="sidebar-entrance hidden lg:flex fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20 flex-col shadow-2xl pt-24 pb-8">
       {/* Level + XP badge */}
       <div className="px-6 mb-8 nav-item-enter" style={{ animationDelay: "180ms" }}>
         <div className="p-4 rounded-xl bg-surface-container-high/40 border border-outline-variant/20">
-          <div className="flex items-baseline justify-between">
-            <div className="font-display text-3xl font-bold text-tertiary leading-none">LVL 26</div>
-            <div className="font-mono text-[10px] text-on-surface-variant">{daysLeft}d left</div>
-          </div>
+          <div className="font-display text-3xl font-bold text-tertiary leading-none">LVL 26</div>
           <div className="font-mono text-[11px] tracking-[0.1em] text-on-surface-variant uppercase mt-1">
-            {daysLeft}d to LVL 27 // PALAWAN
+            EXP // PALAWAN
           </div>
           {/* XP bar */}
           <div className="w-full bg-surface-container mt-3 h-1.5 rounded-full overflow-hidden">
