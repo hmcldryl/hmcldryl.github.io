@@ -33,6 +33,7 @@ export type Project = {
   link: string | null;
   size: string;
   accentColor: string;
+  imageUrl?: string | null;
 };
 
 export type Experience = {

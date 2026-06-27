@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { uploadProfilePhoto } from "@/lib/storage";
+import { uploadProfilePhoto, uploadProjectImage } from "@/lib/storage";
 import {
   getPortfolioData,
   setPortfolioData,
@@ -240,6 +240,35 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
   const upd = (field: keyof Project, val: string | string[] | null) =>
     onChange(idx, { ...project, [field]: val });
 
+  // Local tags state so user can type commas/spaces freely; commit on blur
+  const joinedTags = project.tags.join(", ");
+  const prevJoined = useRef(joinedTags);
+  const [rawTags, setRawTags] = useState(joinedTags);
+  if (prevJoined.current !== joinedTags) {
+    prevJoined.current = joinedTags;
+    setRawTags(joinedTags);
+  }
+
+  // Image upload state
+  const [imgUploading, setImgUploading] = useState(false);
+  const [imgError, setImgError] = useState("");
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImgUploading(true);
+    setImgError("");
+    try {
+      const url = await uploadProjectImage(file);
+      upd("imageUrl", url);
+    } catch (err) {
+      setImgError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setImgUploading(false);
+      e.target.value = "";
+    }
+  };
+
   return (
     <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
       <div className="flex justify-between items-center">
@@ -271,9 +300,37 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
         <textarea className={`${inputCls} resize-none`} rows={3} value={project.description} onChange={(e) => upd("description", e.target.value)} />
       </Field>
       <Field label="Tags (comma-separated)">
-        <input className={inputCls} value={project.tags.join(", ")}
-          onChange={(e) => upd("tags", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))}
-          placeholder="e.g. IoT, Mobile, Flutter" />
+        <input
+          className={inputCls}
+          value={rawTags}
+          onChange={(e) => setRawTags(e.target.value)}
+          onBlur={() => upd("tags", rawTags.split(",").map((t) => t.trim()).filter(Boolean))}
+          placeholder="e.g. IoT, Mobile, Flutter"
+        />
+      </Field>
+      <Field label="Card Image (optional)">
+        <div className="space-y-2">
+          {project.imageUrl && (
+            <div className="relative w-full h-28 rounded-lg overflow-hidden bg-surface-container border border-outline-variant/20">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={project.imageUrl} alt="" className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => upd("imageUrl", null)}
+                className="absolute top-2 right-2 bg-background/80 text-error rounded-lg p-1 hover:bg-error/20 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[16px]">delete</span>
+              </button>
+            </div>
+          )}
+          <label className={`flex items-center gap-2 cursor-pointer w-auto inline-flex px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-container-high text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] hover:border-primary hover:text-primary transition-all ${imgUploading ? "opacity-50 pointer-events-none" : ""}`}>
+            <span className="material-symbols-outlined text-[16px]">image</span>
+            {imgUploading ? "UPLOADING..." : project.imageUrl ? "REPLACE IMAGE" : "UPLOAD IMAGE"}
+            <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={imgUploading} />
+          </label>
+          <p className="font-mono text-[10px] text-on-surface-variant/50">Fills card background · any image format</p>
+          {imgError && <p className="font-mono text-[10px] text-error">{imgError}</p>}
+        </div>
       </Field>
     </div>
   );
@@ -707,7 +764,7 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-4">
                 {data.skills.map((skill, idx) => (
-                  <SkillRow key={`${idx}-${skill.name}`} skill={skill} idx={idx} total={data.skills.length}
+                  <SkillRow key={String(idx)} skill={skill} idx={idx} total={data.skills.length}
                     onChange={updateSkill} onMove={moveSkill} onDelete={deleteSkill} />
                 ))}
               </div>
@@ -731,7 +788,7 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-4">
                 {data.projects.map((project, idx) => (
-                  <ProjectRow key={`${idx}-${project.name}`} project={project} idx={idx} total={data.projects.length}
+                  <ProjectRow key={String(idx)} project={project} idx={idx} total={data.projects.length}
                     onChange={updateProject} onMove={moveProject} onDelete={deleteProject} />
                 ))}
               </div>
@@ -750,7 +807,7 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-4">
                 {data.experience.map((item, idx) => (
-                  <ExperienceRow key={`${idx}-${item.role}`} item={item} idx={idx} total={data.experience.length}
+                  <ExperienceRow key={String(idx)} item={item} idx={idx} total={data.experience.length}
                     onChange={updateExp} onMove={moveExp} onDelete={deleteExp} />
                 ))}
               </div>
@@ -774,7 +831,7 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-4">
                 {accountLinks.map((link, idx) => (
-                  <AccountLinkRow key={`${idx}-${link.platform}`} link={link} idx={idx} total={accountLinks.length}
+                  <AccountLinkRow key={String(idx)} link={link} idx={idx} total={accountLinks.length}
                     onChange={updateAccountLink} onMove={moveAccountLink} onDelete={deleteAccountLink} />
                 ))}
               </div>
