@@ -328,7 +328,13 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
             {imgUploading ? "UPLOADING..." : project.imageUrl ? "REPLACE IMAGE" : "UPLOAD IMAGE"}
             <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={imgUploading} />
           </label>
-          <p className="font-mono text-[10px] text-on-surface-variant/50">Fills card background · any image format</p>
+          <p className="font-mono text-[10px] text-on-surface-variant/50">
+            Fills card background · any image format
+            {project.size === "big"   && " · recommended 16:9 landscape (1600×900)"}
+            {project.size === "small" && " · recommended 4:5 portrait (800×1000)"}
+            {project.size === "wide"  && " · recommended 4:1 banner (2400×600)"}
+            {project.size === "other" && " · recommended 3:2 landscape (1200×800)"}
+          </p>
           {imgError && <p className="font-mono text-[10px] text-error">{imgError}</p>}
         </div>
       </Field>
