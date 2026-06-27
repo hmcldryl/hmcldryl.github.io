@@ -119,7 +119,7 @@ export function ConnectSection() {
             </a>
           </div>
           <div className="font-mono text-[11px] text-on-surface-variant opacity-40">
-            STATUS: ONLINE // PALAWAN.PH
+            STATUS: ONLINE // {personalInfo.location ? personalInfo.location.toUpperCase() : "ONLINE"}
           </div>
         </div>
       </div>

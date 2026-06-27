@@ -3,16 +3,18 @@
 import { useEffect, useRef } from "react";
 import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 
-const TERMINAL_LINES = [
-  { text: "$ analyzing_core_dependencies...", color: "text-primary" },
-  { text: "$ loading_project_registry...", color: "text-on-surface-variant" },
-  { text: "$ build_status: SUCCESS", color: "text-tertiary" },
-  { text: "$ deploy_target: palawan.ph", color: "text-secondary" },
-  { text: "$ system_status: nominal", color: "text-primary" },
-];
-
 export function HeroSection() {
   const { personalInfo } = usePortfolio();
+  const deployTarget = personalInfo.location
+    ? personalInfo.location.toLowerCase().replace(/\s+/g, "-") + ".dev"
+    : "palawan.dev";
+  const TERMINAL_LINES = [
+    { text: "$ analyzing_core_dependencies...", color: "text-primary" },
+    { text: "$ loading_project_registry...", color: "text-on-surface-variant" },
+    { text: "$ build_status: SUCCESS", color: "text-tertiary" },
+    { text: `$ deploy_target: ${deployTarget}`, color: "text-secondary" },
+    { text: "$ system_status: nominal", color: "text-primary" },
+  ];
   const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
