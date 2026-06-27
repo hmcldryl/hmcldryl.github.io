@@ -1,0 +1,128 @@
+{
+  "personalInfo": {
+    "name": "John Daryl Homecillo",
+    "tagline": "I love to build stuff.",
+    "bio": "Software Engineer and Prototype Developer based in Palawan, Philippines. I design, build, and ship internal systems, mobile applications, and IoT prototypes — turning ideas into working solutions for enterprises, researchers, and startup teams.",
+    "location": "Aborlan, Palawan, Philippines",
+    "email": "daryl.homecillo@gmail.com",
+    "github": "https://github.com/hmcldryl",
+    "linkedin": "https://linkedin.com/in/hmcldryl"
+  },
+  "skills": [
+    {
+      "name": "TypeScript & Node.js (Next.js)",
+      "level": 90,
+      "color": "secondary",
+      "icon": "code",
+      "description": "Scalable microservices, REST APIs, and full-stack web applications including Next.js."
+    },
+    {
+      "name": "Java / Android Development",
+      "level": 85,
+      "color": "tertiary",
+      "icon": "android",
+      "description": "Native Android apps, core backend systems, and algorithmic problem solving."
+    },
+    {
+      "name": "Flutter / Mobile Dev",
+      "level": 83,
+      "color": "primary",
+      "icon": "smartphone",
+      "description": "Cross-platform mobile apps, UI architecture, and platform integrations."
+    },
+    {
+      "name": ".NET Web API Development",
+      "level": 82,
+      "color": "secondary",
+      "icon": "hub",
+      "description": "Building RESTful and scalable web APIs using ASP.NET Core."
+    },
+    {
+      "name": "System Architecture",
+      "level": 82,
+      "color": "tertiary",
+      "icon": "account_tree",
+      "description": "Designing internal software systems, third-party integrations, and enterprise backends."
+    },
+    {
+      "name": "UI/UX Design",
+      "level": 82,
+      "color": "primary",
+      "icon": "palette",
+      "description": "Designing intuitive interfaces and user experiences across web and mobile platforms."
+    },
+    {
+      "name": "IoT & Embedded Systems",
+      "level": 80,
+      "color": "tertiary",
+      "icon": "memory",
+      "description": "Embedded programming, sensor integration, and award-winning device prototyping."
+    },
+    {
+      "name": "Database Management",
+      "level": 80,
+      "color": "secondary",
+      "icon": "storage",
+      "description": "Relational and NoSQL database design, query optimization, and data modeling."
+    },
+    {
+      "name": "Cloud & DevOps",
+      "level": 75,
+      "color": "primary",
+      "icon": "cloud",
+      "description": "GCP services, CI/CD pipelines, Kafka, and Google Workspace administration."
+    }
+  ],
+  "projects": [
+    {
+      "name": "MARK-IT! Device",
+      "description": "Award-winning IoT prototype combining embedded programming, 3D modeling/printing, and a companion mobile app. Grand Champion at Shell NXplorers and Best Project at the 2024 National Science and Technology Fair.",
+      "tags": ["IoT", "Embedded", "Mobile"],
+      "link": null,
+      "size": "big",
+      "accentColor": "primary"
+    },
+    {
+      "name": "PSU JobStream App",
+      "description": "Mobile platform for career placement and development programs at Palawan State University, connecting students with opportunities.",
+      "tags": ["Mobile", "Java Android"],
+      "link": null,
+      "size": "small",
+      "accentColor": "tertiary"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Software Engineer",
+      "company": "Eight Under Par (EUPI)",
+      "period": "Sept 2024 – Present",
+      "description": "Designs, develops, and maintains internal software systems supporting company operations. Collaborates with stakeholders to gather requirements, integrates third-party vendors, and prepares technical documentation.",
+      "color": "primary",
+      "icon": "terminal"
+    },
+    {
+      "role": "Prototype Developer",
+      "company": "Freelance",
+      "period": "Apr 2023 – Present",
+      "description": "Builds MVPs and functional prototypes for students, researchers, and startup teams. MARK-IT! device earned Grand Champion at Shell NXplorers and Best Project at the 2024 National Science and Technology Fair.",
+      "color": "secondary",
+      "icon": "rocket_launch"
+    },
+    {
+      "role": "Student Aide",
+      "company": "PSU – Office of Student Affairs & Services",
+      "period": "Feb 2021 – Jul 2024",
+      "description": "Developed the PSU JobStream App and custom admissions tooling. Provided AV/live-streaming support, graphics production, and event coordination across university programs.",
+      "color": "tertiary",
+      "icon": "school"
+    },
+    {
+      "role": "Technical Student Aide",
+      "company": "PSU – Flexible Learning Committee",
+      "period": "Jan 2020 – Jan 2021",
+      "description": "Managed and administered the university's Google Workspace. Provided technical support during the pandemic shift to remote learning and produced digital content for virtual programs.",
+      "color": "primary",
+      "icon": "settings"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+"use client";
+
+import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+
+type ColorKey = "primary" | "secondary" | "tertiary";
+
+const COLOR_MAP: Record<ColorKey, { bg: string; text: string; bar: string }> = {
+  primary: {
+    bg: "bg-primary/10",
+    text: "text-primary",
+    bar: "bg-primary progress-glow",
+  },
+  secondary: {
+    bg: "bg-secondary/10",
+    text: "text-secondary",
+    bar: "bg-secondary progress-glow-lavender",
+  },
+  tertiary: {
+    bg: "bg-tertiary/10",
+    text: "text-tertiary",
+    bar: "bg-tertiary progress-glow-gold",
+  },
+};
+
+const DEFAULT_COLOR = COLOR_MAP.primary;
+
+export function ArsenalSection() {
+  const { skills } = usePortfolio();
+
+  return (
+    <section id="arsenal" className="py-24 px-5 md:px-margin-desktop">
+      <div className="max-w-container-max mx-auto">
+        <div className="mb-16">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-on-surface mb-3">
+            Technical Arsenal
+          </h2>
+          <div className="w-24 h-[2px] bg-primary" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+          {skills.map((skill, idx) => {
+            const colors = COLOR_MAP[skill.color as ColorKey] ?? DEFAULT_COLOR;
+            const levelLabel = Math.round(skill.level / 10) * 10;
+            return (
+              <div
+                key={skill.name}
+                className="glass-panel p-8 rounded-xl relative corner-accent corner-top-left group hover:scale-[1.02] transition-all duration-300 border border-outline-variant/20"
+                style={{ animationDelay: `${idx * 80}ms` }}
+              >
+                <div className="mb-6 flex justify-between items-start">
+                  <div className={`p-3 ${colors.bg} rounded-lg ${colors.text}`}>
+                    <span className="material-symbols-outlined text-4xl">{skill.icon}</span>
+                  </div>
+                  <span className={`font-mono text-[12px] tracking-[0.05em] ${colors.text}`}>
+                    Lvl. {levelLabel}
+                  </span>
+                </div>
+
+                <h3 className="font-display text-xl font-semibold text-on-surface mb-2">
+                  {skill.name}
+                </h3>
+                <p className="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                  {skill.description}
+                </p>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between font-mono text-[11px] tracking-[0.05em] text-on-surface-variant">
+                    <span>PROFICIENCY</span>
+                    <span>{skill.level}%</span>
+                  </div>
+                  <div className="h-[6px] w-full bg-surface-container rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${colors.bar} rounded-full transition-all duration-1000`}
+                      style={{ width: `${skill.level}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
