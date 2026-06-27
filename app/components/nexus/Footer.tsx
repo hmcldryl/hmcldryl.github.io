@@ -16,7 +16,7 @@ export function Footer() {
           NEXUS_SYSTEMS
         </div>
         <div className="font-mono text-[12px] text-on-surface-variant text-center">
-          © {new Date().getFullYear()} {name} // System.Access_Granted
+          © {new Date().getFullYear()} {name}{" // "}System.Access_Granted
         </div>
         <div className="flex gap-6">
           {github && (

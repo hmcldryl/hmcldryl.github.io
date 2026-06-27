@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 
 export function HeroSection() {
   const { personalInfo } = usePortfolio();
-  const deployTarget = personalInfo.location
-    ? personalInfo.location.toLowerCase().replace(/\s+/g, "-") + ".dev"
-    : "palawan.dev";
-  const TERMINAL_LINES = [
-    { text: "$ analyzing_core_dependencies...", color: "text-primary" },
-    { text: "$ loading_project_registry...", color: "text-on-surface-variant" },
-    { text: "$ build_status: SUCCESS", color: "text-tertiary" },
-    { text: `$ deploy_target: ${deployTarget}`, color: "text-secondary" },
-    { text: "$ system_status: nominal", color: "text-primary" },
-  ];
+  const terminalLines = useMemo(() => {
+    const deployTarget = personalInfo.location
+      ? personalInfo.location.toLowerCase().replace(/\s+/g, "-") + ".dev"
+      : "palawan.dev";
+    return [
+      { text: "$ analyzing_core_dependencies...", color: "text-primary" },
+      { text: "$ loading_project_registry...", color: "text-on-surface-variant" },
+      { text: "$ build_status: SUCCESS", color: "text-tertiary" },
+      { text: `$ deploy_target: ${deployTarget}`, color: "text-secondary" },
+      { text: "$ system_status: nominal", color: "text-primary" },
+    ];
+  }, [personalInfo.location]);
   const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,8 +27,8 @@ export function HeroSection() {
     const cursor = terminal.querySelector(".terminal-cursor");
 
     const addLine = () => {
-      if (i >= TERMINAL_LINES.length) return;
-      const line = TERMINAL_LINES[i];
+      if (i >= terminalLines.length) return;
+      const line = terminalLines[i];
       const div = document.createElement("div");
       div.className = "flex gap-3 opacity-0 translate-y-1 transition-all duration-500";
       const prefix = document.createElement("span");
@@ -40,12 +42,12 @@ export function HeroSection() {
       if (cursor) terminal.insertBefore(div, cursor);
       requestAnimationFrame(() => div.classList.remove("opacity-0", "translate-y-1"));
       i++;
-      if (i < TERMINAL_LINES.length) setTimeout(addLine, 1200);
+      if (i < terminalLines.length) setTimeout(addLine, 1200);
     };
 
     const timeout = setTimeout(addLine, 1500);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [terminalLines]);
 
   const [firstName, ...rest] = personalInfo.name.split(" ");
   const lastName = rest.join(" ");
