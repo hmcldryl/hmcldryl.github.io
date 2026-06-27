@@ -46,6 +46,128 @@ const inputCls =
 const selectCls =
   "bg-surface-container border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface font-mono text-[12px] focus:border-primary outline-none";
 
+const COLOR_SWATCHES = {
+  primary:   { hex: "#cfbcff", label: "Primary (lavender)" },
+  secondary: { hex: "#cdc0e9", label: "Secondary (muted purple)" },
+  tertiary:  { hex: "#e7c365", label: "Tertiary (gold)" },
+} as const;
+
+function ColorSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {(Object.keys(COLOR_SWATCHES) as Array<keyof typeof COLOR_SWATCHES>).map((key) => {
+        const { hex, label } = COLOR_SWATCHES[key];
+        const active = value === key;
+        return (
+          <button
+            key={key}
+            type="button"
+            title={label}
+            onClick={() => onChange(key)}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg border font-mono text-[11px] transition-all ${
+              active
+                ? "border-on-surface/60 bg-surface-container-high text-on-surface shadow-[0_0_8px_rgba(255,255,255,0.05)]"
+                : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60"
+            }`}
+          >
+            <span
+              className="w-3 h-3 rounded-full shrink-0 shadow-sm"
+              style={{ backgroundColor: hex, boxShadow: active ? `0 0 8px ${hex}80` : undefined }}
+            />
+            {key}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+const SIZE_INFO = {
+  big:   { cols: "8/12", desc: "Large feature card (left side)" },
+  small: { cols: "4/12", desc: "Compact card (right side)" },
+  wide:  { cols: "12/12", desc: "Full-width banner card" },
+  other: { cols: "6/12", desc: "Half-width card (extras)" },
+} as const;
+
+function SizeSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap gap-2">
+        {(Object.keys(SIZE_INFO) as Array<keyof typeof SIZE_INFO>).map((key) => {
+          const { cols } = SIZE_INFO[key];
+          const active = value === key;
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={() => onChange(key)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border font-mono text-[11px] transition-all ${
+                active
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60"
+              }`}
+            >
+              {key}
+              <span className={`text-[10px] opacity-60`}>{cols}</span>
+            </button>
+          );
+        })}
+      </div>
+      {value in SIZE_INFO && (
+        <p className="font-mono text-[10px] text-on-surface-variant/60">
+          {SIZE_INFO[value as keyof typeof SIZE_INFO].desc}
+        </p>
+      )}
+    </div>
+  );
+}
+
+const ICON_GROUPS = [
+  { label: "Tech", icons: ["code", "terminal", "hub", "memory", "storage", "cloud", "android", "smartphone", "settings", "account_tree"] },
+  { label: "Social", icons: ["person", "alternate_email", "link", "manage_accounts", "forum"] },
+  { label: "Gaming", icons: ["sports_esports", "videogame_asset", "military_tech", "swords"] },
+  { label: "Work", icons: ["work", "school", "rocket_launch", "palette", "task_alt", "business_center"] },
+] as const;
+
+function IconReference({ onPick }: { onPick: (icon: string) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-1">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="font-mono text-[10px] text-on-surface-variant/60 hover:text-primary transition-colors flex items-center gap-1"
+      >
+        <span className="material-symbols-outlined text-[13px]">{open ? "expand_less" : "expand_more"}</span>
+        {open ? "hide icon reference" : "browse common icons"}
+      </button>
+      {open && (
+        <div className="mt-2 glass-panel rounded-xl p-4 border border-outline-variant/20 space-y-3">
+          {ICON_GROUPS.map((group) => (
+            <div key={group.label}>
+              <div className="font-mono text-[10px] text-on-surface-variant/50 mb-2 uppercase tracking-[0.08em]">{group.label}</div>
+              <div className="flex flex-wrap gap-2">
+                {group.icons.map((icon) => (
+                  <button
+                    key={icon}
+                    type="button"
+                    title={icon}
+                    onClick={() => { onPick(icon); setOpen(false); }}
+                    className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-container hover:bg-surface-container-high hover:text-primary text-on-surface-variant transition-all border border-transparent hover:border-primary/30"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                    <span className="font-mono text-[9px] opacity-60">{icon}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Skill row ────────────────────────────────────────────────────────────────
 
 function SkillRow({
@@ -101,37 +223,35 @@ function SkillRow({
             onChange={(e) => upd("name", e.target.value)}
           />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Level (0-100)">
+        <Field label="Level (0-100)">
+          <div className="space-y-2">
             <input
-              type="number"
+              type="range"
               min={0}
               max={100}
-              className={inputCls}
               value={skill.level}
               onChange={(e) => upd("level", Number(e.target.value))}
+              className="w-full accent-[#cfbcff]"
             />
-          </Field>
-          <Field label="Color">
-            <select
-              className={selectCls}
-              value={skill.color}
-              onChange={(e) => upd("color", e.target.value)}
-            >
-              {COLOR_OPTIONS.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </Field>
-        </div>
+            <div className="flex justify-between font-mono text-[10px] text-on-surface-variant/60">
+              <span>0</span>
+              <span className="text-primary font-bold">{skill.level}</span>
+              <span>100</span>
+            </div>
+          </div>
+        </Field>
       </div>
-      <Field label="Icon (Material Symbols name)">
+      <Field label="Color">
+        <ColorSelect value={skill.color} onChange={(v) => upd("color", v)} />
+      </Field>
+      <Field label="Icon">
         <input
           className={inputCls}
           value={skill.icon}
           onChange={(e) => upd("icon", e.target.value)}
           placeholder="e.g. code, smartphone, memory"
         />
+        <IconReference onPick={(icon) => upd("icon", icon)} />
       </Field>
       <Field label="Description">
         <input
@@ -184,19 +304,16 @@ function ProjectRow({
         <Field label="Name">
           <input className={inputCls} value={project.name} onChange={(e) => upd("name", e.target.value)} />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Size">
-            <select className={selectCls} value={project.size} onChange={(e) => upd("size", e.target.value)}>
-              {SIZE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
-          </Field>
-          <Field label="Accent color">
-            <select className={selectCls} value={project.accentColor} onChange={(e) => upd("accentColor", e.target.value)}>
-              {COLOR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </Field>
-        </div>
+        <Field label="Link (optional)">
+          <input className={inputCls} value={project.link ?? ""} placeholder="https://..." onChange={(e) => upd("link", e.target.value || null)} />
+        </Field>
       </div>
+      <Field label="Size">
+        <SizeSelect value={project.size} onChange={(v) => upd("size", v)} />
+      </Field>
+      <Field label="Accent color">
+        <ColorSelect value={project.accentColor} onChange={(v) => upd("accentColor", v)} />
+      </Field>
       <Field label="Description">
         <textarea
           className={`${inputCls} resize-none`}
@@ -205,25 +322,16 @@ function ProjectRow({
           onChange={(e) => upd("description", e.target.value)}
         />
       </Field>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Tags (comma-separated)">
-          <input
-            className={inputCls}
-            value={project.tags.join(", ")}
-            onChange={(e) =>
-              upd("tags", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))
-            }
-          />
-        </Field>
-        <Field label="Link (optional)">
-          <input
-            className={inputCls}
-            value={project.link ?? ""}
-            placeholder="https://..."
-            onChange={(e) => upd("link", e.target.value || null)}
-          />
-        </Field>
-      </div>
+      <Field label="Tags (comma-separated)">
+        <input
+          className={inputCls}
+          value={project.tags.join(", ")}
+          onChange={(e) =>
+            upd("tags", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))
+          }
+          placeholder="e.g. IoT, Mobile, Flutter"
+        />
+      </Field>
     </div>
   );
 }
@@ -272,19 +380,16 @@ function ExperienceRow({
           <input className={inputCls} value={item.company} onChange={(e) => upd("company", e.target.value)} />
         </Field>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Field label="Period">
-          <input className={inputCls} value={item.period} onChange={(e) => upd("period", e.target.value)} />
-        </Field>
-        <Field label="Color">
-          <select className={selectCls} value={item.color} onChange={(e) => upd("color", e.target.value)}>
-            {COLOR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </Field>
-        <Field label="Icon">
-          <input className={inputCls} value={item.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. terminal" />
-        </Field>
-      </div>
+      <Field label="Period">
+        <input className={inputCls} value={item.period} onChange={(e) => upd("period", e.target.value)} placeholder="e.g. Jan 2024 – Present" />
+      </Field>
+      <Field label="Color">
+        <ColorSelect value={item.color} onChange={(v) => upd("color", v)} />
+      </Field>
+      <Field label="Icon">
+        <input className={inputCls} value={item.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. terminal" />
+        <IconReference onPick={(icon) => upd("icon", icon)} />
+      </Field>
       <Field label="Description">
         <textarea
           className={`${inputCls} resize-none`}
@@ -341,19 +446,16 @@ function AccountLinkRow({
           <input className={inputCls} value={link.handle} onChange={(e) => upd("handle", e.target.value)} placeholder="e.g. hmcldryl or SW-1234-5678-9012" />
         </Field>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Field label="URL (optional)">
-          <input className={inputCls} value={link.url ?? ""} placeholder="https://..." onChange={(e) => upd("url", e.target.value || null)} />
-        </Field>
-        <Field label="Icon (Material Symbols)">
-          <input className={inputCls} value={link.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. sports_esports" />
-        </Field>
-        <Field label="Color">
-          <select className={selectCls} value={link.color} onChange={(e) => upd("color", e.target.value)}>
-            {COLOR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </Field>
-      </div>
+      <Field label="URL (optional)">
+        <input className={inputCls} value={link.url ?? ""} placeholder="https://..." onChange={(e) => upd("url", e.target.value || null)} />
+      </Field>
+      <Field label="Color">
+        <ColorSelect value={link.color} onChange={(v) => upd("color", v)} />
+      </Field>
+      <Field label="Icon">
+        <input className={inputCls} value={link.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. sports_esports" />
+        <IconReference onPick={(icon) => upd("icon", icon)} />
+      </Field>
     </div>
   );
 }
