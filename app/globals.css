@@ -241,13 +241,48 @@ textarea:focus {
   pointer-events: none;
 }
 
+/* ===== Nav Entrance Animations ===== */
+@keyframes slide-down {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+@keyframes slide-from-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+@keyframes menu-open {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nav-entrance    { animation: slide-down 0.55s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.sidebar-entrance { animation: slide-from-left 0.5s cubic-bezier(0.4, 0, 0.2, 1) 80ms both; }
+.nav-item-enter  { animation: hero-fade-up 0.45s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.mobile-menu-enter { animation: menu-open 0.22s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* ===== Brand Glow (idle) ===== */
+@keyframes brand-glow {
+  0%, 100% { text-shadow: 0 0 8px rgba(207, 188, 255, 0.25); }
+  50%       { text-shadow: 0 0 24px rgba(207, 188, 255, 0.65), 0 0 48px rgba(207, 188, 255, 0.15); }
+}
+.brand-glow { animation: brand-glow 4s ease-in-out infinite; }
+
+/* ===== XP Bar Glow (idle) ===== */
+@keyframes xp-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(231, 195, 101, 0.5); }
+  50%       { box-shadow: 0 0 18px rgba(231, 195, 101, 0.9), 0 0 36px rgba(231, 195, 101, 0.3); }
+}
+.xp-bar-glow { animation: xp-glow 2.5s ease-in-out infinite; }
+
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal]   { opacity: 1; transform: none; transition: none; }
-  .skill-bar-fill { transition: none; }
-  .hero-entry     { animation: none; opacity: 1; transform: none; }
+  [data-reveal]    { opacity: 1; transform: none; transition: none; }
+  .skill-bar-fill  { transition: none; }
+  .hero-entry      { animation: none; opacity: 1; transform: none; }
   .orb-a, .orb-b, .orb-c { animation: none; }
-  .breathe        { animation: none; }
-  .shimmer-idle   { animation: none; }
-  .scanlines      { animation: none; }
+  .breathe         { animation: none; }
+  .shimmer-idle    { animation: none; }
+  .scanlines       { animation: none; }
+  .nav-entrance, .sidebar-entrance, .nav-item-enter, .mobile-menu-enter { animation: none; }
+  .brand-glow      { animation: none; }
+  .xp-bar-glow     { animation: none; }
 }

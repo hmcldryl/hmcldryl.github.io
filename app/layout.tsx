@@ -26,7 +26,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus // DEV | John Daryl Homecillo",
+  title: "Dev // John Daryl Homecillo",
   description:
     "Software Engineer and Prototype Developer based in Palawan, Philippines. Building internal systems, mobile applications, and award-winning IoT prototypes.",
   keywords: ["software engineer", "flutter", "mobile developer", "IoT", "Palawan", "Philippines"],

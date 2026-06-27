@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-  { id: "nexus", label: "Nexus" },
+  { id: "nexus", label: "Home" },
   { id: "arsenal", label: "Arsenal" },
   { id: "quests", label: "Quests" },
   { id: "experience", label: "Experience" },
@@ -32,27 +32,34 @@ export function TopNav() {
   }, []);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_40px_rgba(207,188,255,0.05)]">
+    <header className="nav-entrance fixed top-0 w-full z-50 bg-background/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_40px_rgba(207,188,255,0.05)]">
       <nav className="flex justify-between items-center h-20 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
-        <div className="font-display text-xl md:text-2xl font-bold text-primary tracking-tighter">
-          NEXUS // DEV
+        <div className="brand-glow font-display text-xl md:text-2xl font-bold text-primary tracking-tighter select-none">
+          DEV // JDH
         </div>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link, i) => (
             <a
               key={link.id}
               href={`#${link.id}`}
               onClick={() => setActive(link.id)}
-              className={`font-mono text-[11px] tracking-[0.1em] font-bold uppercase transition-colors ${
+              style={{ animationDelay: `${i * 60 + 200}ms` }}
+              className={`nav-item-enter relative font-mono text-[11px] tracking-[0.1em] font-bold uppercase transition-colors duration-200 ${
                 active === link.id
-                  ? "text-primary border-b-2 border-primary pb-1"
+                  ? "text-primary"
                   : "text-on-surface-variant hover:text-primary"
               }`}
             >
               {link.label}
+              {/* Animated underline */}
+              <span
+                className={`absolute -bottom-1 left-0 h-[2px] bg-primary rounded-full transition-all duration-300 ${
+                  active === link.id ? "w-full" : "w-0"
+                }`}
+              />
             </a>
           ))}
         </div>
@@ -60,30 +67,34 @@ export function TopNav() {
         {/* Desktop CTA */}
         <a
           href="#connect"
-          className="hidden md:inline-flex bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-2 px-5 rounded-lg hover:brightness-110 active:scale-95 transition-all"
+          className="hidden md:inline-flex bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-2 px-5 rounded-lg hover:brightness-110 hover:shadow-[0_0_16px_rgba(207,188,255,0.4)] active:scale-95 transition-all duration-200"
         >
           CONNECT
         </a>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-primary p-2"
+          className="md:hidden text-primary p-2 hover:bg-primary/10 rounded-lg transition-colors"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
-          <span className="material-symbols-outlined">{menuOpen ? "close" : "menu"}</span>
+          <span className="material-symbols-outlined transition-transform duration-200" style={{ transform: menuOpen ? "rotate(90deg)" : "rotate(0deg)" }}>
+            {menuOpen ? "close" : "menu"}
+          </span>
         </button>
       </nav>
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="md:hidden bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/20 px-5 py-4 space-y-3">
+        <div className="mobile-menu-enter md:hidden bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/20 px-5 py-4 space-y-3">
           {NAV_LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
               onClick={() => { setActive(link.id); setMenuOpen(false); }}
-              className="block font-mono text-[12px] tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary py-2"
+              className={`block font-mono text-[12px] tracking-[0.1em] uppercase py-2 transition-colors ${
+                active === link.id ? "text-primary" : "text-on-surface-variant hover:text-primary"
+              }`}
             >
               {link.label}
             </a>
