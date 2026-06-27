@@ -24,7 +24,7 @@ function getXPData() {
 }
 
 export function SideNav() {
-  const { daysLeft, progress } = useMemo(getXPData, []);
+  const { daysLeft, progress } = useMemo(() => getXPData(), []);
 
   return (
     <aside className="sidebar-entrance hidden lg:flex fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/20 flex-col shadow-2xl pt-24 pb-8">
