@@ -76,15 +76,30 @@ function SizeSelect({ value, onChange }: { value: string; onChange: (v: string) 
   );
 }
 
-const ICON_GROUPS = [
-  { label: "Tech", icons: ["code", "terminal", "hub", "memory", "storage", "cloud", "android", "smartphone", "settings", "account_tree"] },
-  { label: "Social", icons: ["person", "alternate_email", "link", "manage_accounts", "forum"] },
-  { label: "Gaming", icons: ["sports_esports", "videogame_asset", "military_tech", "swords"] },
-  { label: "Work", icons: ["work", "school", "rocket_launch", "palette", "task_alt", "business_center"] },
-] as const;
+const ALL_ICONS: Record<string, string[]> = {
+  "Dev / Code": ["code", "terminal", "bug_report", "data_object", "integration_instructions", "api", "deployed_code", "build", "construction", "developer_mode", "css", "html", "javascript", "schema", "commit", "merge", "fork_right", "account_tree", "device_hub", "lan"],
+  "Cloud / Infra": ["cloud", "cloud_upload", "cloud_download", "cloud_sync", "cloud_done", "storage", "database", "dns", "hub", "router", "memory", "developer_board", "computer", "monitor", "server_person", "backup", "sync", "security", "lock", "key"],
+  "Mobile / Hardware": ["smartphone", "tablet", "android", "phone_iphone", "watch", "headphones", "speaker", "camera", "sensors", "bluetooth", "wifi", "signal_cellular_alt", "battery_full", "usb", "cable", "microchip", "circuit_board", "precision_manufacturing", "settings_remote", "device_thermostat"],
+  "AI / Data": ["psychology", "neurology", "scatter_plot", "bar_chart", "analytics", "insights", "query_stats", "auto_awesome", "smart_toy", "robot_2", "model_training", "dataset", "table_chart", "pivot_table_chart", "network_intelligence", "ssid_chart", "show_chart", "trending_up", "functions", "calculate"],
+  "Design / UI": ["palette", "brush", "format_paint", "draw", "design_services", "auto_fix_high", "wallpaper", "gradient", "blur_on", "layers", "grid_view", "view_quilt", "space_dashboard", "dashboard", "widgets", "crop", "image", "photo_camera", "photo_filter", "style"],
+  "Work / Business": ["work", "business_center", "corporate_fare", "domain", "apartment", "handshake", "groups", "manage_accounts", "badge", "assignment", "task_alt", "checklist", "fact_check", "approval", "contract", "description", "note_alt", "article", "summarize", "inventory"],
+  "Learning / Growth": ["school", "menu_book", "auto_stories", "import_contacts", "bookmark", "lightbulb", "emoji_objects", "science", "biotech", "lab_profile", "experiment", "explore", "travel_explore", "trophy", "military_tech", "workspace_premium", "star", "grade", "new_releases", "rocket_launch"],
+  "Gaming / Hobbies": ["sports_esports", "videogame_asset", "joystick", "swords", "shield", "castle", "catching_pokemon", "pokemon_go", "puzzle_piece", "casino", "dice_6", "chess", "sports_motorsports", "sports", "fitness_center", "hiking", "camping", "surfing", "skateboarding", "music_note"],
+  "Social / Connect": ["person", "group", "people", "alternate_email", "mail", "chat", "forum", "comment", "message", "sms", "call", "video_call", "share", "link", "public", "language", "location_on", "map", "place", "near_me"],
+  "Media / Content": ["play_circle", "video_library", "movie", "live_tv", "podcast", "radio", "headset_mic", "mic", "record_voice_over", "campaign", "newspaper", "feed", "rss_feed", "subscriptions", "thumb_up", "favorite", "bookmark_add", "collections", "photo_library", "gallery_thumbnail"],
+  "Tools / Settings": ["settings", "tune", "build_circle", "home_repair_service", "plumbing", "electrical_services", "handyman", "engineering", "architecture", "straighten", "square_foot", "compress", "expand", "filter_list", "sort", "search", "find_replace", "manage_search", "troubleshoot", "tips_and_updates"],
+};
+
+const ALL_ICONS_FLAT = Object.values(ALL_ICONS).flat();
 
 function IconReference({ onPick }: { onPick: (icon: string) => void }) {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const results = query.trim()
+    ? ALL_ICONS_FLAT.filter((icon) => icon.includes(query.trim().toLowerCase().replace(/\s+/g, "_")))
+    : null;
+
   return (
     <div className="mt-1">
       <button
@@ -93,29 +108,67 @@ function IconReference({ onPick }: { onPick: (icon: string) => void }) {
         className="font-mono text-[10px] text-on-surface-variant/60 hover:text-primary transition-colors flex items-center gap-1"
       >
         <span className="material-symbols-outlined text-[13px]">{open ? "expand_less" : "expand_more"}</span>
-        {open ? "hide icon reference" : "browse common icons"}
+        {open ? "hide icon picker" : "browse icons"}
       </button>
       {open && (
         <div className="mt-2 glass-panel rounded-xl p-4 border border-outline-variant/20 space-y-3">
-          {ICON_GROUPS.map((group) => (
-            <div key={group.label}>
-              <div className="font-mono text-[10px] text-on-surface-variant/50 mb-2 uppercase tracking-[0.08em]">{group.label}</div>
-              <div className="flex flex-wrap gap-2">
-                {group.icons.map((icon) => (
-                  <button
-                    key={icon}
-                    type="button"
-                    title={icon}
-                    onClick={() => { onPick(icon); setOpen(false); }}
-                    className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-container hover:bg-surface-container-high hover:text-primary text-on-surface-variant transition-all border border-transparent hover:border-primary/30"
-                  >
-                    <span className="material-symbols-outlined text-[20px]">{icon}</span>
-                    <span className="font-mono text-[9px] opacity-60">{icon}</span>
-                  </button>
-                ))}
+          {/* Search */}
+          <input
+            autoFocus
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="search icons…"
+            className="w-full bg-surface-container border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface font-mono text-[12px] focus:border-primary focus:shadow-[0_0_0_1px_#cfbcff] outline-none placeholder:text-on-surface-variant/40 transition-all"
+          />
+
+          {results ? (
+            /* Search results */
+            <div>
+              <div className="font-mono text-[10px] text-on-surface-variant/50 mb-2 uppercase tracking-[0.08em]">
+                {results.length} result{results.length !== 1 ? "s" : ""}
               </div>
+              {results.length > 0 ? (
+                <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto">
+                  {results.map((icon) => (
+                    <button
+                      key={icon}
+                      type="button"
+                      title={icon}
+                      onClick={() => { onPick(icon); setOpen(false); setQuery(""); }}
+                      className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-container hover:bg-surface-container-high hover:text-primary text-on-surface-variant transition-all border border-transparent hover:border-primary/30"
+                    >
+                      <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                      <span className="font-mono text-[9px] opacity-60 max-w-[60px] truncate">{icon}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="font-mono text-[11px] text-on-surface-variant/40">No icons found. Try a different term.</p>
+              )}
             </div>
-          ))}
+          ) : (
+            /* Browse by category */
+            Object.entries(ALL_ICONS).map(([label, icons]) => (
+              <div key={label}>
+                <div className="font-mono text-[10px] text-on-surface-variant/50 mb-2 uppercase tracking-[0.08em]">{label}</div>
+                <div className="flex flex-wrap gap-2">
+                  {icons.map((icon) => (
+                    <button
+                      key={icon}
+                      type="button"
+                      title={icon}
+                      onClick={() => { onPick(icon); setOpen(false); }}
+                      className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-container hover:bg-surface-container-high hover:text-primary text-on-surface-variant transition-all border border-transparent hover:border-primary/30"
+                    >
+                      <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                      <span className="font-mono text-[9px] opacity-60 max-w-[60px] truncate">{icon}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>
