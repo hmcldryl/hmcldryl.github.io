@@ -484,8 +484,8 @@ function PhotoUpload({
     try {
       const url = await uploadProfilePhoto(file);
       onUpload(url);
-    } catch {
-      setError("Upload failed. Check Firebase Storage is enabled.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
     } finally {
       setUploading(false);
       e.target.value = "";
