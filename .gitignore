@@ -27,6 +27,7 @@ CLAUDE.md
 # misc
 .DS_Store
 *.pem
+firestore_seed.json
 
 # debug
 npm-debug.log*
