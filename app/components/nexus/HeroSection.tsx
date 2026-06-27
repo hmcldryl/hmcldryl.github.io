@@ -82,44 +82,59 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Right: terminal */}
-        <div className="lg:col-span-5 relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-20 blur-xl group-hover:opacity-35 transition-opacity rounded-xl" />
-          <div className="relative glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
-            <div className="bg-surface-container-high/80 px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-              </div>
-              <div className="font-mono text-[11px] text-on-surface-variant opacity-60">
-                NEXUS_CORE — Terminal
-              </div>
-              <div className="w-16" />
+        {/* Right: photo (if set) or terminal */}
+        <div className="lg:col-span-5 relative">
+          {personalInfo.photoUrl ? (
+            <div className="relative flex justify-center items-end min-h-[420px]">
+              {/* Radial glow beneath photo */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-primary/25 blur-[80px] rounded-full pointer-events-none" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-secondary/15 blur-[40px] rounded-full pointer-events-none" />
+              <img
+                src={personalInfo.photoUrl}
+                alt={personalInfo.name}
+                className="relative z-10 max-h-[480px] w-auto object-contain select-none"
+                style={{ filter: "drop-shadow(0 0 40px rgba(207,188,255,0.18))" }}
+              />
             </div>
-
-            <div
-              ref={terminalRef}
-              className="p-6 font-mono text-[13px] text-[#00F2FE] space-y-2 min-h-[300px]"
-            >
-              <div className="flex gap-3">
-                <span className="text-primary opacity-40">$</span>
-                <span>initializing_systems...</span>
-              </div>
-              <div className="flex gap-3">
-                <span className="text-primary opacity-40">$</span>
-                <span className="text-white">nexus_handshake_established</span>
-              </div>
-              <div className="flex gap-3">
-                <span className="text-primary opacity-40">$</span>
-                <span className="text-secondary">jd_profile.load()</span>
-              </div>
-              <div className="flex gap-3 terminal-cursor">
-                <span className="text-primary opacity-40">$</span>
-                <span>Status: Ready</span>
+          ) : (
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-20 blur-xl group-hover:opacity-35 transition-opacity rounded-xl" />
+              <div className="relative glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
+                <div className="bg-surface-container-high/80 px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                  </div>
+                  <div className="font-mono text-[11px] text-on-surface-variant opacity-60">
+                    NEXUS_CORE — Terminal
+                  </div>
+                  <div className="w-16" />
+                </div>
+                <div
+                  ref={terminalRef}
+                  className="p-6 font-mono text-[13px] text-[#00F2FE] space-y-2 min-h-[300px]"
+                >
+                  <div className="flex gap-3">
+                    <span className="text-primary opacity-40">$</span>
+                    <span>initializing_systems...</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-primary opacity-40">$</span>
+                    <span className="text-white">nexus_handshake_established</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-primary opacity-40">$</span>
+                    <span className="text-secondary">jd_profile.load()</span>
+                  </div>
+                  <div className="flex gap-3 terminal-cursor">
+                    <span className="text-primary opacity-40">$</span>
+                    <span>Status: Ready</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

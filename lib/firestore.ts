@@ -15,6 +15,7 @@ export type PersonalInfo = {
   email: string;
   github: string;
   linkedin: string;
+  photoUrl?: string;
 };
 
 export type Skill = {
