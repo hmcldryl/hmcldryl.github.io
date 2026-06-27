@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 
 const NAV_LINKS = [
   { id: "nexus", label: "Home", icon: "home" },
@@ -24,6 +25,8 @@ function getXPData() {
 }
 
 export function SideNav() {
+  const { personalInfo } = usePortfolio();
+  const location = personalInfo.location ? personalInfo.location.toUpperCase() : "PALAWAN";
   const { progress } = useMemo(() => getXPData(), []);
 
   return (
@@ -33,7 +36,7 @@ export function SideNav() {
         <div className="p-4 rounded-xl bg-surface-container-high/40 border border-outline-variant/20">
           <div className="font-display text-3xl font-bold text-tertiary leading-none">LVL 26</div>
           <div className="font-mono text-[11px] tracking-[0.1em] text-on-surface-variant uppercase mt-1">
-            EXP // PALAWAN
+            EXP // {location}
           </div>
           {/* XP bar */}
           <div className="w-full bg-surface-container mt-3 h-1.5 rounded-full overflow-hidden">

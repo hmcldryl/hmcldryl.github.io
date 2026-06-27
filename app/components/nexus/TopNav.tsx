@@ -1,6 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+
+function getInitials(name: string) {
+  return name.split(" ").filter(Boolean).map((w) => w[0]).join("").toUpperCase();
+}
 
 const NAV_LINKS = [
   { id: "nexus", label: "Home" },
@@ -12,6 +17,8 @@ const NAV_LINKS = [
 ];
 
 export function TopNav() {
+  const { personalInfo } = usePortfolio();
+  const initials = personalInfo.name ? getInitials(personalInfo.name) : "JDH";
   const [active, setActive] = useState("nexus");
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -36,7 +43,7 @@ export function TopNav() {
       <nav className="flex justify-between items-center h-20 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
         <div className="brand-glow font-display text-xl md:text-2xl font-bold text-primary tracking-tighter select-none">
-          DEV // JDH
+          DEV // {initials}
         </div>
 
         {/* Desktop links */}
