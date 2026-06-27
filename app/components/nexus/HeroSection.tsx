@@ -96,16 +96,21 @@ export function HeroSection() {
               {/* Radial glow beneath photo */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-primary/25 blur-[80px] rounded-full pointer-events-none" />
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-secondary/15 blur-[40px] rounded-full pointer-events-none" />
-              <img
-                src={personalInfo.photoUrl}
-                alt={personalInfo.name}
-                className="relative z-10 max-h-[480px] w-auto object-contain select-none"
-                style={{
-                  filter: "drop-shadow(0 0 40px rgba(207,188,255,0.18))",
-                  maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
-                }}
-              />
+              {/* drop-shadow on wrapper so mask-image on img doesn't clip the glow */}
+              <div
+                className="relative z-10"
+                style={{ filter: "drop-shadow(0 0 40px rgba(207,188,255,0.22))" }}
+              >
+                <img
+                  src={personalInfo.photoUrl}
+                  alt={personalInfo.name}
+                  className="max-h-[480px] w-auto object-contain select-none"
+                  style={{
+                    maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+                  }}
+                />
+              </div>
             </div>
           ) : (
             <div className="relative group">
