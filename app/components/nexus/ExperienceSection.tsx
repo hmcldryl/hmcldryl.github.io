@@ -60,7 +60,7 @@ export function ExperienceSection() {
                     {item.role}
                   </h3>
                   <div className="font-mono text-[11px] tracking-[0.05em] text-on-surface-variant mt-1">
-                    {item.company} // {item.period}
+                    {item.company}{" // "}{item.period}
                   </div>
                 </div>
 

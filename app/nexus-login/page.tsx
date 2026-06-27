@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
@@ -126,9 +127,9 @@ export default function NexusLogin() {
         </div>
 
         <div className="text-center mt-8">
-          <a href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors">
+          <Link href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors">
             ← RETURN_TO_NEXUS
-          </a>
+          </Link>
         </div>
       </div>
     </div>

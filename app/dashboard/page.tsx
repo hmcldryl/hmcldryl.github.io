@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import {
@@ -432,10 +433,10 @@ export default function Dashboard() {
       <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
         <div className="flex items-center justify-between h-16 px-5 md:px-8 max-w-[1400px] mx-auto">
           <div className="flex items-center gap-4">
-            <a href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
+            <Link href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">arrow_back</span>
               NEXUS
-            </a>
+            </Link>
             <div className="w-px h-4 bg-outline-variant/40" />
             <span className="font-display text-lg font-bold text-primary">CMS // Dashboard</span>
           </div>
