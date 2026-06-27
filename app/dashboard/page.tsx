@@ -537,12 +537,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!auth) {
-      router.replace("/nexus-login");
+      router.replace("/login");
       return;
     }
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        router.replace("/nexus-login");
+        router.replace("/login");
         return;
       }
       setReady(true);
@@ -567,7 +567,7 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     if (auth) await signOut(auth);
-    router.push("/nexus-login");
+    router.push("/login");
   };
 
   // ── Skill helpers ──
