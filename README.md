@@ -1,78 +1,70 @@
-Welcome to my personal web portfolio!
+# Dev // JDH — Personal Portfolio
 
-Instead of a traditional resume-style website, this project turns my portfolio into an **interactive journey**. You play as me, riding my gravel bike through a 2D side-scrolling world based in my hometown, Palawan. As you move forward, you encounter my **background, education, work experience, skills, and projects**, all presented as in-game elements.
-
----
-
-## 🚲 Concept
-
-* Side-scrolling game-style portfolio
-* The main character is me, riding my favorite bike
-* Progressing through the world reveals:
-
-  * Personal background & history
-  * Education
-  * Work experience
-  * Skills & tech stack
-  * Selected projects
-
-The goal is to make exploring my portfolio **fun, memorable, and interactive**, while still delivering the same information you'd expect from a traditional resume.
+A dark, interactive portfolio built as a CMS-driven website. Firebase Firestore powers all content in real-time — update from `/profile` and the live site reflects changes instantly.
 
 ---
 
-## 🛠️ Tech Stack
+## Stack
 
-* **Next.js** – application framework and routing
-* **HTML5 Canvas** – game rendering and animations
-* **JavaScript / TypeScript** – game logic and interactions
-* **CSS** – UI styling and layout
-* **Ludo.ai** - my character sprite, which was free btw
-
-Canvas is used to handle character movement, animations, parallax backgrounds, and game-like interactions, while Next.js manages structure, performance, and deployment.
-
----
-
-## 🎨 Features
-
-* Side-scrolling movement
-* Cycling character animation
-* Parallax background layers
-* Interactive sections tied to portfolio content
-* Responsive design for different screen sizes
+- **Next.js 15** (App Router, static export → GitHub Pages)
+- **TypeScript**
+- **Tailwind CSS 3** with custom Nexus design tokens
+- **Firebase Auth + Firestore** — authentication and real-time content
+- **Cloudinary** — profile photo and project image uploads (unsigned preset, works on static sites)
+- **Material Symbols Outlined** — icon system
 
 ---
 
-## 🚀 Purpose
+## Features
 
-This project serves as:
-
-* My **personal portfolio website**
-* A **creative experiment** combining web development and game design
-* A showcase of my skills in **interactive UI, animation, graphic design, and modern web technologies**
+- Dynamic content from Firestore — no hardcoded portfolio data
+- `/profile` CMS dashboard — edit all sections, upload images, reorder items
+- Sections: Hero, Technical Arsenal (skills), Quest Log (projects), Experience, Accounts, Connect
+- Quest Log cards support full-bleed background images with zoom-on-hover
+- Scroll-reveal animations, staggered hero entry, floating background orbs
+- Sidebar XP bar — dynamic level and progress based on birthday countdown
+- Responsive — desktop sidebar nav, mobile top + bottom nav
+- `prefers-reduced-motion` support
 
 ---
 
-## 📦 Installation & Setup
+## Commands
 
 ```bash
-# install dependencies
-npm install
-
-# run development server
-npm run dev
-
-# build for production
-npm run build
+npm run dev      # dev server at localhost:3000
+npm run build    # production static export → ./out
+npm run lint     # ESLint
 ```
 
-Then open `http://localhost:3000` in your browser.
+---
+
+## Environment Variables
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
+```
 
 ---
 
-## 📄 License
+## Deploy
 
-This project is for personal portfolio use. Feel free to explore the code for learning or inspiration.
+Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages. All env vars are stored as repository secrets.
 
 ---
 
-Thanks for playing through my portfolio 🚴‍♂️✨
+## Content Management
+
+Go to `/login` → authenticate → `/profile` to manage:
+
+- **Personal Info** — name, tagline, bio, location, links, profile photo
+- **Arsenal** — skills with level, icon, description
+- **Quest Log** — projects with size, tags, image, link
+- **Experience** — roles, company, period, description
+- **Accounts** — gaming/social platform links and handles
