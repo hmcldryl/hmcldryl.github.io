@@ -30,7 +30,7 @@ export function ArsenalSection() {
   return (
     <section id="arsenal" className="py-24 px-5 md:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
-        <div className="mb-16">
+        <div className="mb-16" data-reveal>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-on-surface mb-3">
             Technical Arsenal
           </h2>
@@ -44,8 +44,9 @@ export function ArsenalSection() {
             return (
               <div
                 key={skill.name}
-                className="glass-panel p-8 rounded-xl relative corner-accent corner-top-left group hover:scale-[1.02] transition-all duration-300 border border-outline-variant/20"
-                style={{ animationDelay: `${idx * 80}ms` }}
+                data-reveal
+                data-delay={String((idx % 3) + 1)}
+                className="glass-panel p-8 rounded-xl relative corner-accent corner-top-left group hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 border border-outline-variant/20"
               >
                 <div className="mb-6 flex justify-between items-start">
                   <div className={`p-3 ${colors.bg} rounded-lg ${colors.text}`}>
@@ -70,8 +71,8 @@ export function ArsenalSection() {
                   </div>
                   <div className="h-[6px] w-full bg-surface-container rounded-full overflow-hidden">
                     <div
-                      className={`h-full ${colors.bar} rounded-full transition-all duration-1000`}
-                      style={{ width: `${skill.level}%` }}
+                      className={`skill-bar-fill h-full ${colors.bar} rounded-full`}
+                      style={{ "--bar-level": `${skill.level}%` } as React.CSSProperties}
                     />
                   </div>
                 </div>

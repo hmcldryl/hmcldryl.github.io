@@ -134,3 +134,120 @@ textarea:focus {
   border-color: #cfbcff !important;
   box-shadow: 0 0 0 1px #cfbcff;
 }
+
+/* ===== Scroll Reveal ===== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal][data-delay="1"] { transition-delay: 80ms; }
+[data-reveal][data-delay="2"] { transition-delay: 160ms; }
+[data-reveal][data-delay="3"] { transition-delay: 240ms; }
+[data-reveal][data-delay="4"] { transition-delay: 320ms; }
+[data-reveal][data-delay="5"] { transition-delay: 400ms; }
+[data-reveal][data-delay="6"] { transition-delay: 480ms; }
+[data-reveal][data-delay="7"] { transition-delay: 560ms; }
+[data-reveal][data-delay="8"] { transition-delay: 640ms; }
+[data-reveal][data-delay="9"] { transition-delay: 720ms; }
+
+/* ===== Skill Bar Animated Fill ===== */
+.skill-bar-fill {
+  width: 0 !important;
+  transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.skill-bar-fill.bar-visible {
+  width: var(--bar-level) !important;
+}
+
+/* ===== Hero Entry Stagger ===== */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-entry {
+  animation: hero-fade-up 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.hero-entry-1 { animation-delay: 0ms; }
+.hero-entry-2 { animation-delay: 150ms; }
+.hero-entry-3 { animation-delay: 300ms; }
+.hero-entry-4 { animation-delay: 450ms; }
+.hero-entry-5 { animation-delay: 600ms; }
+
+/* ===== Background Orbs (Idle) ===== */
+@keyframes orb-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(60px, -40px) scale(1.08); }
+  66%       { transform: translate(-30px, 30px) scale(0.94); }
+}
+@keyframes orb-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-50px, 30px) scale(1.05); }
+  70%       { transform: translate(40px, -20px) scale(0.97); }
+}
+@keyframes orb-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(30px, 50px) scale(1.1); }
+}
+.orb-a { animation: orb-a 18s ease-in-out infinite; }
+.orb-b { animation: orb-b 24s ease-in-out infinite; }
+.orb-c { animation: orb-c 20s ease-in-out infinite; }
+
+/* ===== Idle Breathe Glow ===== */
+@keyframes breathe {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50%       { opacity: 0.28; transform: scale(1.04); }
+}
+.breathe { animation: breathe 4s ease-in-out infinite; }
+
+/* ===== Shimmer (cards/badges) ===== */
+@keyframes shimmer-slide {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.shimmer-idle {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(207, 188, 255, 0.06) 40%,
+    rgba(207, 188, 255, 0.12) 50%,
+    rgba(207, 188, 255, 0.06) 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide 6s linear infinite;
+}
+
+/* ===== Scanline overlay (hero) ===== */
+@keyframes scan {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100vh; }
+}
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]   { opacity: 1; transform: none; transition: none; }
+  .skill-bar-fill { transition: none; }
+  .hero-entry     { animation: none; opacity: 1; transform: none; }
+  .orb-a, .orb-b, .orb-c { animation: none; }
+  .breathe        { animation: none; }
+  .shimmer-idle   { animation: none; }
+  .scanlines      { animation: none; }
+}
