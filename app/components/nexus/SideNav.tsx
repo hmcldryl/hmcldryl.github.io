@@ -20,7 +20,7 @@ function getXPData() {
   if (next.getTime() <= now.getTime()) next = new Date(year + 1, 4, 27);
   const msLeft = next.getTime() - now.getTime();
   const daysLeft = Math.ceil(msLeft / (1000 * 60 * 60 * 24));
-  const progress = Math.min(100, Math.round((daysLeft / 365) * 100));
+  const progress = Math.min(100, Math.round(((365 - daysLeft) / 365) * 100));
   return { daysLeft, progress };
 }
 
