@@ -68,3 +68,12 @@ Go to `/login` → authenticate → `/profile` to manage:
 - **Quest Log** — projects with size, tags, image, link
 - **Experience** — roles, company, period, description
 - **Accounts** — gaming/social platform links and handles
+
+---
+
+## Built With AI
+
+This project was developed with the assistance of:
+
+- **[Claude](https://claude.ai) by Anthropic** — architecture, implementation, and iteration via Claude Code
+- **[Google Stitch](https://stitch.withgoogle.com)** — UI prototyping and design generation
