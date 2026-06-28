@@ -43,7 +43,7 @@ export function TopNav() {
       <nav className="flex justify-between items-center h-20 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
         <div className="brand-glow font-display text-xl md:text-2xl font-bold text-primary tracking-tighter select-none">
-          DEV // {initials}
+          NEXUS // {initials}
         </div>
 
         {/* Desktop links */}
