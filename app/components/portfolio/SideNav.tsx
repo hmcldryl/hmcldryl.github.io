@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import { ChangelogModal } from "./ChangelogModal";
+
 const NAV_LINKS = [
   { id: "home", label: "Home", icon: "home" },
   { id: "skills", label: "Skills", icon: "auto_awesome" },
@@ -10,6 +13,8 @@ const NAV_LINKS = [
 ];
 
 export function SideNav() {
+  const [changelogOpen, setChangelogOpen] = useState(false);
+
   return (
     <aside className="sidebar-entrance hidden lg:flex fixed left-0 top-0 h-full w-56 z-40 bg-surface border-r-4 border-black flex-col pt-24 pb-8">
       {/* Nav links */}
@@ -30,15 +35,24 @@ export function SideNav() {
         ))}
       </nav>
 
-      {/* CTA */}
-      <div className="px-6 mt-auto">
+      {/* Changelog + CTA */}
+      <div className="px-6 mt-auto space-y-2">
+        <button
+          onClick={() => setChangelogOpen(true)}
+          className="brutal-press w-full bg-surface text-on-surface py-2.5 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm transition-all flex items-center justify-center gap-2"
+        >
+          <span className="material-symbols-outlined text-[16px]">history</span>
+          Changelog
+        </button>
         <a
-          href="#connect"
+          href="#contact"
           className="brutal-press w-full bg-primary text-on-primary py-2.5 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm transition-all flex items-center justify-center gap-2"
         >
           Contact
         </a>
       </div>
+
+      <ChangelogModal open={changelogOpen} onClose={() => setChangelogOpen(false)} />
     </aside>
   );
 }

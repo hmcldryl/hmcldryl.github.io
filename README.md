@@ -20,6 +20,8 @@ A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Fi
 - Dynamic content from Firestore — no hardcoded portfolio data
 - `/profile` CMS dashboard — edit every section, upload profile photo, reorder items
 - Sections: Hero, Skills, Projects, Experience, Certificates, Links, Contact
+- Sidebar Changelog button — modal listing the version history (`lib/changelog.ts`)
+- Current version badge next to the nav brand, read straight from `package.json`
 - Scroll-reveal animations
 - Responsive — desktop sidebar nav, mobile top + bottom nav
 - `prefers-reduced-motion` support
@@ -80,6 +82,7 @@ Tagged with [Semantic Versioning](https://semver.org). `main` is auto-released b
 | `v2.0.0` | Next.js side-scrolling pixel-art game portfolio |
 | `v3.0.0` | Nexus dark glassmorphism CMS portfolio |
 | `v4.0.0` | Neo-brutalist "on paper" redesign |
+| `v4.1.0` | Certificates section, de-gamified UI, jdhomecillo rebrand |
 
 > Tags off `main` (e.g. milestones on `develop`) intentionally skip the `v*` prefix (e.g. `dev-v4.1.0`) — the release action picks the globally-highest `v*` tag with no branch-ancestry check, so a `v*`-prefixed tag anywhere in the repo can corrupt `main`'s computed version.
 
