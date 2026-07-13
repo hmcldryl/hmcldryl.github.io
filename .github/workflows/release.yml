@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # Skip the loop: don't re-run on the version-bump commit this job itself pushes.
+    if: "!contains(github.event.head_commit.message, 'chore(release):')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Scans commits since the last vX.Y.Z tag for Conventional Commit
+      # prefixes: fix -> patch, feat -> minor, "BREAKING CHANGE"/"!" -> major.
+      # default_bump: false means "no matching prefix -> no new tag" (docs/
+      # chore/style/ci/etc. don't trigger a release on their own).
+      - name: Compute next version and tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: false
+          release_branches: main
+
+      - name: Sync package.json version
+        if: steps.tag_version.outputs.new_tag != ''
+        run: |
+          npm version "${{ steps.tag_version.outputs.new_version }}" --no-git-tag-version --allow-same-version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore(release): ${{ steps.tag_version.outputs.new_tag }} [skip ci]"
+          git push origin HEAD:main
+
+      - name: Create GitHub Release
+        if: steps.tag_version.outputs.new_tag != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          name: ${{ steps.tag_version.outputs.new_tag }}
+          generate_release_notes: true
