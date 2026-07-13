@@ -4,22 +4,10 @@ import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 
 type ColorKey = "primary" | "secondary" | "tertiary";
 
-const COLOR_MAP: Record<ColorKey, { bg: string; text: string; bar: string }> = {
-  primary: {
-    bg: "bg-primary",
-    text: "text-on-primary",
-    bar: "bg-primary",
-  },
-  secondary: {
-    bg: "bg-secondary",
-    text: "text-on-secondary",
-    bar: "bg-secondary",
-  },
-  tertiary: {
-    bg: "bg-tertiary",
-    text: "text-on-tertiary",
-    bar: "bg-tertiary",
-  },
+const COLOR_MAP: Record<ColorKey, { bg: string; text: string }> = {
+  primary: { bg: "bg-primary", text: "text-on-primary" },
+  secondary: { bg: "bg-secondary", text: "text-on-secondary" },
+  tertiary: { bg: "bg-tertiary", text: "text-on-tertiary" },
 };
 
 const DEFAULT_COLOR = COLOR_MAP.primary;
@@ -47,28 +35,16 @@ export function SkillsSection() {
                 data-delay={String((idx % 3) + 1)}
                 className="brutal-press brutal-panel p-5"
               >
-                <div className="mb-4 flex justify-between items-start">
-                  <div className={`p-2 border-2 border-black ${colors.bg} ${colors.text}`}>
-                    <span className="material-symbols-outlined text-2xl">{skill.icon}</span>
-                  </div>
-                  <span className="text-[12px] font-bold text-on-surface">
-                    {skill.level}%
-                  </span>
+                <div className={`mb-4 inline-flex p-2 border-2 border-black ${colors.bg} ${colors.text}`}>
+                  <span className="material-symbols-outlined text-2xl">{skill.icon}</span>
                 </div>
 
                 <h3 className="font-display text-base font-semibold text-on-surface mb-1">
                   {skill.name}
                 </h3>
-                <p className="text-on-surface-variant text-[13px] mb-4 leading-relaxed">
+                <p className="text-on-surface-variant text-[13px] leading-relaxed">
                   {skill.description}
                 </p>
-
-                <div className="h-[8px] w-full bg-surface border-2 border-black overflow-hidden">
-                  <div
-                    className={`skill-bar-fill h-full ${colors.bar}`}
-                    style={{ "--bar-level": `${skill.level}%` } as React.CSSProperties}
-                  />
-                </div>
               </div>
             );
           })}

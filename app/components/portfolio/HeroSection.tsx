@@ -6,7 +6,7 @@ export function HeroSection() {
   const { personalInfo } = usePortfolio();
 
   return (
-    <section id="nexus" className="relative min-h-[85vh] flex items-center px-5 md:px-margin-desktop py-16 overflow-hidden">
+    <section id="home" className="relative min-h-[85vh] flex items-center px-5 md:px-margin-desktop py-16 overflow-hidden">
       <div className="relative z-10 max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
         {/* Left: intro */}
         <div className="lg:col-span-7 space-y-5">

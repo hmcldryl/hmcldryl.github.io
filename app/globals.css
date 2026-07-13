@@ -141,15 +141,6 @@ textarea:focus {
 [data-reveal][data-delay="8"] { transition-delay: 640ms; }
 [data-reveal][data-delay="9"] { transition-delay: 720ms; }
 
-/* ===== Skill Bar Animated Fill ===== */
-.skill-bar-fill {
-  width: 0 !important;
-  transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.skill-bar-fill.bar-visible {
-  width: var(--bar-level) !important;
-}
-
 /* ===== Hero Entry Stagger ===== */
 @keyframes hero-fade-up {
   from { opacity: 0; transform: translateY(32px); }
@@ -185,7 +176,6 @@ textarea:focus {
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal]    { opacity: 1; transform: none; transition: none; }
-  .skill-bar-fill  { transition: none; }
   .hero-entry      { animation: none; opacity: 1; transform: none; }
   .nav-entrance, .sidebar-entrance, .nav-item-enter, .mobile-menu-enter { animation: none; }
   .brutal-press    { transition: none; }

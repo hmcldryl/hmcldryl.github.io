@@ -1,7 +1,7 @@
 "use client";
 
 const NAV_LINKS = [
-  { id: "nexus", label: "Home", icon: "home" },
+  { id: "home", label: "Home", icon: "home" },
   { id: "skills", label: "Skills", icon: "auto_awesome" },
   { id: "projects", label: "Projects", icon: "grid_view" },
   { id: "experience", label: "Experience", icon: "work" },

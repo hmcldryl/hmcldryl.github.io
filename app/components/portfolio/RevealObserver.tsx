@@ -16,21 +16,8 @@ export function RevealObserver() {
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
 
-    const barObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("bar-visible");
-            barObs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
     const observe = () => {
       document.querySelectorAll("[data-reveal]").forEach((el) => revealObs.observe(el));
-      document.querySelectorAll(".skill-bar-fill").forEach((el) => barObs.observe(el));
     };
 
     observe();
@@ -41,7 +28,6 @@ export function RevealObserver() {
 
     return () => {
       revealObs.disconnect();
-      barObs.disconnect();
       mutObs.disconnect();
     };
   }, []);

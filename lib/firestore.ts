@@ -20,7 +20,6 @@ export type PersonalInfo = {
 
 export type Skill = {
   name: string;
-  level: number;
   color: string;
   icon: string;
   description: string;

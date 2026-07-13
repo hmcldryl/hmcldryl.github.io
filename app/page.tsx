@@ -1,13 +1,13 @@
-import { TopNav } from "./components/nexus/TopNav";
-import { SideNav } from "./components/nexus/SideNav";
-import { HeroSection } from "./components/nexus/HeroSection";
-import { SkillsSection } from "./components/nexus/SkillsSection";
-import { ProjectsSection } from "./components/nexus/ProjectsSection";
-import { ExperienceSection } from "./components/nexus/ExperienceSection";
-import { CertificatesSection } from "./components/nexus/CertificatesSection";
-import { ConnectSection } from "./components/nexus/ConnectSection";
-import { LinksSection } from "./components/nexus/LinksSection";
-import { Footer } from "./components/nexus/Footer";
+import { TopNav } from "./components/portfolio/TopNav";
+import { SideNav } from "./components/portfolio/SideNav";
+import { HeroSection } from "./components/portfolio/HeroSection";
+import { SkillsSection } from "./components/portfolio/SkillsSection";
+import { ProjectsSection } from "./components/portfolio/ProjectsSection";
+import { ExperienceSection } from "./components/portfolio/ExperienceSection";
+import { CertificatesSection } from "./components/portfolio/CertificatesSection";
+import { ConnectSection } from "./components/portfolio/ConnectSection";
+import { LinksSection } from "./components/portfolio/LinksSection";
+import { Footer } from "./components/portfolio/Footer";
 
 export default function Home() {
   return (
