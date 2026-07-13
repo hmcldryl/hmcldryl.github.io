@@ -1,16 +1,16 @@
-# Nexus // JDH — Personal Portfolio
+# jdhomecillo — Personal Portfolio
 
-A dark, interactive portfolio built as a CMS-driven website. Firebase Firestore powers all content in real-time — update from `/profile` and the live site reflects changes instantly.
+A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Firestore powers all content in real-time — update from `/profile` and the live site reflects changes instantly.
 
 ---
 
 ## Stack
 
-- **Next.js 15** (App Router, static export → GitHub Pages)
+- **Next.js 16** (App Router, static export → GitHub Pages)
 - **TypeScript**
-- **Tailwind CSS 3** with custom Nexus design tokens
+- **Tailwind CSS 3** with a custom neo-brutalist design system (squared corners, hard offset shadows, paper-beige background, teal/magenta/yellow accents)
 - **Firebase Auth + Firestore** — authentication and real-time content
-- **Cloudinary** — profile photo and project image uploads (unsigned preset, works on static sites)
+- **Cloudinary** — profile photo uploads (unsigned preset, works on static sites)
 - **Material Symbols Outlined** — icon system
 
 ---
@@ -18,11 +18,9 @@ A dark, interactive portfolio built as a CMS-driven website. Firebase Firestore 
 ## Features
 
 - Dynamic content from Firestore — no hardcoded portfolio data
-- `/profile` CMS dashboard — edit all sections, upload images, reorder items
-- Sections: Hero, Technical Arsenal (skills), Quest Log (projects), Experience, Accounts, Connect
-- Quest Log cards support full-bleed background images with zoom-on-hover
-- Scroll-reveal animations, staggered hero entry, floating background orbs
-- Sidebar XP bar — dynamic level and progress based on birthday countdown
+- `/profile` CMS dashboard — edit every section, upload profile photo, reorder items
+- Sections: Hero, Skills, Projects, Experience, Certificates, Links, Contact
+- Scroll-reveal animations, skill proficiency bars
 - Responsive — desktop sidebar nav, mobile top + bottom nav
 - `prefers-reduced-motion` support
 
@@ -64,10 +62,26 @@ Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages. A
 Go to `/login` → authenticate → `/profile` to manage:
 
 - **Personal Info** — name, tagline, bio, location, links, profile photo
-- **Arsenal** — skills with level, icon, description
-- **Quest Log** — projects with size, tags, image, link
+- **Skills** — proficiency level, icon, description
+- **Projects** — size (grid layout), tags, link, description
 - **Experience** — roles, company, period, description
-- **Accounts** — gaming/social platform links and handles
+- **Certificates** — name, issuer, date, link
+- **Links** — social/platform handles and URLs
+
+---
+
+## Versioning
+
+Tagged with [Semantic Versioning](https://semver.org). `main` is auto-released by `.github/workflows/release.yml`: on every push, it parses [Conventional Commit](https://www.conventionalcommits.org) messages since the last tag (`fix:` → patch, `feat:` → minor, `BREAKING CHANGE` → major), bumps `package.json`, tags the commit, and publishes a GitHub Release.
+
+| Tag | Era |
+|---|---|
+| `v1.0.0` | Static HTML/Bootstrap site, Firestore-backed blog, ParaNawen companion app attempt |
+| `v2.0.0` | Next.js side-scrolling pixel-art game portfolio |
+| `v3.0.0` | Nexus dark glassmorphism CMS portfolio |
+| `v4.0.0` | Neo-brutalist "on paper" redesign |
+
+> Tags off `main` (e.g. milestones on `develop`) intentionally skip the `v*` prefix (e.g. `dev-v4.1.0`) — the release action picks the globally-highest `v*` tag with no branch-ancestry check, so a `v*`-prefixed tag anywhere in the repo can corrupt `main`'s computed version.
 
 ---
 
