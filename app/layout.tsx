@@ -4,7 +4,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
 import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
 import { RevealObserver } from "@/app/components/nexus/RevealObserver";
-import { PaperTexture } from "@/app/components/nexus/BackgroundOrbs";
+import { PaperTexture } from "@/app/components/nexus/PaperTexture";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -26,7 +26,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus // John Daryl Homecillo",
+  title: "John Daryl Homecillo",
   description:
     "Software Engineer and Prototype Developer based in Palawan, Philippines. Building internal systems, mobile applications, and award-winning IoT prototypes.",
   keywords: ["software engineer", "flutter", "mobile developer", "IoT", "Palawan", "Philippines"],

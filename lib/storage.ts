@@ -20,7 +20,3 @@ async function uploadToCloudinary(file: File, publicId: string): Promise<string>
 export async function uploadProfilePhoto(file: File): Promise<string> {
   return uploadToCloudinary(file, `nexus_profile_${Date.now()}`);
 }
-
-export async function uploadProjectImage(file: File): Promise<string> {
-  return uploadToCloudinary(file, `nexus_project_${Date.now()}`);
-}
