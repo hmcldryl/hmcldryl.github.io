@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
-import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
-import { RevealObserver } from "@/app/components/nexus/RevealObserver";
-import { PaperTexture } from "@/app/components/nexus/PaperTexture";
+import { FaviconUpdater } from "@/app/components/portfolio/FaviconUpdater";
+import { RevealObserver } from "@/app/components/portfolio/RevealObserver";
+import { PaperTexture } from "@/app/components/portfolio/PaperTexture";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({

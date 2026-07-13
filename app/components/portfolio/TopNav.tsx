@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-  { id: "nexus", label: "Home" },
+  { id: "home", label: "Home" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
@@ -12,7 +12,7 @@ const NAV_LINKS = [
 ];
 
 export function TopNav() {
-  const [active, setActive] = useState("nexus");
+  const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function TopNav() {
       <nav className="flex justify-between items-center h-16 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
         <div className="font-display text-lg font-bold text-on-surface select-none">
-          jdhomecillo
+          JDHomecillo
         </div>
 
         {/* Desktop links */}

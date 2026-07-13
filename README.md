@@ -1,4 +1,4 @@
-# jdhomecillo — Personal Portfolio
+# JDHomecillo — Personal Portfolio
 
 A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Firestore powers all content in real-time — update from `/profile` and the live site reflects changes instantly.
 
