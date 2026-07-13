@@ -32,8 +32,13 @@ export type Project = {
   tags: string[];
   link: string | null;
   size: string;
-  accentColor: string;
-  imageUrl?: string | null;
+};
+
+export type Certificate = {
+  name: string;
+  issuer: string;
+  date: string;
+  link: string | null;
 };
 
 export type Experience = {
@@ -58,6 +63,7 @@ export type PortfolioData = {
   skills: Skill[];
   projects: Project[];
   experience: Experience[];
+  certificates: Certificate[];
   accountLinks: AccountLink[];
 };
 
@@ -66,6 +72,7 @@ export const EMPTY_PORTFOLIO: PortfolioData = {
   skills: [],
   projects: [],
   experience: [],
+  certificates: [],
   accountLinks: [],
 };
 

@@ -10,30 +10,27 @@ export function Footer() {
   const email = personalInfo.email || "daryl.homecillo@gmail.com";
 
   return (
-    <footer className="w-full py-12 border-t-4 border-black">
-      <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-margin-desktop max-w-container-max mx-auto gap-4">
-        <div className="font-mono text-[12px] tracking-[0.1em] font-bold uppercase text-on-surface">
-          NEXUS_SYSTEMS
+    <footer className="w-full py-8 border-t-4 border-black">
+      <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-margin-desktop max-w-container-max mx-auto gap-3">
+        <div className="text-[13px] text-on-surface-variant">
+          © {new Date().getFullYear()} {name}
         </div>
-        <div className="font-mono text-[12px] text-on-surface-variant text-center">
-          © {new Date().getFullYear()} {name}{" // "}System.Access_Granted
-        </div>
-        <div className="flex gap-6">
+        <div className="flex gap-5">
           {github && (
             <a href={github} target="_blank" rel="noopener noreferrer"
-              className="font-mono text-[12px] font-bold text-on-surface-variant hover:text-primary transition-colors">
+              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
               GitHub
             </a>
           )}
           {linkedin && (
             <a href={linkedin} target="_blank" rel="noopener noreferrer"
-              className="font-mono text-[12px] font-bold text-on-surface-variant hover:text-primary transition-colors">
+              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
               LinkedIn
             </a>
           )}
           {email && (
             <a href={`mailto:${email}`}
-              className="font-mono text-[12px] font-bold text-on-surface-variant hover:text-primary transition-colors">
+              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
               Email
             </a>
           )}

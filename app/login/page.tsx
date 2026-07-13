@@ -6,7 +6,7 @@ import Link from "next/link";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
-export default function NexusLogin() {
+export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("daryl.homecillo@gmail.com");
   const [password, setPassword] = useState("");
@@ -48,8 +48,8 @@ export default function NexusLogin() {
   if (checking) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="font-mono text-[12px] text-on-surface-variant animate-pulse">
-          CHECKING AUTH...
+        <div className="text-[13px] text-on-surface-variant animate-pulse">
+          Checking session…
         </div>
       </div>
     );
@@ -59,37 +59,34 @@ export default function NexusLogin() {
     <div className="min-h-screen bg-background flex items-center justify-center px-5">
       <div className="relative w-full max-w-md">
         {/* Header */}
-        <div className="text-center mb-10">
-          <div className="inline-block py-1 px-3 border-2 border-black bg-tertiary font-mono text-[11px] font-bold text-on-tertiary tracking-[0.05em] mb-6">
-            [ RESTRICTED ACCESS ]
-          </div>
-          <h1 className="font-display text-4xl font-bold text-on-surface mb-2">
-            NEXUS // CMS
+        <div className="text-center mb-8">
+          <h1 className="font-display text-2xl font-bold text-on-surface mb-1">
+            Admin Login
           </h1>
-          <p className="font-mono text-[12px] text-on-surface-variant">
-            Portfolio management terminal
+          <p className="text-[13px] text-on-surface-variant">
+            Sign in to manage portfolio content
           </p>
         </div>
 
         {/* Login card */}
         <div className="brutal-panel p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-on-surface font-bold block">
-                Admin.Email
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-semibold text-on-surface block">
+                Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-surface-container border-2 border-black p-4 text-on-surface font-mono text-sm outline-none transition-shadow"
+                className="w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm outline-none transition-shadow"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-on-surface font-bold block">
-                Auth.Key
+            <div className="space-y-1.5">
+              <label className="text-[12px] font-semibold text-on-surface block">
+                Password
               </label>
               <input
                 type="password"
@@ -97,12 +94,12 @@ export default function NexusLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="w-full bg-surface-container border-2 border-black p-4 text-on-surface font-mono text-sm outline-none placeholder:text-on-surface-variant/40 transition-shadow"
+                className="w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm outline-none placeholder:text-on-surface-variant/40 transition-shadow"
               />
             </div>
 
             {error && (
-              <div className="font-mono text-[11px] text-on-error bg-error border-2 border-black p-3">
+              <div className="text-[12px] text-on-error bg-error border-2 border-black p-3">
                 {error}
               </div>
             )}
@@ -110,20 +107,20 @@ export default function NexusLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="brutal-press w-full bg-primary text-on-primary py-4 border-2 border-black shadow-brutal-sm font-mono text-[11px] tracking-[0.1em] font-bold uppercase transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="brutal-press w-full bg-primary text-on-primary py-3 border-2 border-black shadow-brutal-sm text-[13px] font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <>AUTHENTICATING... <span className="material-symbols-outlined text-[18px] animate-spin">refresh</span></>
+                <>Signing in… <span className="material-symbols-outlined text-[18px] animate-spin">refresh</span></>
               ) : (
-                <>INITIALIZE_SESSION <span className="material-symbols-outlined text-[18px]">login</span></>
+                <>Sign In <span className="material-symbols-outlined text-[18px]">login</span></>
               )}
             </button>
           </form>
         </div>
 
-        <div className="text-center mt-8">
-          <Link href="/" className="font-mono text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">
-            ← RETURN_TO_NEXUS
+        <div className="text-center mt-6">
+          <Link href="/" className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
+            ← Back to site
           </Link>
         </div>
       </div>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { uploadProfilePhoto, uploadProjectImage } from "@/lib/storage";
+import { uploadProfilePhoto } from "@/lib/storage";
 import {
   getPortfolioData,
   setPortfolioData,
@@ -13,10 +13,11 @@ import {
   type Skill,
   type Project,
   type Experience,
+  type Certificate,
   type AccountLink,
 } from "@/lib/firestore";
 
-type Tab = "info" | "skills" | "projects" | "experience" | "accounts";
+type Tab = "info" | "skills" | "projects" | "experience" | "certificates" | "accounts";
 
 const AUTO_COLORS = ["primary", "secondary", "tertiary"] as const;
 
@@ -240,34 +241,10 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
   const upd = (field: keyof Project, val: string | string[] | null) =>
     onChange(idx, { ...project, [field]: val });
 
-  // Local tags state so user can type commas/spaces freely; commit on blur
+  // Uncontrolled: user types commas/spaces freely, committed on blur.
+  // Keyed on joinedTags so it remounts with the right value if the
+  // underlying project changes (e.g. reordered via move up/down).
   const joinedTags = project.tags.join(", ");
-  const prevJoined = useRef(joinedTags);
-  const [rawTags, setRawTags] = useState(joinedTags);
-  if (prevJoined.current !== joinedTags) {
-    prevJoined.current = joinedTags;
-    setRawTags(joinedTags);
-  }
-
-  // Image upload state
-  const [imgUploading, setImgUploading] = useState(false);
-  const [imgError, setImgError] = useState("");
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImgUploading(true);
-    setImgError("");
-    try {
-      const url = await uploadProjectImage(file);
-      upd("imageUrl", url);
-    } catch (err) {
-      setImgError(err instanceof Error ? err.message : "Upload failed");
-    } finally {
-      setImgUploading(false);
-      e.target.value = "";
-    }
-  };
 
   return (
     <div className="brutal-panel p-5 space-y-4">
@@ -301,42 +278,12 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
       </Field>
       <Field label="Tags (comma-separated)">
         <input
+          key={joinedTags}
           className={inputCls}
-          value={rawTags}
-          onChange={(e) => setRawTags(e.target.value)}
-          onBlur={() => upd("tags", rawTags.split(",").map((t) => t.trim()).filter(Boolean))}
+          defaultValue={joinedTags}
+          onBlur={(e) => upd("tags", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))}
           placeholder="e.g. IoT, Mobile, Flutter"
         />
-      </Field>
-      <Field label="Card Image (optional)">
-        <div className="space-y-2">
-          {project.imageUrl && (
-            <div className="relative w-full h-28 rounded-lg overflow-hidden bg-surface-container border border-outline-variant/20">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={project.imageUrl} alt="" className="w-full h-full object-cover" />
-              <button
-                type="button"
-                onClick={() => upd("imageUrl", null)}
-                className="absolute top-2 right-2 bg-background/80 text-error rounded-lg p-1 hover:bg-error/20 transition-colors"
-              >
-                <span className="material-symbols-outlined text-[16px]">delete</span>
-              </button>
-            </div>
-          )}
-          <label className={`flex items-center gap-2 cursor-pointer w-auto inline-flex px-4 py-2 border-2 border-black bg-surface-container-high text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] shadow-brutal-sm brutal-press transition-all ${imgUploading ? "opacity-50 pointer-events-none" : ""}`}>
-            <span className="material-symbols-outlined text-[16px]">image</span>
-            {imgUploading ? "UPLOADING..." : project.imageUrl ? "REPLACE IMAGE" : "UPLOAD IMAGE"}
-            <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={imgUploading} />
-          </label>
-          <p className="font-mono text-[10px] text-on-surface-variant/50">
-            Fills card background · any image format
-            {project.size === "big"   && " · recommended 16:9 landscape (1600×900)"}
-            {project.size === "small" && " · recommended 4:5 portrait (800×1000)"}
-            {project.size === "wide"  && " · recommended 4:1 banner (2400×600)"}
-            {project.size === "other" && " · recommended 3:2 landscape (1200×800)"}
-          </p>
-          {imgError && <p className="font-mono text-[10px] text-error">{imgError}</p>}
-        </div>
       </Field>
     </div>
   );
@@ -387,6 +334,53 @@ function ExperienceRow({ item, idx, total, onChange, onMove, onDelete }: {
       <Field label="Description">
         <textarea className={`${inputCls} resize-none`} rows={3} value={item.description} onChange={(e) => upd("description", e.target.value)} />
       </Field>
+    </div>
+  );
+}
+
+// ─── Certificate row ──────────────────────────────────────────────────────────
+
+function CertificateRow({ cert, idx, total, onChange, onMove, onDelete }: {
+  cert: Certificate; idx: number; total: number;
+  onChange: (idx: number, updated: Certificate) => void;
+  onMove: (idx: number, dir: -1 | 1) => void;
+  onDelete: (idx: number) => void;
+}) {
+  const upd = (field: keyof Certificate, val: string | null) =>
+    onChange(idx, { ...cert, [field]: val });
+
+  return (
+    <div className="brutal-panel p-5 space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="font-mono text-[11px] text-on-surface-variant">CERTIFICATE #{idx + 1}</span>
+        <div className="flex gap-2">
+          <button onClick={() => onMove(idx, -1)} disabled={idx === 0} className="text-on-surface-variant hover:text-primary disabled:opacity-30 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">arrow_upward</span>
+          </button>
+          <button onClick={() => onMove(idx, 1)} disabled={idx === total - 1} className="text-on-surface-variant hover:text-primary disabled:opacity-30 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
+          </button>
+          <button onClick={() => onDelete(idx)} className="text-error hover:brightness-125 transition-colors">
+            <span className="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Name">
+          <input className={inputCls} value={cert.name} onChange={(e) => upd("name", e.target.value)} />
+        </Field>
+        <Field label="Issuer">
+          <input className={inputCls} value={cert.issuer} onChange={(e) => upd("issuer", e.target.value)} placeholder="e.g. Google, AWS" />
+        </Field>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Date">
+          <input className={inputCls} value={cert.date} onChange={(e) => upd("date", e.target.value)} placeholder="e.g. Jan 2024" />
+        </Field>
+        <Field label="Link (optional)">
+          <input className={inputCls} value={cert.link ?? ""} placeholder="https://..." onChange={(e) => upd("link", e.target.value || null)} />
+        </Field>
+      </div>
     </div>
   );
 }
@@ -522,6 +516,7 @@ export default function ProfilePage() {
         skills: current.skills ?? [],
         projects: current.projects ?? [],
         experience: current.experience ?? [],
+        certificates: current.certificates ?? [],
       });
     });
     return unsub;
@@ -576,7 +571,7 @@ export default function ProfilePage() {
     setData((d) => d && { ...d, projects: d.projects.filter((_, i) => i !== idx) });
   const addProject = () =>
     setData((d) =>
-      d && { ...d, projects: [...d.projects, { name: "New Project", description: "", tags: [], link: null, size: "small", accentColor: AUTO_COLORS[d.projects.length % 3] }] }
+      d && { ...d, projects: [...d.projects, { name: "New Project", description: "", tags: [], link: null, size: "small" }] }
     );
 
   // ── Experience helpers ──
@@ -594,6 +589,23 @@ export default function ProfilePage() {
   const addExp = () =>
     setData((d) =>
       d && { ...d, experience: [...d.experience, { role: "New Role", company: "", period: "", description: "", color: AUTO_COLORS[d.experience.length % 3], icon: "work" }] }
+    );
+
+  // ── Certificate helpers ──
+  const updateCert = (idx: number, updated: Certificate) =>
+    setData((d) => d && { ...d, certificates: d.certificates.map((c, i) => (i === idx ? updated : c)) });
+  const moveCert = (idx: number, dir: -1 | 1) =>
+    setData((d) => {
+      if (!d) return d;
+      const arr = [...d.certificates];
+      [arr[idx], arr[idx + dir]] = [arr[idx + dir], arr[idx]];
+      return { ...d, certificates: arr };
+    });
+  const deleteCert = (idx: number) =>
+    setData((d) => d && { ...d, certificates: d.certificates.filter((_, i) => i !== idx) });
+  const addCert = () =>
+    setData((d) =>
+      d && { ...d, certificates: [...d.certificates, { name: "New Certificate", issuer: "", date: "", link: null }] }
     );
 
   // ── Account link helpers ──
@@ -614,22 +626,24 @@ export default function ProfilePage() {
     );
 
   const TABS: { id: Tab; label: string; icon: string }[] = [
-    { id: "info",       label: "Personal Info", icon: "person" },
-    { id: "skills",     label: "Arsenal",        icon: "swords" },
-    { id: "projects",   label: "Quest Log",      icon: "task_alt" },
-    { id: "experience", label: "Experience",     icon: "military_tech" },
-    { id: "accounts",   label: "Accounts",       icon: "manage_accounts" },
+    { id: "info",         label: "Personal Info", icon: "person" },
+    { id: "skills",       label: "Skills",        icon: "auto_awesome" },
+    { id: "projects",     label: "Projects",      icon: "grid_view" },
+    { id: "experience",   label: "Experience",    icon: "work" },
+    { id: "certificates", label: "Certificates",  icon: "workspace_premium" },
+    { id: "accounts",     label: "Links",         icon: "link" },
   ];
 
   if (!ready || !data) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="font-mono text-[12px] text-on-surface-variant animate-pulse">LOADING_PORTFOLIO_DATA...</div>
+        <div className="font-mono text-[12px] text-on-surface-variant animate-pulse">Loading…</div>
       </div>
     );
   }
 
   const accountLinks = data.accountLinks ?? [];
+  const certificates = data.certificates ?? [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -639,10 +653,10 @@ export default function ProfilePage() {
           <div className="flex items-center gap-4">
             <Link href="/" className="font-mono text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">arrow_back</span>
-              PORTFOLIO
+              SITE
             </Link>
             <div className="w-px h-4 bg-black" />
-            <span className="font-display text-lg font-bold text-on-surface">CMS // Profile</span>
+            <span className="font-display text-lg font-bold text-on-surface">Admin</span>
           </div>
           <div className="flex items-center gap-4">
             {saveStatus !== "idle" && (
@@ -650,23 +664,23 @@ export default function ProfilePage() {
                 saveStatus === "saved" ? "text-primary" :
                 saveStatus === "error" ? "text-error" : "text-on-surface-variant animate-pulse"
               }`}>
-                {saveStatus === "saving" ? "SAVING..." : saveStatus === "saved" ? "✓ SAVED" : "✗ ERROR"}
+                {saveStatus === "saving" ? "Saving…" : saveStatus === "saved" ? "✓ Saved" : "✗ Error"}
               </span>
             )}
             <button
               onClick={save}
               disabled={saveStatus === "saving"}
-              className="brutal-press bg-primary text-on-primary font-mono text-[11px] tracking-[0.08em] font-bold uppercase py-2 px-5 border-2 border-black shadow-brutal-sm transition-all disabled:opacity-60 flex items-center gap-2"
+              className="brutal-press bg-primary text-on-primary font-mono text-[11px] font-bold py-2 px-5 border-2 border-black shadow-brutal-sm transition-all disabled:opacity-60 flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-[16px]">save</span>
-              SAVE
+              Save
             </button>
             <button
               onClick={handleLogout}
-              className="text-on-surface-variant hover:text-error font-mono text-[11px] font-bold tracking-[0.08em] uppercase transition-colors flex items-center gap-1"
+              className="text-on-surface-variant hover:text-error font-mono text-[11px] font-bold transition-colors flex items-center gap-1"
             >
               <span className="material-symbols-outlined text-[16px]">logout</span>
-              LOGOUT
+              Log out
             </button>
           </div>
         </div>
@@ -699,7 +713,7 @@ export default function ProfilePage() {
         </aside>
 
         {/* Mobile tab bar */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t-4 border-black flex">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t-4 border-black flex overflow-x-auto">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -762,10 +776,10 @@ export default function ProfilePage() {
           {tab === "skills" && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="font-display text-2xl font-bold text-on-surface">Arsenal ({data.skills.length})</h2>
+                <h2 className="font-display text-2xl font-bold text-on-surface">Skills ({data.skills.length})</h2>
                 <button onClick={addSkill} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
-                  ADD SKILL
+                  Add Skill
                 </button>
               </div>
               <div className="space-y-4">
@@ -781,14 +795,14 @@ export default function ProfilePage() {
           {tab === "projects" && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="font-display text-2xl font-bold text-on-surface">Quest Log ({data.projects.length})</h2>
+                <h2 className="font-display text-2xl font-bold text-on-surface">Projects ({data.projects.length})</h2>
                 <button onClick={addProject} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
-                  ADD PROJECT
+                  Add Project
                 </button>
               </div>
               <div className="bg-tertiary border-2 border-black p-4 mb-2">
-                <p className="font-mono text-[11px] text-tertiary">
+                <p className="font-mono text-[11px] text-on-tertiary">
                   <strong>Size guide:</strong> big (col-span-8) · small (col-span-4) · wide (col-span-12) · other (col-span-6)
                 </p>
               </div>
@@ -808,7 +822,7 @@ export default function ProfilePage() {
                 <h2 className="font-display text-2xl font-bold text-on-surface">Experience ({data.experience.length})</h2>
                 <button onClick={addExp} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
-                  ADD ROLE
+                  Add Role
                 </button>
               </div>
               <div className="space-y-4">
@@ -820,18 +834,37 @@ export default function ProfilePage() {
             </div>
           )}
 
-          {/* Accounts */}
+          {/* Certificates */}
+          {tab === "certificates" && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="font-display text-2xl font-bold text-on-surface">Certificates ({certificates.length})</h2>
+                <button onClick={addCert} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
+                  <span className="material-symbols-outlined text-[16px]">add</span>
+                  Add Certificate
+                </button>
+              </div>
+              <div className="space-y-4">
+                {certificates.map((cert, idx) => (
+                  <CertificateRow key={String(idx)} cert={cert} idx={idx} total={certificates.length}
+                    onChange={updateCert} onMove={moveCert} onDelete={deleteCert} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Links */}
           {tab === "accounts" && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="font-display text-2xl font-bold text-on-surface">Accounts ({accountLinks.length})</h2>
+                <h2 className="font-display text-2xl font-bold text-on-surface">Links ({accountLinks.length})</h2>
                 <button onClick={addAccountLink} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
-                  ADD ACCOUNT
+                  Add Link
                 </button>
               </div>
               <div className="bg-secondary border-2 border-black p-4 mb-2">
-                <p className="font-mono text-[11px] text-secondary">
+                <p className="font-mono text-[11px] text-on-secondary">
                   Leave URL empty for accounts with no link (e.g. Nintendo Switch friend codes).
                 </p>
               </div>

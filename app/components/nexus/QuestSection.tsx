@@ -22,17 +22,10 @@ const COL_SPAN: Record<string, string> = {
   other: "md:col-span-6",
 };
 
-const MIN_H: Record<string, string> = {
-  big:   "min-h-[400px]",
-  small: "min-h-[400px]",
-  wide:  "min-h-[260px]",
-  other: "min-h-[300px]",
-};
-
 function Tag({ label }: { label: string }) {
   const cls = TAG_COLORS[label] ?? "bg-surface text-on-surface";
   return (
-    <span className={`text-[10px] font-bold py-1 px-3 border-2 border-black ${cls}`}>
+    <span className={`text-[9px] font-bold py-0.5 px-2 border border-black ${cls}`}>
       {label}
     </span>
   );
@@ -40,51 +33,32 @@ function Tag({ label }: { label: string }) {
 
 function ProjectCard({ project }: { project: Project }) {
   const colSpan = COL_SPAN[project.size] ?? "md:col-span-6";
-  const minH    = MIN_H[project.size]    ?? "min-h-[300px]";
 
   return (
-    <div className={`${colSpan} brutal-press group relative overflow-hidden border-2 border-black shadow-brutal ${minH}`}>
-      {/* Background */}
-      {project.imageUrl ? (
-        <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={project.imageUrl}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
-        </>
-      ) : (
-        <div className="absolute inset-0 bg-surface" />
-      )}
-
-      {/* Content */}
-      <div className={`relative z-10 h-full p-8 flex flex-col justify-end ${minH}`}>
-        <div className="flex gap-2 mb-4 flex-wrap">
-          {project.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
-        </div>
-        <h3 className={`font-display font-semibold mb-2 ${project.imageUrl ? "text-background" : "text-on-surface"} ${project.size === "wide" ? "text-3xl md:text-4xl font-bold" : project.size === "big" ? "text-2xl" : "text-xl"}`}>
-          {project.name}
-        </h3>
-        <p className={`text-sm leading-relaxed mb-6 ${project.imageUrl ? "text-background/80" : "text-on-surface-variant"} ${project.size === "wide" ? "text-base max-w-2xl" : project.size === "big" ? "max-w-lg" : ""}`}>
-          {project.description}
-        </p>
-        {project.link ? (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] font-bold uppercase group-hover:translate-x-2 transition-transform w-fit ${project.imageUrl ? "text-background" : "text-primary"}`}
-          >
-            VIEW_PROJECT <span className="material-symbols-outlined text-[18px]">arrow_right_alt</span>
-          </a>
-        ) : (
-          <div className={`flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] font-bold uppercase ${project.imageUrl ? "text-background" : "text-primary"}`}>
-            IN_PROGRESS <span className="material-symbols-outlined text-[18px]">military_tech</span>
-          </div>
-        )}
+    <div className={`${colSpan} brutal-press brutal-panel p-6 flex flex-col`}>
+      <div className="flex gap-1.5 mb-3 flex-wrap">
+        {project.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
       </div>
+      <h3 className="font-display font-semibold text-on-surface mb-1.5 text-lg">
+        {project.name}
+      </h3>
+      <p className="text-on-surface-variant text-[13px] leading-relaxed mb-4">
+        {project.description}
+      </p>
+      {project.link ? (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 text-primary text-[12px] font-bold mt-auto w-fit"
+        >
+          View Project <span className="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+        </a>
+      ) : (
+        <div className="flex items-center gap-1 text-on-surface-variant text-[12px] font-bold mt-auto">
+          In Progress
+        </div>
+      )}
     </div>
   );
 }
@@ -93,21 +67,16 @@ export function QuestSection() {
   const { projects } = usePortfolio();
 
   return (
-    <section id="quests" className="py-24 px-5 md:px-margin-desktop">
+    <section id="projects" className="py-16 px-5 md:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
-        <div className="mb-16 flex justify-between items-end flex-wrap gap-4">
-          <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-on-surface mb-3">
-              Quest Log
-            </h2>
-            <div className="w-24 h-[4px] bg-black" />
-          </div>
-          <div className="hidden md:block font-mono text-[12px] font-bold tracking-[0.05em] text-on-surface">
-            ACTIVE_PROJECTS: {projects.length.toString().padStart(2, "0")}
-          </div>
+        <div className="mb-10" data-reveal>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface mb-2">
+            Projects
+          </h2>
+          <div className="w-16 h-[3px] bg-black" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {projects.map((project, i) => (
             <ProjectCard key={`${i}-${project.name}`} project={project} />
           ))}
