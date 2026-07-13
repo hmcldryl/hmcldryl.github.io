@@ -32,7 +32,7 @@ export function HeroSection() {
               View Projects
             </a>
             <a
-              href="#connect"
+              href="#contact"
               className="brutal-press bg-surface border-2 border-black text-on-surface text-[13px] font-bold py-2.5 px-6 shadow-brutal-sm transition-all"
             >
               Contact

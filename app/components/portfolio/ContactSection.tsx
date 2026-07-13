@@ -6,7 +6,7 @@ import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 const fieldCls =
   "w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm outline-none placeholder:text-on-surface-variant/50 transition-shadow";
 
-export function ConnectSection() {
+export function ContactSection() {
   const { personalInfo } = usePortfolio();
   const [status, setStatus] = useState<"idle" | "sent">("idle");
 
@@ -25,7 +25,7 @@ export function ConnectSection() {
   };
 
   return (
-    <section id="connect" className="py-16 px-5 md:px-margin-desktop">
+    <section id="contact" className="py-16 px-5 md:px-margin-desktop">
       <div className="max-w-2xl mx-auto brutal-panel p-6 md:p-8">
         <div className="mb-8">
           <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface mb-1.5">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import packageJson from "@/package.json";
 
 const NAV_LINKS = [
   { id: "home", label: "Home" },
@@ -11,18 +12,24 @@ const NAV_LINKS = [
   { id: "links", label: "Links" },
 ];
 
+// Contact isn't a nav link (it's the standalone CTA button below), but it
+// still needs to be tracked here — otherwise scroll-spy has nothing to match
+// once you scroll past the last real nav link, and "Links" stays stuck
+// highlighted for the rest of the page (including Contact + the footer).
+const SCROLL_SECTION_IDS = [...NAV_LINKS.map((l) => l.id), "contact"];
+
 export function TopNav() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = NAV_LINKS.map((l) => document.getElementById(l.id));
+      const sections = SCROLL_SECTION_IDS.map((id) => document.getElementById(id));
       const scrollY = window.scrollY + 120;
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollY) {
-          setActive(NAV_LINKS[i].id);
+          setActive(SCROLL_SECTION_IDS[i]);
           break;
         }
       }
@@ -35,8 +42,13 @@ export function TopNav() {
     <header className="nav-entrance fixed top-0 w-full z-50 bg-surface border-b-4 border-black">
       <nav className="flex justify-between items-center h-16 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
-        <div className="font-display text-lg font-bold text-on-surface select-none">
-          JDHomecillo
+        <div className="flex items-center gap-2 select-none">
+          <span className="font-display text-lg font-bold text-on-surface">
+            JDHomecillo
+          </span>
+          <span className="text-[10px] font-mono px-1.5 py-0.5 border border-black bg-tertiary text-on-tertiary">
+            v{packageJson.version}
+          </span>
         </div>
 
         {/* Desktop links */}
@@ -59,7 +71,7 @@ export function TopNav() {
 
         {/* Desktop CTA */}
         <a
-          href="#connect"
+          href="#contact"
           className="brutal-press hidden md:inline-flex bg-primary text-on-primary text-[13px] font-bold py-1.5 px-4 border-2 border-black shadow-brutal-sm transition-all"
         >
           Contact
@@ -93,7 +105,7 @@ export function TopNav() {
             </a>
           ))}
           <a
-            href="#connect"
+            href="#contact"
             onClick={() => setMenuOpen(false)}
             className="brutal-press block bg-primary text-on-primary text-[13px] font-bold py-2.5 px-4 border-2 border-black shadow-brutal-sm text-center transition-all mt-2"
           >
