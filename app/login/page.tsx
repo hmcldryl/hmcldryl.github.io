@@ -57,18 +57,13 @@ export default function NexusLogin() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-5">
-      {/* Background glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 blur-[120px] rounded-full" />
-      </div>
-
       <div className="relative w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-block py-1 px-3 border border-primary/30 rounded-full font-mono text-[11px] text-primary bg-primary/5 tracking-[0.05em] mb-6">
+          <div className="inline-block py-1 px-3 border-2 border-black bg-tertiary font-mono text-[11px] font-bold text-on-tertiary tracking-[0.05em] mb-6">
             [ RESTRICTED ACCESS ]
           </div>
-          <h1 className="font-display text-4xl font-bold text-primary mb-2">
+          <h1 className="font-display text-4xl font-bold text-on-surface mb-2">
             NEXUS // CMS
           </h1>
           <p className="font-mono text-[12px] text-on-surface-variant">
@@ -77,10 +72,10 @@ export default function NexusLogin() {
         </div>
 
         {/* Login card */}
-        <div className="glass-panel rounded-2xl p-8 border border-primary/20">
+        <div className="brutal-panel p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-primary block">
+              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-on-surface font-bold block">
                 Admin.Email
               </label>
               <input
@@ -88,12 +83,12 @@ export default function NexusLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-surface-container border border-outline-variant/30 rounded-lg p-4 text-on-surface font-mono text-sm focus:border-primary focus:shadow-[0_0_0_1px_#cfbcff] transition-all outline-none"
+                className="w-full bg-surface-container border-2 border-black p-4 text-on-surface font-mono text-sm outline-none transition-shadow"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-primary block">
+              <label className="font-mono text-[11px] tracking-[0.1em] uppercase text-on-surface font-bold block">
                 Auth.Key
               </label>
               <input
@@ -102,12 +97,12 @@ export default function NexusLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="w-full bg-surface-container border border-outline-variant/30 rounded-lg p-4 text-on-surface font-mono text-sm focus:border-primary focus:shadow-[0_0_0_1px_#cfbcff] transition-all outline-none placeholder:text-on-surface-variant/40"
+                className="w-full bg-surface-container border-2 border-black p-4 text-on-surface font-mono text-sm outline-none placeholder:text-on-surface-variant/40 transition-shadow"
               />
             </div>
 
             {error && (
-              <div className="font-mono text-[11px] text-error bg-error-container/20 border border-error/20 rounded-lg p-3">
+              <div className="font-mono text-[11px] text-on-error bg-error border-2 border-black p-3">
                 {error}
               </div>
             )}
@@ -115,7 +110,7 @@ export default function NexusLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-on-primary py-4 rounded-lg font-mono text-[11px] tracking-[0.1em] font-bold uppercase hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="brutal-press w-full bg-primary text-on-primary py-4 border-2 border-black shadow-brutal-sm font-mono text-[11px] tracking-[0.1em] font-bold uppercase transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>AUTHENTICATING... <span className="material-symbols-outlined text-[18px] animate-spin">refresh</span></>
@@ -127,7 +122,7 @@ export default function NexusLogin() {
         </div>
 
         <div className="text-center mt-8">
-          <Link href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors">
+          <Link href="/" className="font-mono text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">
             ← RETURN_TO_NEXUS
           </Link>
         </div>

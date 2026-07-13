@@ -39,11 +39,11 @@ export function TopNav() {
   }, []);
 
   return (
-    <header className="nav-entrance fixed top-0 w-full z-50 bg-background/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_40px_rgba(207,188,255,0.05)]">
+    <header className="nav-entrance fixed top-0 w-full z-50 bg-surface border-b-4 border-black">
       <nav className="flex justify-between items-center h-20 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
         {/* Brand */}
-        <div className="brand-glow font-display text-xl md:text-2xl font-bold text-primary tracking-tighter select-none">
-          NEXUS // {initials}
+        <div className="font-display text-xl md:text-2xl font-bold text-on-surface tracking-tighter select-none">
+          NEXUS <span className="bg-tertiary border-2 border-black px-2 ml-1">{initials}</span>
         </div>
 
         {/* Desktop links */}
@@ -57,13 +57,12 @@ export function TopNav() {
               className={`nav-item-enter relative font-mono text-[11px] tracking-[0.1em] font-bold uppercase transition-colors duration-200 ${
                 active === link.id
                   ? "text-primary"
-                  : "text-on-surface-variant hover:text-primary"
+                  : "text-on-surface hover:text-primary"
               }`}
             >
               {link.label}
-              {/* Animated underline */}
               <span
-                className={`absolute -bottom-1 left-0 h-[2px] bg-primary rounded-full transition-all duration-300 ${
+                className={`absolute -bottom-1 left-0 h-[3px] bg-black transition-all duration-300 ${
                   active === link.id ? "w-full" : "w-0"
                 }`}
               />
@@ -74,14 +73,14 @@ export function TopNav() {
         {/* Desktop CTA */}
         <a
           href="#connect"
-          className="hidden md:inline-flex bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-2 px-5 rounded-lg hover:brightness-110 hover:shadow-[0_0_16px_rgba(207,188,255,0.4)] active:scale-95 transition-all duration-200"
+          className="brutal-press hidden md:inline-flex bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-2 px-5 border-2 border-black shadow-brutal-sm transition-all"
         >
           CONNECT
         </a>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-primary p-2 hover:bg-primary/10 rounded-lg transition-colors"
+          className="md:hidden text-on-surface p-2 border-2 border-black bg-surface"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
@@ -93,14 +92,14 @@ export function TopNav() {
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="mobile-menu-enter md:hidden bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/20 px-5 py-4 space-y-3">
+        <div className="mobile-menu-enter md:hidden bg-surface border-t-4 border-black px-5 py-4 space-y-3">
           {NAV_LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
               onClick={() => { setActive(link.id); setMenuOpen(false); }}
               className={`block font-mono text-[12px] tracking-[0.1em] uppercase py-2 transition-colors ${
-                active === link.id ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                active === link.id ? "text-primary" : "text-on-surface hover:text-primary"
               }`}
             >
               {link.label}
@@ -109,7 +108,7 @@ export function TopNav() {
           <a
             href="#connect"
             onClick={() => setMenuOpen(false)}
-            className="block bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-3 px-4 rounded-lg text-center hover:brightness-110 transition-all mt-2"
+            className="brutal-press block bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-3 px-4 border-2 border-black shadow-brutal-sm text-center transition-all mt-2"
           >
             CONNECT
           </a>

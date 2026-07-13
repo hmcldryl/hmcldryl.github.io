@@ -4,7 +4,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
 import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
 import { RevealObserver } from "@/app/components/nexus/RevealObserver";
-import { BackgroundOrbs } from "@/app/components/nexus/BackgroundOrbs";
+import { PaperTexture } from "@/app/components/nexus/BackgroundOrbs";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -46,12 +46,12 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} font-body antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} font-body antialiased bg-background text-on-surface`}
       >
         <PortfolioProvider>
           <FaviconUpdater />
           <RevealObserver />
-          <BackgroundOrbs />
+          <PaperTexture />
           {children}
         </PortfolioProvider>
       </body>

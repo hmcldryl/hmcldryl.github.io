@@ -10,8 +10,8 @@ export function HeroSection() {
       ? personalInfo.location.toLowerCase().replace(/\s+/g, "-") + ".dev"
       : "palawan.dev";
     return [
-      { text: "$ analyzing_core_dependencies...", color: "text-primary" },
-      { text: "$ loading_project_registry...", color: "text-on-surface-variant" },
+      { text: "$ analyzing_core_dependencies...", color: "text-on-surface" },
+      { text: "$ loading_project_registry...", color: "text-on-surface" },
       { text: "$ build_status: SUCCESS", color: "text-tertiary" },
       { text: `$ deploy_target: ${deployTarget}`, color: "text-secondary" },
       { text: "$ system_status: nominal", color: "text-primary" },
@@ -32,7 +32,7 @@ export function HeroSection() {
       const div = document.createElement("div");
       div.className = "flex gap-3 opacity-0 translate-y-1 transition-all duration-500";
       const prefix = document.createElement("span");
-      prefix.className = "text-primary opacity-40";
+      prefix.className = "text-primary font-bold";
       prefix.textContent = "$";
       const text = document.createElement("span");
       text.className = line.color;
@@ -54,17 +54,14 @@ export function HeroSection() {
 
   return (
     <section id="nexus" className="relative min-h-screen flex items-center px-5 md:px-margin-desktop py-24 overflow-hidden">
-      {/* Scanline idle overlay */}
-      <div className="scanlines absolute inset-0 z-0 opacity-40" aria-hidden="true" />
-
       <div className="relative z-10 max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
         {/* Left: intro */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="hero-entry hero-entry-1 inline-block py-1 px-3 border border-primary/30 rounded-full font-mono text-[12px] text-primary bg-primary/5 tracking-[0.05em] breathe">
+          <div className="hero-entry hero-entry-1 inline-block py-1 px-3 border-2 border-black bg-tertiary font-mono text-[12px] font-bold text-on-tertiary tracking-[0.05em]">
             [ SYSTEM ACTIVE: V1.0.0 ]
           </div>
 
-          <h1 className="font-display font-bold text-on-surface leading-none">
+          <h1 className="font-display font-bold text-on-surface leading-[0.95]">
             <span className="hero-entry hero-entry-2 text-5xl md:text-7xl block">{firstName}</span>
             <span className="hero-entry hero-entry-3 text-5xl md:text-7xl block text-primary">{lastName}</span>
           </h1>
@@ -76,13 +73,13 @@ export function HeroSection() {
           <div className="hero-entry hero-entry-5 flex flex-wrap gap-4 pt-2">
             <a
               href="#quests"
-              className="bg-primary text-on-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-4 px-8 rounded-lg border border-transparent border-glow hover:brightness-110 active:scale-95 transition-all"
+              className="brutal-press bg-black text-background font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-4 px-8 border-2 border-black shadow-brutal transition-all"
             >
               VIEW_QUESTS
             </a>
             <a
               href="#connect"
-              className="border border-outline text-on-surface font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-4 px-8 rounded-lg hover:bg-surface-variant/30 border-glow transition-all"
+              className="brutal-press bg-surface border-2 border-black text-on-surface font-mono text-[11px] tracking-[0.1em] font-bold uppercase py-4 px-8 shadow-brutal transition-all"
             >
               CONNECT
             </a>
@@ -93,58 +90,46 @@ export function HeroSection() {
         <div className="lg:col-span-5 relative">
           {personalInfo.photoUrl ? (
             <div className="relative flex justify-center items-end min-h-[420px]">
-              {/* Radial glow beneath photo */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-primary/25 blur-[80px] rounded-full pointer-events-none" />
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-secondary/15 blur-[40px] rounded-full pointer-events-none" />
-              {/* drop-shadow on wrapper so mask-image on img doesn't clip the glow */}
-              <div
-                className="relative z-10"
-                style={{ filter: "drop-shadow(0 0 40px rgba(207,188,255,0.22))" }}
-              >
-                <img
-                  src={personalInfo.photoUrl}
-                  alt={personalInfo.name}
-                  className="max-h-[480px] w-auto object-contain select-none"
-                  style={{
-                    maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
-                  }}
-                />
-              </div>
+              {/* Solid accent block behind photo — no blur */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-64 h-64 bg-tertiary border-2 border-black -z-10" />
+              <img
+                src={personalInfo.photoUrl}
+                alt={personalInfo.name}
+                className="relative z-10 max-h-[480px] w-auto object-contain select-none"
+              />
             </div>
           ) : (
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-20 blur-xl group-hover:opacity-35 transition-opacity rounded-xl" />
-              <div className="relative glass-panel rounded-xl overflow-hidden border border-outline-variant/30">
-                <div className="bg-surface-container-high/80 px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+            <div className="relative">
+              <div className="brutal-panel overflow-hidden">
+                <div className="bg-black px-4 py-3 flex items-center justify-between">
                   <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                    <div className="w-3 h-3 rounded-full bg-secondary border border-background" />
+                    <div className="w-3 h-3 rounded-full bg-tertiary border border-background" />
+                    <div className="w-3 h-3 rounded-full bg-primary border border-background" />
                   </div>
-                  <div className="font-mono text-[11px] text-on-surface-variant opacity-60">
+                  <div className="font-mono text-[11px] text-background opacity-70">
                     NEXUS_CORE — Terminal
                   </div>
                   <div className="w-16" />
                 </div>
                 <div
                   ref={terminalRef}
-                  className="p-6 font-mono text-[13px] text-[#00F2FE] space-y-2 min-h-[300px]"
+                  className="p-6 font-mono text-[13px] text-on-surface space-y-2 min-h-[300px] bg-surface"
                 >
                   <div className="flex gap-3">
-                    <span className="text-primary opacity-40">$</span>
+                    <span className="text-primary font-bold">$</span>
                     <span>initializing_systems...</span>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-primary opacity-40">$</span>
-                    <span className="text-white">nexus_handshake_established</span>
+                    <span className="text-primary font-bold">$</span>
+                    <span className="font-bold">nexus_handshake_established</span>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-primary opacity-40">$</span>
+                    <span className="text-primary font-bold">$</span>
                     <span className="text-secondary">jd_profile.load()</span>
                   </div>
                   <div className="flex gap-3 terminal-cursor">
-                    <span className="text-primary opacity-40">$</span>
+                    <span className="text-primary font-bold">$</span>
                     <span>Status: Ready</span>
                   </div>
                 </div>

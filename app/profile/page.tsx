@@ -34,7 +34,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const inputCls =
-  "w-full bg-surface-container border border-outline-variant/30 rounded-lg p-3 text-on-surface font-body text-sm focus:border-primary focus:shadow-[0_0_0_1px_#cfbcff] transition-all outline-none placeholder:text-on-surface-variant/40";
+  "w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm transition-shadow outline-none placeholder:text-on-surface-variant/40";
 
 const SIZE_INFO = {
   big:   { cols: "8/12", desc: "Large feature card (left side)" },
@@ -55,10 +55,10 @@ function SizeSelect({ value, onChange }: { value: string; onChange: (v: string) 
               key={key}
               type="button"
               onClick={() => onChange(key)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border font-mono text-[11px] transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 border-2 font-mono text-[11px] font-bold transition-colors ${
                 active
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60"
+                  ? "border-black bg-primary text-on-primary"
+                  : "border-black/30 text-on-surface-variant hover:border-black"
               }`}
             >
               {key}
@@ -111,7 +111,7 @@ function IconReference({ onPick }: { onPick: (icon: string) => void }) {
         {open ? "hide icon picker" : "browse icons"}
       </button>
       {open && (
-        <div className="mt-2 glass-panel rounded-xl p-4 border border-outline-variant/20 space-y-3">
+        <div className="mt-2 brutal-panel p-4 space-y-3">
           {/* Search */}
           <input
             autoFocus
@@ -119,7 +119,7 @@ function IconReference({ onPick }: { onPick: (icon: string) => void }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="search icons…"
-            className="w-full bg-surface-container border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface font-mono text-[12px] focus:border-primary focus:shadow-[0_0_0_1px_#cfbcff] outline-none placeholder:text-on-surface-variant/40 transition-all"
+            className="w-full bg-surface-container border-2 border-black px-3 py-2 text-on-surface font-mono text-[12px] outline-none placeholder:text-on-surface-variant/40 transition-shadow"
           />
 
           {results ? (
@@ -187,7 +187,7 @@ function SkillRow({ skill, idx, total, onChange, onMove, onDelete }: {
     onChange(idx, { ...skill, [field]: val });
 
   return (
-    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+    <div className="brutal-panel p-5 space-y-4">
       <div className="flex justify-between items-center">
         <span className="font-mono text-[11px] text-on-surface-variant">SKILL #{idx + 1}</span>
         <div className="flex gap-2">
@@ -209,7 +209,7 @@ function SkillRow({ skill, idx, total, onChange, onMove, onDelete }: {
         <Field label="Level (0-100)">
           <div className="space-y-2">
             <input type="range" min={0} max={100} value={skill.level}
-              onChange={(e) => upd("level", Number(e.target.value))} className="w-full accent-[#cfbcff]" />
+              onChange={(e) => upd("level", Number(e.target.value))} className="w-full accent-[#00C2CB]" />
             <div className="flex justify-between font-mono text-[10px] text-on-surface-variant/60">
               <span>0</span>
               <span className="text-primary font-bold">{skill.level}</span>
@@ -270,7 +270,7 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
   };
 
   return (
-    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+    <div className="brutal-panel p-5 space-y-4">
       <div className="flex justify-between items-center">
         <span className="font-mono text-[11px] text-on-surface-variant">PROJECT #{idx + 1}</span>
         <div className="flex gap-2">
@@ -323,7 +323,7 @@ function ProjectRow({ project, idx, total, onChange, onMove, onDelete }: {
               </button>
             </div>
           )}
-          <label className={`flex items-center gap-2 cursor-pointer w-auto inline-flex px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-container-high text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] hover:border-primary hover:text-primary transition-all ${imgUploading ? "opacity-50 pointer-events-none" : ""}`}>
+          <label className={`flex items-center gap-2 cursor-pointer w-auto inline-flex px-4 py-2 border-2 border-black bg-surface-container-high text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] shadow-brutal-sm brutal-press transition-all ${imgUploading ? "opacity-50 pointer-events-none" : ""}`}>
             <span className="material-symbols-outlined text-[16px]">image</span>
             {imgUploading ? "UPLOADING..." : project.imageUrl ? "REPLACE IMAGE" : "UPLOAD IMAGE"}
             <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={imgUploading} />
@@ -354,7 +354,7 @@ function ExperienceRow({ item, idx, total, onChange, onMove, onDelete }: {
     onChange(idx, { ...item, [field]: val });
 
   return (
-    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+    <div className="brutal-panel p-5 space-y-4">
       <div className="flex justify-between items-center">
         <span className="font-mono text-[11px] text-on-surface-variant">ROLE #{idx + 1}</span>
         <div className="flex gap-2">
@@ -403,7 +403,7 @@ function AccountLinkRow({ link, idx, total, onChange, onMove, onDelete }: {
     onChange(idx, { ...link, [field]: val });
 
   return (
-    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+    <div className="brutal-panel p-5 space-y-4">
       <div className="flex justify-between items-center">
         <span className="font-mono text-[11px] text-on-surface-variant">LINK #{idx + 1}</span>
         <div className="flex gap-2">
@@ -464,7 +464,7 @@ function PhotoUpload({ currentUrl, onUpload }: { currentUrl?: string; onUpload: 
   };
 
   return (
-    <div className="glass-panel rounded-xl p-5 border border-outline-variant/20 space-y-4">
+    <div className="brutal-panel p-5 space-y-4">
       <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-primary">Profile Photo</div>
       <div className="flex items-center gap-6">
         <div className="relative w-24 h-24 rounded-xl bg-surface-container border border-outline-variant/30 overflow-hidden shrink-0 flex items-center justify-center">
@@ -476,7 +476,7 @@ function PhotoUpload({ currentUrl, onUpload }: { currentUrl?: string; onUpload: 
           )}
         </div>
         <div className="space-y-2 min-w-0">
-          <label className={`flex items-center gap-2 cursor-pointer ${inputCls} w-auto inline-flex px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-container-high text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] hover:border-primary hover:text-primary transition-all ${uploading ? "opacity-50 pointer-events-none" : ""}`}>
+          <label className={`flex items-center gap-2 cursor-pointer ${inputCls} w-auto inline-flex px-4 py-2 border-2 border-black bg-surface-container-high text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] shadow-brutal-sm brutal-press transition-all ${uploading ? "opacity-50 pointer-events-none" : ""}`}>
             <span className="material-symbols-outlined text-[16px]">upload</span>
             {uploading ? "UPLOADING..." : currentUrl ? "REPLACE PHOTO" : "UPLOAD PHOTO"}
             <input type="file" accept=".png,image/png" className="hidden" onChange={handleFile} disabled={uploading} />
@@ -634,20 +634,20 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Top bar */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
+      <header className="fixed top-0 w-full z-50 bg-surface border-b-4 border-black">
         <div className="flex items-center justify-between h-16 px-5 md:px-8 max-w-[1400px] mx-auto">
           <div className="flex items-center gap-4">
-            <Link href="/" className="font-mono text-[11px] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
+            <Link href="/" className="font-mono text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">arrow_back</span>
               PORTFOLIO
             </Link>
-            <div className="w-px h-4 bg-outline-variant/40" />
-            <span className="font-display text-lg font-bold text-primary">CMS // Profile</span>
+            <div className="w-px h-4 bg-black" />
+            <span className="font-display text-lg font-bold text-on-surface">CMS // Profile</span>
           </div>
           <div className="flex items-center gap-4">
             {saveStatus !== "idle" && (
-              <span className={`font-mono text-[11px] ${
-                saveStatus === "saved" ? "text-tertiary" :
+              <span className={`font-mono text-[11px] font-bold ${
+                saveStatus === "saved" ? "text-primary" :
                 saveStatus === "error" ? "text-error" : "text-on-surface-variant animate-pulse"
               }`}>
                 {saveStatus === "saving" ? "SAVING..." : saveStatus === "saved" ? "✓ SAVED" : "✗ ERROR"}
@@ -656,14 +656,14 @@ export default function ProfilePage() {
             <button
               onClick={save}
               disabled={saveStatus === "saving"}
-              className="bg-primary text-on-primary font-mono text-[11px] tracking-[0.08em] uppercase py-2 px-5 rounded-lg hover:brightness-110 active:scale-95 transition-all disabled:opacity-60 flex items-center gap-2"
+              className="brutal-press bg-primary text-on-primary font-mono text-[11px] tracking-[0.08em] font-bold uppercase py-2 px-5 border-2 border-black shadow-brutal-sm transition-all disabled:opacity-60 flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-[16px]">save</span>
               SAVE
             </button>
             <button
               onClick={handleLogout}
-              className="text-on-surface-variant hover:text-error font-mono text-[11px] tracking-[0.08em] uppercase transition-colors flex items-center gap-1"
+              className="text-on-surface-variant hover:text-error font-mono text-[11px] font-bold tracking-[0.08em] uppercase transition-colors flex items-center gap-1"
             >
               <span className="material-symbols-outlined text-[16px]">logout</span>
               LOGOUT
@@ -674,16 +674,16 @@ export default function ProfilePage() {
 
       <div className="pt-16 flex min-h-screen">
         {/* Sidebar tabs */}
-        <aside className="hidden md:flex w-56 fixed left-0 top-16 h-[calc(100vh-4rem)] bg-surface-container-lowest/80 backdrop-blur-xl border-r border-outline-variant/20 flex-col pt-6 pb-8">
-          <nav className="space-y-1">
+        <aside className="hidden md:flex w-56 fixed left-0 top-16 h-[calc(100vh-4rem)] bg-surface border-r-4 border-black flex-col pt-6 pb-8">
+          <nav className="space-y-1 px-3">
             {TABS.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`w-full text-left px-5 py-3 flex items-center gap-3 transition-all font-body text-sm ${
+                className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors font-body text-sm border-2 ${
                   tab === t.id
-                    ? "bg-primary/10 text-primary border-l-2 border-primary"
-                    : "text-on-surface-variant hover:bg-surface-variant/20 hover:text-on-surface"
+                    ? "bg-primary text-on-primary border-black"
+                    : "text-on-surface-variant border-transparent hover:border-black hover:text-on-surface"
                 }`}
               >
                 <span className="material-symbols-outlined text-[18px]">{t.icon}</span>
@@ -692,14 +692,14 @@ export default function ProfilePage() {
             ))}
           </nav>
           <div className="mt-auto px-5">
-            <div className="font-mono text-[10px] text-on-surface-variant/50 leading-relaxed">
+            <div className="font-mono text-[10px] text-on-surface-variant/70 leading-relaxed">
               Changes save to Firestore instantly. Live site updates in real-time.
             </div>
           </div>
         </aside>
 
         {/* Mobile tab bar */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/20 flex">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t-4 border-black flex">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -709,7 +709,7 @@ export default function ProfilePage() {
               }`}
             >
               <span className="material-symbols-outlined text-[20px]">{t.icon}</span>
-              <span className="font-mono text-[9px] uppercase">{t.label.split(" ")[0]}</span>
+              <span className="font-mono text-[9px] uppercase font-bold">{t.label.split(" ")[0]}</span>
             </button>
           ))}
         </div>
@@ -763,7 +763,7 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="font-display text-2xl font-bold text-on-surface">Arsenal ({data.skills.length})</h2>
-                <button onClick={addSkill} className="flex items-center gap-2 bg-surface-container-high border border-outline-variant/30 text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] py-2 px-4 rounded-lg hover:border-primary hover:text-primary transition-all">
+                <button onClick={addSkill} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
                   ADD SKILL
                 </button>
@@ -782,12 +782,12 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="font-display text-2xl font-bold text-on-surface">Quest Log ({data.projects.length})</h2>
-                <button onClick={addProject} className="flex items-center gap-2 bg-surface-container-high border border-outline-variant/30 text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] py-2 px-4 rounded-lg hover:border-primary hover:text-primary transition-all">
+                <button onClick={addProject} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
                   ADD PROJECT
                 </button>
               </div>
-              <div className="glass-panel rounded-xl p-4 border border-tertiary/20 mb-2">
+              <div className="bg-tertiary border-2 border-black p-4 mb-2">
                 <p className="font-mono text-[11px] text-tertiary">
                   <strong>Size guide:</strong> big (col-span-8) · small (col-span-4) · wide (col-span-12) · other (col-span-6)
                 </p>
@@ -806,7 +806,7 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="font-display text-2xl font-bold text-on-surface">Experience ({data.experience.length})</h2>
-                <button onClick={addExp} className="flex items-center gap-2 bg-surface-container-high border border-outline-variant/30 text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] py-2 px-4 rounded-lg hover:border-primary hover:text-primary transition-all">
+                <button onClick={addExp} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
                   ADD ROLE
                 </button>
@@ -825,12 +825,12 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="font-display text-2xl font-bold text-on-surface">Accounts ({accountLinks.length})</h2>
-                <button onClick={addAccountLink} className="flex items-center gap-2 bg-surface-container-high border border-outline-variant/30 text-on-surface font-mono text-[11px] uppercase tracking-[0.08em] py-2 px-4 rounded-lg hover:border-primary hover:text-primary transition-all">
+                <button onClick={addAccountLink} className="brutal-press flex items-center gap-2 bg-surface-container-high border-2 border-black text-on-surface font-mono text-[11px] font-bold uppercase tracking-[0.08em] py-2 px-4 shadow-brutal-sm transition-all">
                   <span className="material-symbols-outlined text-[16px]">add</span>
                   ADD ACCOUNT
                 </button>
               </div>
-              <div className="glass-panel rounded-xl p-4 border border-secondary/20 mb-2">
+              <div className="bg-secondary border-2 border-black p-4 mb-2">
                 <p className="font-mono text-[11px] text-secondary">
                   Leave URL empty for accounts with no link (e.g. Nintendo Switch friend codes).
                 </p>

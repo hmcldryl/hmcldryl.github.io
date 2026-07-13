@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #050505;
-  --foreground: #e6e0e9;
+  --background: #f2ecdd;
+  --foreground: #0a0a0a;
 }
 
 html {
@@ -12,62 +12,37 @@ html {
 }
 
 body {
-  background-color: #050505;
-  color: #e6e0e9;
+  background-color: #f2ecdd;
+  color: #0a0a0a;
   overflow-x: hidden;
 }
 
-/* ===== Glass Panel ===== */
-.glass-panel {
-  background: rgba(15, 13, 19, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(207, 188, 255, 0.1);
+/* ===== Paper grid texture (fixed backdrop) ===== */
+.paper-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* ===== Hover Border Glow ===== */
-.border-glow {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.border-glow:hover {
-  border-color: #cfbcff !important;
-  box-shadow: 0 0 20px rgba(207, 188, 255, 0.15);
+/* ===== Brutal Panel — solid card, thick border, hard offset shadow ===== */
+.brutal-panel {
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
 }
 
-/* ===== Corner Accents ===== */
-.corner-accent {
-  position: relative;
+/* ===== Brutal Press — tactile hover/active lift for interactive blocks ===== */
+.brutal-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.corner-accent::before,
-.corner-accent::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: #cfbcff;
+.brutal-press:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 #000;
 }
-.corner-top-left::before {
-  top: 0;
-  left: 0;
-  border-top: 1px solid;
-  border-left: 1px solid;
-}
-.corner-bottom-right::after {
-  bottom: 0;
-  right: 0;
-  border-bottom: 1px solid;
-  border-right: 1px solid;
-}
-
-/* ===== Progress Glow ===== */
-.progress-glow {
-  box-shadow: 0 0 10px rgba(207, 188, 255, 0.5);
-}
-.progress-glow-gold {
-  box-shadow: 0 0 10px rgba(231, 195, 101, 0.6);
-}
-.progress-glow-lavender {
-  box-shadow: 0 0 10px rgba(205, 192, 233, 0.5);
+.brutal-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
 }
 
 /* ===== Terminal Cursor ===== */
@@ -90,8 +65,8 @@ body {
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, #cfbcff 30%, #cfbcff 70%, transparent);
+  width: 4px;
+  background: #000;
   transform: translateX(-50%);
 }
 
@@ -114,25 +89,34 @@ body {
 
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f0d13;
+  background: #f2ecdd;
+  border-left: 2px solid #000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #494551;
-  border-radius: 3px;
+  background: #000;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #cfbcff;
+  background: #00c2cb;
 }
 
-/* ===== Focus styles ===== */
+/* ===== Focus styles — always visible, per design-system rule ===== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #ffd400;
+}
 input:focus,
 textarea:focus {
   outline: none;
-  border-color: #cfbcff !important;
-  box-shadow: 0 0 0 1px #cfbcff;
+  border-color: #000 !important;
+  box-shadow: 4px 4px 0 #000;
 }
 
 /* ===== Scroll Reveal ===== */
@@ -180,67 +164,6 @@ textarea:focus {
 .hero-entry-4 { animation-delay: 450ms; }
 .hero-entry-5 { animation-delay: 600ms; }
 
-/* ===== Background Orbs (Idle) ===== */
-@keyframes orb-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(60px, -40px) scale(1.08); }
-  66%       { transform: translate(-30px, 30px) scale(0.94); }
-}
-@keyframes orb-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40%       { transform: translate(-50px, 30px) scale(1.05); }
-  70%       { transform: translate(40px, -20px) scale(0.97); }
-}
-@keyframes orb-c {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(30px, 50px) scale(1.1); }
-}
-.orb-a { animation: orb-a 18s ease-in-out infinite; }
-.orb-b { animation: orb-b 24s ease-in-out infinite; }
-.orb-c { animation: orb-c 20s ease-in-out infinite; }
-
-/* ===== Idle Breathe Glow ===== */
-@keyframes breathe {
-  0%, 100% { opacity: 0.12; transform: scale(1); }
-  50%       { opacity: 0.28; transform: scale(1.04); }
-}
-.breathe { animation: breathe 4s ease-in-out infinite; }
-
-/* ===== Shimmer (cards/badges) ===== */
-@keyframes shimmer-slide {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-.shimmer-idle {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(207, 188, 255, 0.06) 40%,
-    rgba(207, 188, 255, 0.12) 50%,
-    rgba(207, 188, 255, 0.06) 60%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer-slide 6s linear infinite;
-}
-
-/* ===== Scanline overlay (hero) ===== */
-@keyframes scan {
-  from { background-position: 0 0; }
-  to   { background-position: 0 100vh; }
-}
-.scanlines {
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.04) 2px,
-    rgba(0, 0, 0, 0.04) 4px
-  );
-  animation: scan 8s linear infinite;
-  pointer-events: none;
-}
-
 /* ===== Nav Entrance Animations ===== */
 @keyframes slide-down {
   from { transform: translateY(-100%); opacity: 0; }
@@ -259,30 +182,11 @@ textarea:focus {
 .nav-item-enter  { animation: hero-fade-up 0.45s cubic-bezier(0.4, 0, 0.2, 1) both; }
 .mobile-menu-enter { animation: menu-open 0.22s cubic-bezier(0.4, 0, 0.2, 1) both; }
 
-/* ===== Brand Glow (idle) ===== */
-@keyframes brand-glow {
-  0%, 100% { text-shadow: 0 0 8px rgba(207, 188, 255, 0.25); }
-  50%       { text-shadow: 0 0 24px rgba(207, 188, 255, 0.65), 0 0 48px rgba(207, 188, 255, 0.15); }
-}
-.brand-glow { animation: brand-glow 4s ease-in-out infinite; }
-
-/* ===== XP Bar Glow (idle) ===== */
-@keyframes xp-glow {
-  0%, 100% { box-shadow: 0 0 6px rgba(231, 195, 101, 0.5); }
-  50%       { box-shadow: 0 0 18px rgba(231, 195, 101, 0.9), 0 0 36px rgba(231, 195, 101, 0.3); }
-}
-.xp-bar-glow { animation: xp-glow 2.5s ease-in-out infinite; }
-
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal]    { opacity: 1; transform: none; transition: none; }
   .skill-bar-fill  { transition: none; }
   .hero-entry      { animation: none; opacity: 1; transform: none; }
-  .orb-a, .orb-b, .orb-c { animation: none; }
-  .breathe         { animation: none; }
-  .shimmer-idle    { animation: none; }
-  .scanlines       { animation: none; }
   .nav-entrance, .sidebar-entrance, .nav-item-enter, .mobile-menu-enter { animation: none; }
-  .brand-glow      { animation: none; }
-  .xp-bar-glow     { animation: none; }
+  .brutal-press    { transition: none; }
 }

@@ -4,22 +4,10 @@ import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 
 type ColorKey = "primary" | "secondary" | "tertiary";
 
-const NODE_COLORS: Record<ColorKey, { border: string; text: string; shadow: string }> = {
-  primary: {
-    border: "border-primary",
-    text: "text-primary",
-    shadow: "shadow-[0_0_15px_rgba(207,188,255,0.4)]",
-  },
-  secondary: {
-    border: "border-secondary",
-    text: "text-secondary",
-    shadow: "shadow-[0_0_15px_rgba(205,192,233,0.4)]",
-  },
-  tertiary: {
-    border: "border-tertiary",
-    text: "text-tertiary",
-    shadow: "shadow-[0_0_15px_rgba(231,195,101,0.4)]",
-  },
+const NODE_COLORS: Record<ColorKey, { bg: string; text: string }> = {
+  primary: { bg: "bg-primary", text: "text-on-primary" },
+  secondary: { bg: "bg-secondary", text: "text-on-secondary" },
+  tertiary: { bg: "bg-tertiary", text: "text-on-tertiary" },
 };
 
 const DEFAULT_NODE = NODE_COLORS.primary;
@@ -56,7 +44,7 @@ export function ExperienceSection() {
                     isEven ? "md:text-right" : "md:text-left"
                   }`}
                 >
-                  <h3 className={`font-display text-xl font-semibold ${colors.text}`}>
+                  <h3 className="font-display text-xl font-semibold text-on-surface">
                     {item.role}
                   </h3>
                   <div className="font-mono text-[11px] tracking-[0.05em] text-on-surface-variant mt-1">
@@ -65,7 +53,7 @@ export function ExperienceSection() {
                 </div>
 
                 <div
-                  className={`relative z-10 w-12 h-12 bg-background border-2 ${colors.border} rounded-full flex items-center justify-center ${colors.shadow} flex-shrink-0`}
+                  className={`relative z-10 w-12 h-12 border-2 border-black rounded-full flex items-center justify-center flex-shrink-0 ${colors.bg}`}
                 >
                   <span className={`material-symbols-outlined text-[20px] ${colors.text}`}>
                     {item.icon}

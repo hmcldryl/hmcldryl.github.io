@@ -6,19 +6,19 @@ type ColorKey = "primary" | "secondary" | "tertiary";
 
 const COLOR_MAP: Record<ColorKey, { bg: string; text: string; bar: string }> = {
   primary: {
-    bg: "bg-primary/10",
-    text: "text-primary",
-    bar: "bg-primary progress-glow",
+    bg: "bg-primary",
+    text: "text-on-primary",
+    bar: "bg-primary",
   },
   secondary: {
-    bg: "bg-secondary/10",
-    text: "text-secondary",
-    bar: "bg-secondary progress-glow-lavender",
+    bg: "bg-secondary",
+    text: "text-on-secondary",
+    bar: "bg-secondary",
   },
   tertiary: {
-    bg: "bg-tertiary/10",
-    text: "text-tertiary",
-    bar: "bg-tertiary progress-glow-gold",
+    bg: "bg-tertiary",
+    text: "text-on-tertiary",
+    bar: "bg-tertiary",
   },
 };
 
@@ -34,7 +34,7 @@ export function ArsenalSection() {
           <h2 className="font-display text-4xl md:text-5xl font-bold text-on-surface mb-3">
             Technical Arsenal
           </h2>
-          <div className="w-24 h-[2px] bg-primary" />
+          <div className="w-24 h-[4px] bg-black" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
@@ -46,13 +46,13 @@ export function ArsenalSection() {
                 key={skill.name}
                 data-reveal
                 data-delay={String((idx % 3) + 1)}
-                className="glass-panel p-8 rounded-xl relative corner-accent corner-top-left group hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 border border-outline-variant/20"
+                className="brutal-press brutal-panel p-8"
               >
                 <div className="mb-6 flex justify-between items-start">
-                  <div className={`p-3 ${colors.bg} rounded-lg ${colors.text}`}>
+                  <div className={`p-3 border-2 border-black ${colors.bg} ${colors.text}`}>
                     <span className="material-symbols-outlined text-4xl">{skill.icon}</span>
                   </div>
-                  <span className={`font-mono text-[12px] tracking-[0.05em] ${colors.text}`}>
+                  <span className="font-mono text-[12px] font-bold tracking-[0.05em] text-on-surface">
                     Lvl. {levelLabel}
                   </span>
                 </div>
@@ -65,13 +65,13 @@ export function ArsenalSection() {
                 </p>
 
                 <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-[11px] tracking-[0.05em] text-on-surface-variant">
+                  <div className="flex justify-between font-mono text-[11px] font-bold tracking-[0.05em] text-on-surface">
                     <span>PROFICIENCY</span>
                     <span>{skill.level}%</span>
                   </div>
-                  <div className="h-[6px] w-full bg-surface-container rounded-full overflow-hidden">
+                  <div className="h-[10px] w-full bg-surface border-2 border-black overflow-hidden">
                     <div
-                      className={`skill-bar-fill h-full ${colors.bar} rounded-full`}
+                      className={`skill-bar-fill h-full ${colors.bar}`}
                       style={{ "--bar-level": `${skill.level}%` } as React.CSSProperties}
                     />
                   </div>

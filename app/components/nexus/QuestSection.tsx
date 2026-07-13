@@ -4,15 +4,15 @@ import { usePortfolio } from "@/lib/contexts/PortfolioContext";
 import type { Project } from "@/lib/firestore";
 
 const TAG_COLORS: Record<string, string> = {
-  IoT: "bg-primary/20 text-primary border-primary/30",
-  Embedded: "bg-tertiary/20 text-tertiary border-tertiary/30",
-  Mobile: "bg-primary/20 text-primary border-primary/30",
-  Flutter: "bg-secondary/20 text-secondary border-secondary/30",
-  "Java Android": "bg-tertiary/20 text-tertiary border-tertiary/30",
-  Web: "bg-secondary/20 text-secondary border-secondary/30",
-  TypeScript: "bg-secondary/20 text-secondary border-secondary/30",
-  Enterprise: "bg-surface-variant/50 text-on-surface border-outline/30",
-  "3D Print": "bg-tertiary/20 text-tertiary border-tertiary/30",
+  IoT: "bg-primary text-on-primary",
+  Embedded: "bg-tertiary text-on-tertiary",
+  Mobile: "bg-primary text-on-primary",
+  Flutter: "bg-secondary text-on-secondary",
+  "Java Android": "bg-tertiary text-on-tertiary",
+  Web: "bg-secondary text-on-secondary",
+  TypeScript: "bg-secondary text-on-secondary",
+  Enterprise: "bg-surface text-on-surface",
+  "3D Print": "bg-tertiary text-on-tertiary",
 };
 
 const COL_SPAN: Record<string, string> = {
@@ -30,9 +30,9 @@ const MIN_H: Record<string, string> = {
 };
 
 function Tag({ label }: { label: string }) {
-  const cls = TAG_COLORS[label] ?? "bg-surface-variant/50 text-on-surface border-outline/30";
+  const cls = TAG_COLORS[label] ?? "bg-surface text-on-surface";
   return (
-    <span className={`text-[10px] font-bold py-1 px-3 rounded-full border ${cls}`}>
+    <span className={`text-[10px] font-bold py-1 px-3 border-2 border-black ${cls}`}>
       {label}
     </span>
   );
@@ -43,7 +43,7 @@ function ProjectCard({ project }: { project: Project }) {
   const minH    = MIN_H[project.size]    ?? "min-h-[300px]";
 
   return (
-    <div className={`${colSpan} group relative overflow-hidden rounded-xl border border-outline-variant/30 ${minH}`}>
+    <div className={`${colSpan} brutal-press group relative overflow-hidden border-2 border-black shadow-brutal ${minH}`}>
       {/* Background */}
       {project.imageUrl ? (
         <>
@@ -51,15 +51,12 @@ function ProjectCard({ project }: { project: Project }) {
           <img
             src={project.imageUrl}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
         </>
       ) : (
-        <>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
-          <div className="absolute inset-0 glass-panel" />
-        </>
+        <div className="absolute inset-0 bg-surface" />
       )}
 
       {/* Content */}
@@ -67,10 +64,10 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="flex gap-2 mb-4 flex-wrap">
           {project.tags.map((t, i) => <Tag key={`${t}-${i}`} label={t} />)}
         </div>
-        <h3 className={`font-display font-semibold text-on-surface mb-2 ${project.size === "wide" ? "text-3xl md:text-4xl font-bold" : project.size === "big" ? "text-2xl" : "text-xl"}`}>
+        <h3 className={`font-display font-semibold mb-2 ${project.imageUrl ? "text-background" : "text-on-surface"} ${project.size === "wide" ? "text-3xl md:text-4xl font-bold" : project.size === "big" ? "text-2xl" : "text-xl"}`}>
           {project.name}
         </h3>
-        <p className={`text-on-surface-variant text-sm leading-relaxed mb-6 ${project.size === "wide" ? "text-base max-w-2xl" : project.size === "big" ? "max-w-lg" : ""}`}>
+        <p className={`text-sm leading-relaxed mb-6 ${project.imageUrl ? "text-background/80" : "text-on-surface-variant"} ${project.size === "wide" ? "text-base max-w-2xl" : project.size === "big" ? "max-w-lg" : ""}`}>
           {project.description}
         </p>
         {project.link ? (
@@ -78,12 +75,12 @@ function ProjectCard({ project }: { project: Project }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase group-hover:translate-x-2 transition-transform w-fit"
+            className={`flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] font-bold uppercase group-hover:translate-x-2 transition-transform w-fit ${project.imageUrl ? "text-background" : "text-primary"}`}
           >
             VIEW_PROJECT <span className="material-symbols-outlined text-[18px]">arrow_right_alt</span>
           </a>
         ) : (
-          <div className="flex items-center gap-2 text-primary font-mono text-[11px] tracking-[0.1em] font-bold uppercase">
+          <div className={`flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] font-bold uppercase ${project.imageUrl ? "text-background" : "text-primary"}`}>
             IN_PROGRESS <span className="material-symbols-outlined text-[18px]">military_tech</span>
           </div>
         )}
@@ -96,16 +93,16 @@ export function QuestSection() {
   const { projects } = usePortfolio();
 
   return (
-    <section id="quests" className="py-24 px-5 md:px-margin-desktop bg-surface/30">
+    <section id="quests" className="py-24 px-5 md:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <div className="mb-16 flex justify-between items-end flex-wrap gap-4">
           <div>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-on-surface mb-3">
               Quest Log
             </h2>
-            <div className="w-24 h-[2px] bg-primary" />
+            <div className="w-24 h-[4px] bg-black" />
           </div>
-          <div className="hidden md:block font-mono text-[12px] tracking-[0.05em] text-on-surface-variant">
+          <div className="hidden md:block font-mono text-[12px] font-bold tracking-[0.05em] text-on-surface">
             ACTIVE_PROJECTS: {projects.length.toString().padStart(2, "0")}
           </div>
         </div>
