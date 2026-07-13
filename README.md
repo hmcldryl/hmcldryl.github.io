@@ -20,7 +20,7 @@ A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Fi
 - Dynamic content from Firestore — no hardcoded portfolio data
 - `/profile` CMS dashboard — edit every section, upload profile photo, reorder items
 - Sections: Hero, Skills, Projects, Experience, Certificates, Links, Contact
-- Scroll-reveal animations, skill proficiency bars
+- Scroll-reveal animations
 - Responsive — desktop sidebar nav, mobile top + bottom nav
 - `prefers-reduced-motion` support
 
@@ -62,7 +62,7 @@ Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages. A
 Go to `/login` → authenticate → `/profile` to manage:
 
 - **Personal Info** — name, tagline, bio, location, links, profile photo
-- **Skills** — proficiency level, icon, description
+- **Skills** — icon, description
 - **Projects** — size (grid layout), tags, link, description
 - **Experience** — roles, company, period, description
 - **Certificates** — name, issuer, date, link

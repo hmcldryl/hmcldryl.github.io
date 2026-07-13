@@ -184,7 +184,7 @@ function SkillRow({ skill, idx, total, onChange, onMove, onDelete }: {
   onMove: (idx: number, dir: -1 | 1) => void;
   onDelete: (idx: number) => void;
 }) {
-  const upd = (field: keyof Skill, val: string | number) =>
+  const upd = (field: keyof Skill, val: string) =>
     onChange(idx, { ...skill, [field]: val });
 
   return (
@@ -203,22 +203,9 @@ function SkillRow({ skill, idx, total, onChange, onMove, onDelete }: {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Name">
-          <input className={inputCls} value={skill.name} onChange={(e) => upd("name", e.target.value)} />
-        </Field>
-        <Field label="Level (0-100)">
-          <div className="space-y-2">
-            <input type="range" min={0} max={100} value={skill.level}
-              onChange={(e) => upd("level", Number(e.target.value))} className="w-full accent-[#00C2CB]" />
-            <div className="flex justify-between font-mono text-[10px] text-on-surface-variant/60">
-              <span>0</span>
-              <span className="text-primary font-bold">{skill.level}</span>
-              <span>100</span>
-            </div>
-          </div>
-        </Field>
-      </div>
+      <Field label="Name">
+        <input className={inputCls} value={skill.name} onChange={(e) => upd("name", e.target.value)} />
+      </Field>
       <Field label="Icon">
         <input className={inputCls} value={skill.icon} onChange={(e) => upd("icon", e.target.value)} placeholder="e.g. code, smartphone, memory" />
         <IconReference onPick={(icon) => upd("icon", icon)} />
@@ -554,7 +541,7 @@ export default function ProfilePage() {
     setData((d) => d && { ...d, skills: d.skills.filter((_, i) => i !== idx) });
   const addSkill = () =>
     setData((d) =>
-      d && { ...d, skills: [...d.skills, { name: "New Skill", level: 75, color: AUTO_COLORS[d.skills.length % 3], icon: "code", description: "" }] }
+      d && { ...d, skills: [...d.skills, { name: "New Skill", color: AUTO_COLORS[d.skills.length % 3], icon: "code", description: "" }] }
     );
 
   // ── Project helpers ──
