@@ -24,7 +24,7 @@ const COLOR_MAP: Record<ColorKey, { bg: string; text: string; bar: string }> = {
 
 const DEFAULT_COLOR = COLOR_MAP.primary;
 
-export function ArsenalSection() {
+export function SkillsSection() {
   const { skills } = usePortfolio();
 
   return (

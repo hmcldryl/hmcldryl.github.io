@@ -63,7 +63,7 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function QuestSection() {
+export function ProjectsSection() {
   const { projects } = usePortfolio();
 
   return (

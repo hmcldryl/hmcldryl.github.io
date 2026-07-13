@@ -10,7 +10,7 @@ const COLOR_MAP = {
 
 type ColorKey = keyof typeof COLOR_MAP;
 
-export function AccountLinksSection() {
+export function LinksSection() {
   const { accountLinks } = usePortfolio();
 
   if (!accountLinks?.length) return null;

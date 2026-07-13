@@ -4,7 +4,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
 import { FaviconUpdater } from "@/app/components/nexus/FaviconUpdater";
 import { RevealObserver } from "@/app/components/nexus/RevealObserver";
-import { PaperTexture } from "@/app/components/nexus/BackgroundOrbs";
+import { PaperTexture } from "@/app/components/nexus/PaperTexture";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
