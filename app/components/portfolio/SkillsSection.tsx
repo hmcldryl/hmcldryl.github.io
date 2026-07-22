@@ -1,6 +1,4 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 type ColorKey = "primary" | "secondary" | "tertiary";
 
@@ -13,7 +11,7 @@ const COLOR_MAP: Record<ColorKey, { bg: string; text: string }> = {
 const DEFAULT_COLOR = COLOR_MAP.primary;
 
 export function SkillsSection() {
-  const { skills } = usePortfolio();
+  const { skills } = portfolio;
 
   return (
     <section id="skills" className="py-16 px-5 md:px-margin-desktop">

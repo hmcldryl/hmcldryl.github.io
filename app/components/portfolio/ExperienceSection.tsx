@@ -1,6 +1,4 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 type ColorKey = "primary" | "secondary" | "tertiary";
 
@@ -13,7 +11,7 @@ const NODE_COLORS: Record<ColorKey, { bg: string; text: string }> = {
 const DEFAULT_NODE = NODE_COLORS.primary;
 
 export function ExperienceSection() {
-  const { experience } = usePortfolio();
+  const { experience } = portfolio;
 
   return (
     <section id="experience" className="py-16 px-5 md:px-margin-desktop">

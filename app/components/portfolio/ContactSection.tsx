@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 const fieldCls =
   "w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm outline-none placeholder:text-on-surface-variant/50 transition-shadow";
 
 export function ContactSection() {
-  const { personalInfo } = usePortfolio();
+  const { personalInfo } = portfolio;
   const [status, setStatus] = useState<"idle" | "sent">("idle");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
