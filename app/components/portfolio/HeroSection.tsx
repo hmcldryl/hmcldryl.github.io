@@ -1,9 +1,7 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 export function HeroSection() {
-  const { personalInfo } = usePortfolio();
+  const { personalInfo } = portfolio;
 
   return (
     <section id="home" className="relative min-h-[85vh] flex items-center px-5 md:px-margin-desktop py-16 overflow-hidden">

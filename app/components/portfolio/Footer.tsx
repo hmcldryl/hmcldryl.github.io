@@ -1,9 +1,7 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 export function Footer() {
-  const { personalInfo } = usePortfolio();
+  const { personalInfo } = portfolio;
   const name = personalInfo.name || "John Daryl Homecillo";
   const github = personalInfo.github || "https://github.com/hmcldryl";
   const linkedin = personalInfo.linkedin || "https://linkedin.com/in/hmcldryl";

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Space_Grotesk, Inter } from "next/font/google";
-import { PortfolioProvider } from "@/lib/contexts/PortfolioContext";
 import { FaviconUpdater } from "@/app/components/portfolio/FaviconUpdater";
 import { RevealObserver } from "@/app/components/portfolio/RevealObserver";
 import { PaperTexture } from "@/app/components/portfolio/PaperTexture";
@@ -48,12 +47,10 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} font-body antialiased bg-background text-on-surface`}
       >
-        <PortfolioProvider>
-          <FaviconUpdater />
-          <RevealObserver />
-          <PaperTexture />
-          {children}
-        </PortfolioProvider>
+        <FaviconUpdater />
+        <RevealObserver />
+        <PaperTexture />
+        {children}
       </body>
     </html>
   );

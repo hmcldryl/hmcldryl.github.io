@@ -1,6 +1,4 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 const COLOR_MAP = {
   primary: { bg: "bg-primary", text: "text-on-primary" },
@@ -11,7 +9,7 @@ const COLOR_MAP = {
 type ColorKey = keyof typeof COLOR_MAP;
 
 export function LinksSection() {
-  const { accountLinks } = usePortfolio();
+  const { accountLinks } = portfolio;
 
   if (!accountLinks?.length) return null;
 

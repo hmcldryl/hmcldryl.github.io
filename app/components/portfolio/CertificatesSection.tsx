@@ -1,9 +1,7 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 export function CertificatesSection() {
-  const { certificates } = usePortfolio();
+  const { certificates } = portfolio;
 
   if (!certificates?.length) return null;
 
@@ -21,9 +19,17 @@ export function CertificatesSection() {
           {certificates.map((cert, i) => {
             const Card = (
               <div className="brutal-press brutal-panel p-5 h-full flex flex-col">
-                <span className="material-symbols-outlined text-2xl text-primary mb-2">
-                  workspace_premium
-                </span>
+                {cert.image ? (
+                  <img
+                    src={`/certificates/${cert.image}`}
+                    alt={cert.name}
+                    className="w-full h-32 object-cover border-2 border-black mb-3"
+                  />
+                ) : (
+                  <span className="material-symbols-outlined text-2xl text-primary mb-2">
+                    workspace_premium
+                  </span>
+                )}
                 <h3 className="font-display text-base font-semibold text-on-surface mb-1">
                   {cert.name}
                 </h3>

@@ -1,0 +1,175 @@
+{
+  "personalInfo": {
+    "name": "John Daryl Homecillo",
+    "tagline": "I love to build stuff.",
+    "bio": "Software Engineer and Prototype Developer based in Palawan, Philippines. I design, build, and ship internal systems, mobile applications, and IoT prototypes — turning ideas into working solutions for enterprises, researchers, and startup teams.",
+    "location": "Palawan",
+    "email": "daryl.homecillo@gmail.com",
+    "github": "https://github.com/hmcldryl",
+    "linkedin": "https://linkedin.com/in/hmcldryl",
+    "photoUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782573720/nexus_profile.png"
+  },
+  "skills": [
+    {
+      "name": "TypeScript & Node.js (Next.js)",
+      "color": "secondary",
+      "icon": "code",
+      "description": "Scalable microservices, REST APIs, and full-stack web applications including Next.js."
+    },
+    {
+      "name": "Java / Android Development",
+      "color": "tertiary",
+      "icon": "android",
+      "description": "Native Android apps, core backend systems, and algorithmic problem solving."
+    },
+    {
+      "name": "Flutter / Mobile Development",
+      "color": "primary",
+      "icon": "smartphone",
+      "description": "Cross-platform mobile apps, UI architecture, and platform integrations."
+    },
+    {
+      "name": ".NET Web API Development",
+      "color": "secondary",
+      "icon": "hub",
+      "description": "Building RESTful and scalable web APIs using ASP.NET Core."
+    },
+    {
+      "name": "System Architecture",
+      "color": "tertiary",
+      "icon": "account_tree",
+      "description": "Designing internal software systems, third-party integrations, and enterprise backends."
+    },
+    {
+      "name": "UI/UX Design",
+      "color": "primary",
+      "icon": "palette",
+      "description": "Designing intuitive interfaces and user experiences across web and mobile platforms."
+    },
+    {
+      "name": "IoT & Embedded Systems",
+      "color": "tertiary",
+      "icon": "memory",
+      "description": "Embedded programming, sensor integration, and award-winning device prototyping."
+    },
+    {
+      "name": "Database Management",
+      "color": "secondary",
+      "icon": "storage",
+      "description": "Relational and NoSQL database design, query optimization, and data modeling."
+    },
+    {
+      "name": "Cloud & DevOps",
+      "color": "primary",
+      "icon": "cloud",
+      "description": "GCP services, Firebase, Vercel, CI/CD pipelines, and Google Workspace administration."
+    }
+  ],
+  "projects": [
+    {
+      "name": "The Palawan Scientist",
+      "description": "Modernized the official website for The Palawan Scientist journal by establishing the foundation for its migration from WordPress to Open Journal Systems (OJS) 3.3. Configured the initial environment and migration pipeline, and custom-developed the responsive frontend interface from the ground up to deliver a clean, modern reading experience for the academic community.",
+      "tags": ["OJS", "Smarty", "php"],
+      "link": "https://palawanscientist.org/",
+      "size": "wide",
+      "accentColor": "tertiary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782579163/nexus_project_1782579162861.jpg"
+    },
+    {
+      "name": "WPU SF-12 Health Assessment Survey",
+      "description": "Developed a dedicated data-collection application to evaluate health and well-being metrics among university faculty and staff. Built on the standard SF-12 framework, the tool streamlines internal data gathering and automatically generates aggregated summaries, providing the RIDE Office with actionable insights to support institutional personnel and research capacity planning.",
+      "tags": ["Next.js", "Firebase", "SF-12", "WPU"],
+      "link": "https://wpu-sf12-portal-pi.vercel.app/",
+      "size": "big",
+      "accentColor": "primary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782580266/nexus_project_1782580265072.jpg"
+    },
+    {
+      "name": "PSU JobStream App",
+      "description": "Mobile platform for career placement and development programs at Palawan State University, connecting students with opportunities.",
+      "tags": ["ARCHIVED", "Mobile", "Java Android"],
+      "link": "https://www.facebook.com/share/p/1YvzyhH2Pk/",
+      "size": "small",
+      "accentColor": "tertiary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782615849/nexus_project_1782615847450.jpg"
+    },
+    {
+      "name": "MARK-IT! System",
+      "description": "Award-winning IoT prototype combining embedded programming, 3D modeling/printing, and a companion mobile app. Grand Champion at Shell NXplorers TBIC and Best Project at the 2024 National Science and Technology Fair.",
+      "tags": ["IoT", "Embedded", "Mobile"],
+      "link": "https://www.facebook.com/share/p/18uujWnRJx/",
+      "size": "small",
+      "accentColor": "primary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782618329/nexus_project_1782618327350.jpg"
+    },
+    {
+      "name": "KaEatSaan",
+      "description": "KaEatSaan (from \"Kahit\" + \"Saan\") is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless \"Ikaw bahala\" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!",
+      "tags": ["PWA", "Next.js", "HTML5 Canvas", "Firebase"],
+      "link": "kaeatsaan.web.app",
+      "size": "big",
+      "accentColor": "secondary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782708418/nexus_project_1782708414191.jpg"
+    }
+  ],
+  "experience": [
+    {
+      "role": "University Extension Specialist I",
+      "company": "Western Philippines University",
+      "period": "May 2026 – Present",
+      "description": "Architecting digital platforms and managing IT infrastructure for the Research, Innovation, Development, and Extension (RIDE) Office at Western Philippines University. I design and build full-stack web solutions that streamline research tracking, secure institutional data, and amplify the impact of community outreach programs.",
+      "color": "secondary",
+      "icon": "work"
+    },
+    {
+      "role": "Applications Engineer",
+      "company": "Eight Under Par, Inc. (EUPI)",
+      "period": "Mar 2026 – Jun 2026",
+      "description": "Focused on the full-lifecycle development and optimization of internal software systems. Built responsive web apps and backend APIs, ensuring seamless data flow across internal services to maximize operational efficiency and platform stability.",
+      "color": "tertiary",
+      "icon": "work"
+    },
+    {
+      "role": "Software Engineer",
+      "company": "Eight Under Par, Inc. (EUPI)",
+      "period": "Sept 2024 – Mar 2026",
+      "description": "Developed and maintained internal web applications and backend APIs to support core corporate operations. Collaborated with cross-functional teams to build secure data pipelines, optimize financial workflows, and integrate enterprise resource planning (ERP) platforms.",
+      "color": "primary",
+      "icon": "terminal"
+    },
+    {
+      "role": "Prototype Developer",
+      "company": "Freelance",
+      "period": "Apr 2023 – Present",
+      "description": "Builds MVPs and functional prototypes for students, researchers, and startup teams. MARK-IT! device earned Grand Champion at Shell NXplorers and Best Project at the 2024 National Science and Technology Fair.",
+      "color": "secondary",
+      "icon": "rocket_launch"
+    },
+    {
+      "role": "Student Aide",
+      "company": "PSU – OSAS",
+      "period": "Feb 2021 – Jul 2024",
+      "description": "Developed the PSU JobStream App and custom admissions tooling. Provided AV/live-streaming support, graphics production, and event coordination across university programs.",
+      "color": "tertiary",
+      "icon": "school"
+    },
+    {
+      "role": "Technical Student Aide",
+      "company": "PSU – CODIFLO",
+      "period": "Jan 2020 – Jan 2021",
+      "description": "Managed and administered the university's Google Workspace. Provided technical support during the pandemic shift to remote learning and produced digital content for virtual programs.",
+      "color": "primary",
+      "icon": "settings"
+    }
+  ],
+  "certificates": [],
+  "accountLinks": [
+    {
+      "platform": "Nintendo Switch",
+      "handle": "SW-7752-5406-7017",
+      "url": null,
+      "icon": "videogame_asset",
+      "color": "primary"
+    }
+  ]
+}
