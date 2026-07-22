@@ -1,6 +1,6 @@
 # JDHomecillo — Personal Portfolio
 
-A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Firestore powers all content in real-time — update from `/profile` and the live site reflects changes instantly.
+A minimalist, neo-brutalist portfolio. Content is hardcoded in `data/portfolio.json` — edit that file and redeploy to update the site.
 
 ---
 
@@ -9,16 +9,13 @@ A minimalist, neo-brutalist portfolio built as a CMS-driven website. Firebase Fi
 - **Next.js 16** (App Router, static export → GitHub Pages)
 - **TypeScript**
 - **Tailwind CSS 3** with a custom neo-brutalist design system (squared corners, hard offset shadows, paper-beige background, teal/magenta/yellow accents)
-- **Firebase Auth + Firestore** — authentication and real-time content
-- **Cloudinary** — profile photo uploads (unsigned preset, works on static sites)
 - **Material Symbols Outlined** — icon system
 
 ---
 
 ## Features
 
-- Dynamic content from Firestore — no hardcoded portfolio data
-- `/profile` CMS dashboard — edit every section, upload profile photo, reorder items
+- Content from `data/portfolio.json` — no CMS, no backend
 - Sections: Hero, Skills, Projects, Experience, Certificates, Links, Contact
 - Sidebar Changelog button — modal listing the version history (`lib/changelog.ts`)
 - Current version badge next to the nav brand, read straight from `package.json`
@@ -38,37 +35,24 @@ npm run lint     # ESLint
 
 ---
 
-## Environment Variables
-
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
-```
-
----
-
 ## Deploy
 
-Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages. All env vars are stored as repository secrets.
+Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages.
 
 ---
 
 ## Content Management
 
-Go to `/login` → authenticate → `/profile` to manage:
+Edit `data/portfolio.json` directly:
 
-- **Personal Info** — name, tagline, bio, location, links, profile photo
-- **Skills** — icon, description
-- **Projects** — size (grid layout), tags, link, description
-- **Experience** — roles, company, period, description
-- **Certificates** — name, issuer, date, link
-- **Links** — social/platform handles and URLs
+- **personalInfo** — name, tagline, bio, location, links, profile photo URL
+- **skills** — icon, color, description
+- **projects** — size (grid layout), tags, link, description, image URL
+- **experience** — role, company, period, description
+- **certificates** — name, issuer, date, link, optional `image` (filename under `public/certificates/`)
+- **accountLinks** — social/platform handles and URLs
+
+To add a certificate image, drop the file in `public/certificates/` and reference its filename in the certificate's `image` field.
 
 ---
 

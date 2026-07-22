@@ -1,7 +1,4 @@
-"use client";
-
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
-import type { Project } from "@/lib/firestore";
+import { portfolio, type Project } from "@/lib/portfolio";
 
 const TAG_COLORS: Record<string, string> = {
   IoT: "bg-primary text-on-primary",
@@ -64,7 +61,7 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsSection() {
-  const { projects } = usePortfolio();
+  const { projects } = portfolio;
 
   return (
     <section id="projects" className="py-16 px-5 md:px-margin-desktop">

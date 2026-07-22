@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePortfolio } from "@/lib/contexts/PortfolioContext";
+import { portfolio } from "@/lib/portfolio";
 
 export function FaviconUpdater() {
-  const { personalInfo } = usePortfolio();
-
   useEffect(() => {
-    const url = personalInfo.photoUrl;
+    const url = portfolio.personalInfo.photoUrl;
     if (!url) return;
     let link = document.querySelector<HTMLLinkElement>("link[rel='icon']");
     if (!link) {
@@ -17,7 +15,7 @@ export function FaviconUpdater() {
     }
     link.type = "image/png";
     link.href = url;
-  }, [personalInfo.photoUrl]);
+  }, []);
 
   return null;
 }
