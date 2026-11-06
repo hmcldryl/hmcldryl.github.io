@@ -10,7 +10,8 @@ export const CHANGELOG: ChangelogEntry[] = [
     version: "v4.2.0",
     title: "New projects + site cleanup",
     notes: [
-      "Added BetterPuertoPrincesa, its budget portal, BetterAborlan, ICWPS and RIDE Conference Proceedings",
+      "Added seven projects, including BetterPuertoPrincesa, BetterAborlan and ICWPS",
+      "Added more accounts to Links",
       "Fixed icon sizes, the nav highlight, the hero layout and the mobile timeline",
       "Improved text contrast, keyboard access and link previews",
       "Removed the CMS and the leftover game assets",

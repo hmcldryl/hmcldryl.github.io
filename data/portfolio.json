@@ -107,6 +107,22 @@
       "accentColor": "secondary"
     },
     {
+      "name": "WPU Extension Forum 2026",
+      "description": "Website for Likas-Bayanihan, Western Philippines University's 2026 Extension Forum. Covers the forum overview, important dates, subthemes, guidelines and judging criteria, and takes abstract submissions through an embedded form.",
+      "tags": ["Next.js", "Tailwind CSS", "Firebase", "WPU"],
+      "link": "https://wpu-extension-forum.web.app/",
+      "size": "big",
+      "accentColor": "tertiary"
+    },
+    {
+      "name": "Aquatic Science Bulletin",
+      "description": "Journal website running on Open Journal Systems 3.5, with a custom theme built from the OJS default theme. Still in development and not yet deployed.",
+      "tags": ["OJS", "PHP", "WPU"],
+      "link": null,
+      "size": "small",
+      "accentColor": "primary"
+    },
+    {
       "name": "The Palawan Scientist",
       "description": "Modernized the official website for The Palawan Scientist journal by establishing the foundation for its migration from WordPress to Open Journal Systems (OJS) 3.3. Configured the initial environment and migration pipeline, and custom-developed the responsive frontend interface from the ground up to deliver a clean, modern reading experience for the academic community.",
       "tags": ["OJS", "Smarty", "PHP"],
@@ -116,13 +132,13 @@
       "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782579163/nexus_project_1782579162861.jpg"
     },
     {
-      "name": "WPU SF-12 Health Assessment Survey",
-      "description": "Developed a dedicated data-collection application to evaluate health and well-being metrics among university faculty and staff. Built on the standard SF-12 framework, the tool streamlines internal data gathering and automatically generates aggregated summaries, providing the RIDE Office with actionable insights to support institutional personnel and research capacity planning.",
-      "tags": ["Next.js", "Firebase", "SF-12", "WPU"],
-      "link": "https://github.com/WPU-RIDE/wpu-sf12-portal",
+      "name": "KaEatSaan",
+      "description": "KaEatSaan (from \"Kahit\" + \"Saan\") is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless \"Ikaw bahala\" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!",
+      "tags": ["PWA", "Next.js", "HTML5 Canvas", "Firebase"],
+      "link": "https://kaeatsaan.com/",
       "size": "big",
-      "accentColor": "primary",
-      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782580266/nexus_project_1782580265072.jpg"
+      "accentColor": "secondary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782708418/nexus_project_1782708414191.jpg"
     },
     {
       "name": "PSU JobStream App",
@@ -143,13 +159,13 @@
       "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782618329/nexus_project_1782618327350.jpg"
     },
     {
-      "name": "KaEatSaan",
-      "description": "KaEatSaan (from \"Kahit\" + \"Saan\") is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless \"Ikaw bahala\" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!",
-      "tags": ["PWA", "Next.js", "HTML5 Canvas", "Firebase"],
-      "link": "https://kaeatsaan.com/",
+      "name": "WPU SF-12 Health Assessment Survey",
+      "description": "Developed a dedicated data-collection application to evaluate health and well-being metrics among university faculty and staff. Built on the standard SF-12 framework, the tool streamlines internal data gathering and automatically generates aggregated summaries, providing the RIDE Office with actionable insights to support institutional personnel and research capacity planning.",
+      "tags": ["ARCHIVED", "Next.js", "Firebase", "SF-12", "WPU"],
+      "link": "https://github.com/WPU-RIDE/wpu-sf12-portal",
       "size": "big",
-      "accentColor": "secondary",
-      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782708418/nexus_project_1782708414191.jpg"
+      "accentColor": "primary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782580266/nexus_project_1782580265072.jpg"
     }
   ],
   "experience": [
@@ -204,6 +220,27 @@
   ],
   "certificates": [],
   "accountLinks": [
+    {
+      "platform": "Facebook",
+      "handle": "hmcldryl",
+      "url": "https://www.facebook.com/hmcldryl",
+      "icon": "group",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Instagram",
+      "handle": "@hmcldryl",
+      "url": "https://www.instagram.com/hmcldryl/",
+      "icon": "photo_camera",
+      "color": "secondary"
+    },
+    {
+      "platform": "Instagram",
+      "handle": "@nopenotdada",
+      "url": "https://www.instagram.com/nopenotdada/",
+      "icon": "photo_camera",
+      "color": "secondary"
+    },
     {
       "platform": "Spotify",
       "handle": "nopenotdada",
