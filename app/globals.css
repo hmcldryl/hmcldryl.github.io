@@ -40,21 +40,25 @@ body {
 .brutal-press-sm {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.brutal-press:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 9px 9px 0 #000;
-}
 .brutal-press:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 #000;
 }
-.brutal-press-sm:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 #000;
-}
 .brutal-press-sm:active {
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 #000;
+}
+
+/* Hover lift only where hover exists, otherwise it sticks after a tap. */
+@media (hover: hover) {
+  .brutal-press:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 #000;
+  }
+  .brutal-press-sm:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #000;
+  }
 }
 
 /* Material Symbols

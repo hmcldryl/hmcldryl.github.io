@@ -8,11 +8,11 @@ export function LinksSection() {
   if (!accountLinks?.length) return null;
 
   return (
-    <section id="links" className="py-16 px-5 md:px-margin-desktop">
+    <section id="links" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <SectionHeading title="Links" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
           {accountLinks.map((link, i) => {
             const Card = (
               <div className={`${link.url ? "brutal-press" : ""} brutal-panel p-4 flex items-center gap-3 group`}>

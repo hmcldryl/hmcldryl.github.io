@@ -1,13 +1,13 @@
 import { portfolio } from "@/lib/portfolio";
 
-const linkCls = "text-[13px] font-medium text-on-surface-variant hover:text-primary-ink transition-colors";
+const linkCls = "inline-flex items-center justify-center min-h-11 min-w-11 text-[13px] font-medium text-on-surface-variant hover:text-primary-ink transition-colors";
 
 export function Footer() {
   const { name, github, linkedin, email } = portfolio.personalInfo;
 
   return (
     <footer className="w-full py-8 border-t-4 border-black">
-      <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-margin-desktop max-w-container-max mx-auto gap-3">
+      <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-10 xl:px-margin-desktop max-w-container-max mx-auto gap-3">
         <div className="text-[13px] text-on-surface-variant">
           © {new Date().getFullYear()} {name}
         </div>

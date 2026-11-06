@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // Stops hover: colors sticking after a tap on touch screens.
+  future: { hoverOnlyWhenSupported: true },
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {

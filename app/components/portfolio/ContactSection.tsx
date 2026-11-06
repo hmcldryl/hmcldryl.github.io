@@ -5,10 +5,10 @@ import { portfolio } from "@/lib/portfolio";
 import { SectionHeading } from "./SectionHeading";
 
 const fieldCls =
-  "w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-sm outline-none placeholder:text-on-surface-variant/70 transition-shadow";
+  "w-full bg-surface-container border-2 border-black p-3 text-on-surface font-body text-base outline-none placeholder:text-on-surface-variant/70 transition-shadow";
 const labelCls = "text-[13px] font-semibold text-on-surface block";
 const linkCls =
-  "text-on-surface-variant hover:text-primary-ink transition-colors flex items-center gap-1.5 text-[13px] font-medium";
+  "text-on-surface-variant hover:text-primary-ink transition-colors flex items-center justify-center gap-1.5 min-h-11 min-w-11 text-[13px] font-medium";
 
 export function ContactSection() {
   const { personalInfo } = portfolio;
@@ -30,12 +30,12 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 px-5 md:px-margin-desktop">
+    <section id="contact" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-2xl mx-auto brutal-panel p-6 md:p-8">
         <SectionHeading title="Get in Touch" subtitle="Have a project in mind? Send a message." />
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="space-y-1.5">
               <label htmlFor="contact-name" className={labelCls}>
                 Name

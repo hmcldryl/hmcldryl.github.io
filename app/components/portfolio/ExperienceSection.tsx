@@ -15,7 +15,7 @@ export function ExperienceSection() {
   const { experience } = portfolio;
 
   return (
-    <section id="experience" className="py-16 px-5 md:px-margin-desktop">
+    <section id="experience" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <SectionHeading title="Experience" />
 

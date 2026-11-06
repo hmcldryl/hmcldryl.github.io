@@ -8,7 +8,7 @@ export function CertificatesSection() {
   if (!certificates?.length) return null;
 
   return (
-    <section id="certificates" className="py-16 px-5 md:px-margin-desktop">
+    <section id="certificates" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <SectionHeading title="Certificates" />
 

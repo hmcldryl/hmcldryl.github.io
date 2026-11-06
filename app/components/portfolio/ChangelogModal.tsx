@@ -25,14 +25,14 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
         // Only the backdrop reports the dialog itself as the click target.
         if (e.target === dialogRef.current) onClose();
       }}
-      className="brutal-panel m-auto p-0 w-[calc(100%-2.5rem)] max-w-lg max-h-[80vh] overflow-y-auto bg-surface text-on-surface backdrop:bg-black/50"
+      className="brutal-panel m-auto p-0 w-[calc(100%-2.5rem)] max-w-lg max-h-[80svh] overflow-y-auto bg-surface text-on-surface backdrop:bg-black/50"
     >
       <div className="flex items-center justify-between p-5 border-b-2 border-black sticky top-0 bg-surface">
         <h2 className="font-display text-xl font-bold text-on-surface">Changelog</h2>
         <button
           onClick={onClose}
           aria-label="Close changelog"
-          className="brutal-press-sm flex p-1 border-2 border-black bg-surface shadow-brutal-sm"
+          className="brutal-press-sm flex items-center justify-center w-11 h-11 border-2 border-black bg-surface shadow-brutal-sm"
         >
           <span className="icon text-[18px]">close</span>
         </button>
