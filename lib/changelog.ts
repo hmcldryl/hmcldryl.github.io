@@ -12,6 +12,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     notes: [
       "Added seven projects, including BetterPuertoPrincesa, BetterAborlan and ICWPS",
       "Added more accounts to Links",
+      "Reworked the layout for phones and tablets",
       "Fixed icon sizes, the nav highlight, the hero layout and the mobile timeline",
       "Improved text contrast, keyboard access and link previews",
       "Removed the CMS and the leftover game assets",
