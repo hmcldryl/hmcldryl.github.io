@@ -1,7 +1,11 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
+  # Run after Release, not on push: Release commits the version bump with
+  # [skip ci], so a push-triggered build would ship the previous version badge.
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
     branches: ["main"]
   # Allow manual trigger from Actions tab
   workflow_dispatch:
@@ -19,11 +23,15 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # ref: main picks up the bump commit, which is newer than the triggering SHA.
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v4

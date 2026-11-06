@@ -1,80 +1,57 @@
-# JDHomecillo — Personal Portfolio
+# JDHomecillo
 
-A minimalist, neo-brutalist portfolio. Content is hardcoded in `data/portfolio.json` — edit that file and redeploy to update the site.
+My personal portfolio, live at [hmcldryl.github.io](https://hmcldryl.github.io).
 
----
+It's a static Next.js site with a neo-brutalist look: paper background, square corners, hard shadows, and teal, magenta and yellow accents. There's no CMS or backend. All the content sits in `data/portfolio.json`, so updating the site means editing that file and pushing.
 
-## Stack
-
-- **Next.js 16** (App Router, static export → GitHub Pages)
-- **TypeScript**
-- **Tailwind CSS 3** with a custom neo-brutalist design system (squared corners, hard offset shadows, paper-beige background, teal/magenta/yellow accents)
-- **Material Symbols Outlined** — icon system
-
----
-
-## Features
-
-- Content from `data/portfolio.json` — no CMS, no backend
-- Sections: Hero, Skills, Projects, Experience, Certificates, Links, Contact
-- Sidebar Changelog button — modal listing the version history (`lib/changelog.ts`)
-- Current version badge next to the nav brand, read straight from `package.json`
-- Scroll-reveal animations
-- Responsive — desktop sidebar nav, mobile top + bottom nav
-- `prefers-reduced-motion` support
-
----
-
-## Commands
+## Running it
 
 ```bash
-npm run dev      # dev server at localhost:3000
-npm run build    # production static export → ./out
-npm run lint     # ESLint
+npm install
+npm run dev      # localhost:3000
+npm run build    # static export to ./out
+npm run lint
 ```
 
----
+Built with Next.js 16 (App Router), TypeScript and Tailwind CSS 3. Icons are Material Symbols.
 
-## Deploy
+## Editing content
 
-Push to `main` triggers GitHub Actions → builds → deploys to GitHub Pages.
+Everything is in `data/portfolio.json`:
 
----
+| Key | What it holds |
+|---|---|
+| `personalInfo` | Name, tagline, bio, location, links, profile photo |
+| `skills` | Name, icon, color, description |
+| `projects` | Name, description, tags, link, accent color, and `size` for the grid layout |
+| `experience` | Role, company, period, description, icon, color |
+| `certificates` | Name, issuer, date, link, optional `image` |
+| `accountLinks` | Platform, handle, URL, icon, color |
 
-## Content Management
+Certificates and Links disappear from the page and the nav when their lists are empty.
 
-Edit `data/portfolio.json` directly:
+For a certificate image, put the file in `public/certificates/` and use its filename as `image`.
 
-- **personalInfo** — name, tagline, bio, location, links, profile photo URL
-- **skills** — icon, color, description
-- **projects** — size (grid layout), tags, link, description, image URL
-- **experience** — role, company, period, description
-- **certificates** — name, issuer, date, link, optional `image` (filename under `public/certificates/`)
-- **accountLinks** — social/platform handles and URLs
+## Branches and deploys
 
-To add a certificate image, drop the file in `public/certificates/` and reference its filename in the certificate's `image` field.
+`main` is production and the only long-lived branch. Work goes on `feat/`, `fix/` and similar branches and merges straight into `main`.
 
----
+Every push to `main` runs the Release workflow, and the site deploys to GitHub Pages once that finishes. The deploy waits so the version badge in the header matches the new release.
 
 ## Versioning
 
-Tagged with [Semantic Versioning](https://semver.org). `main` is auto-released by `.github/workflows/release.yml`: on every push, it parses [Conventional Commit](https://www.conventionalcommits.org) messages since the last tag (`fix:` → patch, `feat:` → minor, `BREAKING CHANGE` → major), bumps `package.json`, tags the commit, and publishes a GitHub Release.
+Release reads the [Conventional Commit](https://www.conventionalcommits.org) messages since the last tag. `fix:` bumps the patch version, `feat:` bumps the minor, and `BREAKING CHANGE` bumps the major. It then updates `package.json`, tags the commit and publishes a GitHub Release. Other prefixes like `chore:` and `docs:` don't trigger a release.
 
-| Tag | Era |
+Don't put a `v*` tag on a commit outside `main`. The release action takes the highest `v*` tag in the whole repo without checking which branch it's on, so a stray tag throws off the next version.
+
+The changelog in the site's modal is written by hand in `lib/changelog.ts`. Keep it in step with this table:
+
+| Tag | What it was |
 |---|---|
-| `v1.0.0` | Static HTML/Bootstrap site, Firestore-backed blog, ParaNawen companion app attempt |
-| `v2.0.0` | Next.js side-scrolling pixel-art game portfolio |
-| `v3.0.0` | Nexus dark glassmorphism CMS portfolio |
+| `v1.0.0` | Plain HTML and Bootstrap site with a Firestore blog, plus an attempt at a ParaNawen companion app |
+| `v2.0.0` | Side-scrolling pixel-art game portfolio in Next.js |
+| `v3.0.0` | Nexus, a dark glassmorphism portfolio with a CMS |
 | `v4.0.0` | Neo-brutalist "on paper" redesign |
-| `v4.1.0` | Certificates section, de-gamified UI, jdhomecillo rebrand |
-
-> Tags off `main` (e.g. milestones on `develop`) intentionally skip the `v*` prefix (e.g. `dev-v4.1.0`) — the release action picks the globally-highest `v*` tag with no branch-ancestry check, so a `v*`-prefixed tag anywhere in the repo can corrupt `main`'s computed version.
-
----
-
-## Built With AI
-
-This project was developed with the assistance of:
-
-- **[Claude](https://claude.ai) by Anthropic** — architecture, implementation, and iteration via Claude Code
-- **[Google Stitch](https://stitch.withgoogle.com)** — UI prototyping and design generation
+| `v4.1.0` | Certificates section, removed the game-style UI, rebranded to JDHomecillo |
+| `v4.1.1` | Version badge and changelog modal |
+| `v4.2.0` | New projects, UI and accessibility fixes, removed the CMS and old game assets |

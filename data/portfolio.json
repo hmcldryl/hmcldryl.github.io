@@ -2,7 +2,7 @@
   "personalInfo": {
     "name": "John Daryl Homecillo",
     "tagline": "I love to build stuff.",
-    "bio": "Software Engineer and Prototype Developer based in Palawan, Philippines. I design, build, and ship internal systems, mobile applications, and IoT prototypes — turning ideas into working solutions for enterprises, researchers, and startup teams.",
+    "bio": "Software Engineer and Prototype Developer based in Palawan, Philippines. I design, build, and ship internal systems, mobile applications, and IoT prototypes, turning ideas into working solutions for enterprises, researchers, and startup teams.",
     "location": "Palawan",
     "email": "daryl.homecillo@gmail.com",
     "github": "https://github.com/hmcldryl",
@@ -67,22 +67,78 @@
   ],
   "projects": [
     {
+      "name": "BetterPuertoPrincesa",
+      "description": "A volunteer-made guide to city services in Puerto Princesa, Palawan. Step-by-step service guides, office contacts, emergency hotlines, city statistics, weather, maps and local news, in English and Filipino, all pointing back to the City Government's own website and offices. Part of the BetterGov.ph community.",
+      "tags": ["TypeScript", "Civic Tech", "BetterGov"],
+      "link": "https://betterpuertoprincesa.org/",
+      "size": "wide",
+      "accentColor": "secondary"
+    },
+    {
+      "name": "Puerto Princesa and Palawan Budget Portal",
+      "description": "BetterPuertoPrincesa's budget transparency portal. Lists every FY 2027 budget project for Puerto Princesa City and the Province of Palawan, from the NEP and the House bill, with the source page for each figure, plus the enacted budgets of 2020 to 2026. Runs on data from the BetterGov.ph Budget API.",
+      "tags": ["TypeScript", "Open Data", "Civic Tech"],
+      "link": "https://budget.betterpuertoprincesa.org/",
+      "size": "big",
+      "accentColor": "primary"
+    },
+    {
+      "name": "BetterAborlan",
+      "description": "Volunteer-built civic portal for LGU Aborlan, Palawan. Brings office services, officials, ordinances, statistics and budget data into one searchable site.",
+      "tags": ["TypeScript", "Civic Tech"],
+      "link": "https://betteraborlan.org/",
+      "size": "small",
+      "accentColor": "tertiary"
+    },
+    {
+      "name": "ICWPS",
+      "description": "Website for the International Conference on the West Philippine Sea, organized by Western Philippines University.",
+      "tags": ["WordPress", "PHP", "WPU"],
+      "link": "https://icwps.org/",
+      "size": "small",
+      "accentColor": "primary"
+    },
+    {
+      "name": "RIDE Conference Proceedings",
+      "description": "Publishing site for the proceedings of Western Philippines University's Research, Innovation, Development, and Extension (RIDE) conference. Runs on Open Journal Systems with a custom theme, and handles submissions, the editorial board and the archive of volumes.",
+      "tags": ["OJS", "PHP", "WPU"],
+      "link": "https://racp.wpu.edu.ph/",
+      "size": "big",
+      "accentColor": "secondary"
+    },
+    {
+      "name": "WPU Extension Forum 2026",
+      "description": "Website for Likas-Bayanihan, Western Philippines University's 2026 Extension Forum. Covers the forum overview, important dates, subthemes, guidelines and judging criteria, and takes abstract submissions through an embedded form.",
+      "tags": ["Next.js", "Tailwind CSS", "Firebase", "WPU"],
+      "link": "https://wpu-extension-forum.web.app/",
+      "size": "big",
+      "accentColor": "tertiary"
+    },
+    {
+      "name": "Aquatic Science Bulletin",
+      "description": "Journal website running on Open Journal Systems 3.5, with a custom theme built from the OJS default theme. Still in development and not yet deployed.",
+      "tags": ["OJS", "PHP", "WPU"],
+      "link": null,
+      "size": "small",
+      "accentColor": "primary"
+    },
+    {
       "name": "The Palawan Scientist",
       "description": "Modernized the official website for The Palawan Scientist journal by establishing the foundation for its migration from WordPress to Open Journal Systems (OJS) 3.3. Configured the initial environment and migration pipeline, and custom-developed the responsive frontend interface from the ground up to deliver a clean, modern reading experience for the academic community.",
-      "tags": ["OJS", "Smarty", "php"],
+      "tags": ["OJS", "Smarty", "PHP"],
       "link": "https://palawanscientist.org/",
       "size": "wide",
       "accentColor": "tertiary",
       "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782579163/nexus_project_1782579162861.jpg"
     },
     {
-      "name": "WPU SF-12 Health Assessment Survey",
-      "description": "Developed a dedicated data-collection application to evaluate health and well-being metrics among university faculty and staff. Built on the standard SF-12 framework, the tool streamlines internal data gathering and automatically generates aggregated summaries, providing the RIDE Office with actionable insights to support institutional personnel and research capacity planning.",
-      "tags": ["Next.js", "Firebase", "SF-12", "WPU"],
-      "link": "https://wpu-sf12-portal-pi.vercel.app/",
+      "name": "KaEatSaan",
+      "description": "KaEatSaan (from \"Kahit\" + \"Saan\") is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless \"Ikaw bahala\" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!",
+      "tags": ["PWA", "Next.js", "HTML5 Canvas", "Firebase"],
+      "link": "https://kaeatsaan.com/",
       "size": "big",
-      "accentColor": "primary",
-      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782580266/nexus_project_1782580265072.jpg"
+      "accentColor": "secondary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782708418/nexus_project_1782708414191.jpg"
     },
     {
       "name": "PSU JobStream App",
@@ -103,13 +159,13 @@
       "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782618329/nexus_project_1782618327350.jpg"
     },
     {
-      "name": "KaEatSaan",
-      "description": "KaEatSaan (from \"Kahit\" + \"Saan\") is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless \"Ikaw bahala\" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!",
-      "tags": ["PWA", "Next.js", "HTML5 Canvas", "Firebase"],
-      "link": "kaeatsaan.web.app",
+      "name": "WPU SF-12 Health Assessment Survey",
+      "description": "Developed a dedicated data-collection application to evaluate health and well-being metrics among university faculty and staff. Built on the standard SF-12 framework, the tool streamlines internal data gathering and automatically generates aggregated summaries, providing the RIDE Office with actionable insights to support institutional personnel and research capacity planning.",
+      "tags": ["ARCHIVED", "Next.js", "Firebase", "SF-12", "WPU"],
+      "link": "https://github.com/WPU-RIDE/wpu-sf12-portal",
       "size": "big",
-      "accentColor": "secondary",
-      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782708418/nexus_project_1782708414191.jpg"
+      "accentColor": "primary",
+      "imageUrl": "https://res.cloudinary.com/dplli4unu/image/upload/v1782580266/nexus_project_1782580265072.jpg"
     }
   ],
   "experience": [
@@ -132,7 +188,7 @@
     {
       "role": "Software Engineer",
       "company": "Eight Under Par, Inc. (EUPI)",
-      "period": "Sept 2024 – Mar 2026",
+      "period": "Sep 2024 – Mar 2026",
       "description": "Developed and maintained internal web applications and backend APIs to support core corporate operations. Collaborated with cross-functional teams to build secure data pipelines, optimize financial workflows, and integrate enterprise resource planning (ERP) platforms.",
       "color": "primary",
       "icon": "terminal"
@@ -164,6 +220,83 @@
   ],
   "certificates": [],
   "accountLinks": [
+    {
+      "platform": "Facebook",
+      "handle": "hmcldryl",
+      "url": "https://www.facebook.com/hmcldryl",
+      "icon": "group",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Instagram",
+      "handle": "@hmcldryl",
+      "url": "https://www.instagram.com/hmcldryl/",
+      "icon": "photo_camera",
+      "color": "secondary"
+    },
+    {
+      "platform": "Instagram",
+      "handle": "@nopenotdada",
+      "url": "https://www.instagram.com/nopenotdada/",
+      "icon": "photo_camera",
+      "color": "secondary"
+    },
+    {
+      "platform": "Spotify",
+      "handle": "nopenotdada",
+      "url": "https://open.spotify.com/user/12181107070",
+      "icon": "music_note",
+      "color": "primary"
+    },
+    {
+      "platform": "TikTok",
+      "handle": "@nopenotdada",
+      "url": "https://www.tiktok.com/@nopenotdada",
+      "icon": "smart_display",
+      "color": "secondary"
+    },
+    {
+      "platform": "DeviantArt",
+      "handle": "iamdaryl",
+      "url": "https://www.deviantart.com/iamdaryl",
+      "icon": "brush",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Discord",
+      "handle": "hmcldryl",
+      "url": null,
+      "icon": "forum",
+      "color": "secondary"
+    },
+    {
+      "platform": "Steam",
+      "handle": "nopenotdada",
+      "url": "https://steamcommunity.com/id/nopenotdada/",
+      "icon": "sports_esports",
+      "color": "primary"
+    },
+    {
+      "platform": "Steam",
+      "handle": "tylandron",
+      "url": "https://steamcommunity.com/id/tylandron",
+      "icon": "sports_esports",
+      "color": "primary"
+    },
+    {
+      "platform": "Epic Games",
+      "handle": "nopenotdada",
+      "url": null,
+      "icon": "sports_esports",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Battle.net",
+      "handle": "Tylandron#1434",
+      "url": null,
+      "icon": "sports_esports",
+      "color": "secondary"
+    },
     {
       "platform": "Nintendo Switch",
       "handle": "SW-7752-5406-7017",

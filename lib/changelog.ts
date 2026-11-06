@@ -7,6 +7,26 @@ export type ChangelogEntry = {
 // Keep in sync with the version table in README.md.
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "v4.2.0",
+    title: "New projects + site cleanup",
+    notes: [
+      "Added seven projects, including BetterPuertoPrincesa, BetterAborlan and ICWPS",
+      "Added more accounts to Links",
+      "Reworked the layout for phones and tablets",
+      "Fixed icon sizes, the nav highlight, the hero layout and the mobile timeline",
+      "Improved text contrast, keyboard access and link previews",
+      "Removed the CMS and the leftover game assets",
+    ],
+  },
+  {
+    version: "v4.1.1",
+    title: "Version badge + changelog",
+    notes: [
+      "Added the nav version badge and this changelog",
+      "Renamed the nav CTA to Contact",
+    ],
+  },
+  {
     version: "v4.1.0",
     title: "Certificates + de-gamified UI",
     notes: [
