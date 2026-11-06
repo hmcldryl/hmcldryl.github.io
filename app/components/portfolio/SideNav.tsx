@@ -38,14 +38,14 @@ export function SideNav() {
       <div className="px-6 mt-auto space-y-2">
         <button
           onClick={() => setChangelogOpen(true)}
-          className="brutal-press-sm w-full bg-surface text-on-surface py-2.5 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm flex items-center justify-center gap-2"
+          className="brutal-press-sm w-full bg-surface text-on-surface py-3 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm flex items-center justify-center gap-2"
         >
           <span className="icon text-[16px]">history</span>
           Changelog
         </button>
         <a
           href="#contact"
-          className="brutal-press-sm w-full bg-primary text-on-primary py-2.5 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm flex items-center justify-center gap-2"
+          className="brutal-press-sm w-full bg-primary text-on-primary py-3 px-4 text-[13px] font-bold border-2 border-black shadow-brutal-sm flex items-center justify-center gap-2"
         >
           Contact
         </a>

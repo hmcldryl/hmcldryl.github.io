@@ -6,7 +6,7 @@ export function SkillsSection() {
   const { skills } = portfolio;
 
   return (
-    <section id="skills" className="py-16 px-5 md:px-margin-desktop">
+    <section id="skills" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <SectionHeading title="Skills" />
 

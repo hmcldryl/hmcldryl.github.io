@@ -24,7 +24,7 @@ export function TopNav() {
 
   return (
     <header className="nav-entrance fixed top-0 w-full z-50 bg-surface border-b-4 border-black">
-      <div className="flex justify-between items-center h-16 px-5 lg:px-6">
+      <div className="flex justify-between items-center h-16 px-5 md:px-10 lg:px-6">
         {/* Brand */}
         <div className="flex items-center gap-2 select-none">
           <span className="font-display text-lg font-bold text-on-surface">
@@ -37,7 +37,7 @@ export function TopNav() {
 
         {/* Menu toggle */}
         <button
-          className="lg:hidden flex text-on-surface p-2 border-2 border-black bg-surface"
+          className="lg:hidden flex text-on-surface p-2.5 border-2 border-black bg-surface"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
@@ -54,7 +54,7 @@ export function TopNav() {
         <nav
           id="mobile-menu"
           aria-label="Main"
-          className="mobile-menu-enter lg:hidden bg-surface border-t-4 border-black px-5 py-4 space-y-3"
+          className="mobile-menu-enter lg:hidden bg-surface border-t-4 border-black px-5 md:px-10 py-3 space-y-1 max-h-[calc(100svh-4.25rem)] overflow-y-auto"
         >
           {NAV_LINKS.map((link) => (
             <a
@@ -62,7 +62,7 @@ export function TopNav() {
               href={`#${link.id}`}
               aria-current={active === link.id ? "true" : undefined}
               onClick={() => setMenuOpen(false)}
-              className={`block text-sm py-1.5 transition-colors ${
+              className={`block text-sm py-3 transition-colors ${
                 active === link.id ? "text-primary-ink font-semibold" : "text-on-surface hover:text-primary-ink"
               }`}
             >
@@ -74,14 +74,14 @@ export function TopNav() {
               setChangelogOpen(true);
               setMenuOpen(false);
             }}
-            className="block w-full text-left text-sm py-1.5 text-on-surface hover:text-primary-ink transition-colors"
+            className="block w-full text-left text-sm py-3 text-on-surface hover:text-primary-ink transition-colors"
           >
             Changelog
           </button>
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="brutal-press-sm block bg-primary text-on-primary text-[13px] font-bold py-2.5 px-4 border-2 border-black shadow-brutal-sm text-center mt-2"
+            className="brutal-press-sm block bg-primary text-on-primary text-[13px] font-bold py-3 px-4 border-2 border-black shadow-brutal-sm text-center mt-2"
           >
             Contact
           </a>

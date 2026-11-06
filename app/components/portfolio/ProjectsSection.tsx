@@ -3,10 +3,10 @@ import { accentClass } from "./accent";
 import { SectionHeading } from "./SectionHeading";
 
 const COL_SPAN: Record<string, string> = {
-  big:   "md:col-span-8",
-  small: "md:col-span-4",
-  wide:  "md:col-span-12",
-  other: "md:col-span-6",
+  big:   "xl:col-span-8",
+  small: "xl:col-span-4",
+  wide:  "md:col-span-2 xl:col-span-12",
+  other: "xl:col-span-6",
 };
 
 function Tag({ label, accent }: { label: string; accent: string }) {
@@ -57,11 +57,11 @@ export function ProjectsSection() {
   const { projects } = portfolio;
 
   return (
-    <section id="projects" className="py-16 px-5 md:px-margin-desktop">
+    <section id="projects" className="py-12 md:py-16 px-5 md:px-10 xl:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
         <SectionHeading title="Projects" />
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-4">
           {projects.map((project, i) => (
             <ProjectCard key={`${i}-${project.name}`} project={project} />
           ))}
