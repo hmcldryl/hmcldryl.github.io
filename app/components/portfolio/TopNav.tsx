@@ -1,46 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import packageJson from "@/package.json";
+import { ChangelogModal } from "./ChangelogModal";
+import { NAV_LINKS } from "./nav";
+import { useActiveSection } from "./useActiveSection";
 
-const NAV_LINKS = [
-  { id: "home", label: "Home" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "certificates", label: "Certificates" },
-  { id: "links", label: "Links" },
-];
-
-// Contact isn't a nav link (it's the standalone CTA button below), but it
-// still needs to be tracked here — otherwise scroll-spy has nothing to match
-// once you scroll past the last real nav link, and "Links" stays stuck
-// highlighted for the rest of the page (including Contact + the footer).
-const SCROLL_SECTION_IDS = [...NAV_LINKS.map((l) => l.id), "contact"];
-
+// Page navigation lives in the SideNav from lg up; below that it's this
+// header's menu.
 export function TopNav() {
-  const [active, setActive] = useState("home");
+  const active = useActiveSection();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [changelogOpen, setChangelogOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = SCROLL_SECTION_IDS.map((id) => document.getElementById(id));
-      const scrollY = window.scrollY + 120;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollY) {
-          setActive(SCROLL_SECTION_IDS[i]);
-          break;
-        }
-      }
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   return (
     <header className="nav-entrance fixed top-0 w-full z-50 bg-surface border-b-4 border-black">
-      <nav className="flex justify-between items-center h-16 px-5 md:px-margin-desktop w-full max-w-container-max mx-auto">
+      <div className="flex justify-between items-center h-16 px-5 lg:px-6">
         {/* Brand */}
         <div className="flex items-center gap-2 select-none">
           <span className="font-display text-lg font-bold text-on-surface">
@@ -51,68 +35,60 @@ export function TopNav() {
           </span>
         </div>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={() => setActive(link.id)}
-              className={`relative text-[13px] font-medium transition-colors duration-200 ${
-                active === link.id
-                  ? "text-primary"
-                  : "text-on-surface hover:text-primary"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        {/* Desktop CTA */}
-        <a
-          href="#contact"
-          className="brutal-press hidden md:inline-flex bg-primary text-on-primary text-[13px] font-bold py-1.5 px-4 border-2 border-black shadow-brutal-sm transition-all"
-        >
-          Contact
-        </a>
-
-        {/* Mobile hamburger */}
+        {/* Menu toggle */}
         <button
-          className="md:hidden text-on-surface p-2 border-2 border-black bg-surface"
+          className="lg:hidden flex text-on-surface p-2 border-2 border-black bg-surface"
           onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
-          <span className="material-symbols-outlined text-[20px] transition-transform duration-200" style={{ transform: menuOpen ? "rotate(90deg)" : "rotate(0deg)" }}>
+          <span className="icon text-[20px]">
             {menuOpen ? "close" : "menu"}
           </span>
         </button>
-      </nav>
+      </div>
 
-      {/* Mobile dropdown */}
+      {/* Dropdown */}
       {menuOpen && (
-        <div className="mobile-menu-enter md:hidden bg-surface border-t-4 border-black px-5 py-4 space-y-3">
+        <nav
+          id="mobile-menu"
+          aria-label="Main"
+          className="mobile-menu-enter lg:hidden bg-surface border-t-4 border-black px-5 py-4 space-y-3"
+        >
           {NAV_LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
-              onClick={() => { setActive(link.id); setMenuOpen(false); }}
+              aria-current={active === link.id ? "true" : undefined}
+              onClick={() => setMenuOpen(false)}
               className={`block text-sm py-1.5 transition-colors ${
-                active === link.id ? "text-primary" : "text-on-surface hover:text-primary"
+                active === link.id ? "text-primary-ink font-semibold" : "text-on-surface hover:text-primary-ink"
               }`}
             >
               {link.label}
             </a>
           ))}
+          <button
+            onClick={() => {
+              setChangelogOpen(true);
+              setMenuOpen(false);
+            }}
+            className="block w-full text-left text-sm py-1.5 text-on-surface hover:text-primary-ink transition-colors"
+          >
+            Changelog
+          </button>
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="brutal-press block bg-primary text-on-primary text-[13px] font-bold py-2.5 px-4 border-2 border-black shadow-brutal-sm text-center transition-all mt-2"
+            className="brutal-press-sm block bg-primary text-on-primary text-[13px] font-bold py-2.5 px-4 border-2 border-black shadow-brutal-sm text-center mt-2"
           >
             Contact
           </a>
-        </div>
+        </nav>
       )}
+
+      <ChangelogModal open={changelogOpen} onClose={() => setChangelogOpen(false)} />
     </header>
   );
 }

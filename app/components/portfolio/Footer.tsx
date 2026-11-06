@@ -1,11 +1,9 @@
 import { portfolio } from "@/lib/portfolio";
 
+const linkCls = "text-[13px] font-medium text-on-surface-variant hover:text-primary-ink transition-colors";
+
 export function Footer() {
-  const { personalInfo } = portfolio;
-  const name = personalInfo.name || "John Daryl Homecillo";
-  const github = personalInfo.github || "https://github.com/hmcldryl";
-  const linkedin = personalInfo.linkedin || "https://linkedin.com/in/hmcldryl";
-  const email = personalInfo.email || "daryl.homecillo@gmail.com";
+  const { name, github, linkedin, email } = portfolio.personalInfo;
 
   return (
     <footer className="w-full py-8 border-t-4 border-black">
@@ -14,24 +12,15 @@ export function Footer() {
           © {new Date().getFullYear()} {name}
         </div>
         <div className="flex gap-5">
-          {github && (
-            <a href={github} target="_blank" rel="noopener noreferrer"
-              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
-              GitHub
-            </a>
-          )}
-          {linkedin && (
-            <a href={linkedin} target="_blank" rel="noopener noreferrer"
-              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
-              LinkedIn
-            </a>
-          )}
-          {email && (
-            <a href={`mailto:${email}`}
-              className="text-[13px] font-medium text-on-surface-variant hover:text-primary transition-colors">
-              Email
-            </a>
-          )}
+          <a href={github} target="_blank" rel="noopener noreferrer" className={linkCls}>
+            GitHub
+          </a>
+          <a href={linkedin} target="_blank" rel="noopener noreferrer" className={linkCls}>
+            LinkedIn
+          </a>
+          <a href={`mailto:${email}`} className={linkCls}>
+            Email
+          </a>
         </div>
       </div>
     </footer>

@@ -24,6 +24,7 @@ export type Project = {
   tags: string[];
   link: string | null;
   size: string;
+  accentColor?: string;
 };
 
 export type Certificate = {

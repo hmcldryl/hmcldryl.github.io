@@ -5,10 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Neo-brutalist "on paper" system — flat, high-contrast, no gradients.
-        primary: "#00C2CB", // accent teal — main CTAs, links, focus
-        secondary: "#FF2FD1", // accent magenta — secondary emphasis
-        tertiary: "#FFD400", // accent yellow — highlights, XP/level, badges
+        // Neo-brutalist "on paper" system: flat, high-contrast, no gradients.
+        primary: "#00C2CB", // accent teal, fills only: fails contrast as text on paper or white
+        "primary-ink": "#00686E", // darker teal for text and links
+        secondary: "#FF2FD1", // accent magenta, secondary emphasis
+        tertiary: "#FFD400", // accent yellow, highlights and badges
         background: "#F2ECDD", // paper beige page background
         surface: "#FFFFFF",
         "surface-dim": "#F2ECDD",
@@ -25,7 +26,7 @@ export default {
         "on-background": "#0A0A0A",
         "on-primary": "#0A0A0A",
         "on-primary-container": "#003538",
-        "on-secondary": "#FFFFFF",
+        "on-secondary": "#0A0A0A",
         "on-secondary-container": "#3D0030",
         "on-tertiary": "#0A0A0A",
         "on-tertiary-container": "#3D3000",
@@ -82,20 +83,6 @@ export default {
         display: ["var(--font-space-grotesk)", "sans-serif"],
         body: ["var(--font-inter)", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
-      },
-      keyframes: {
-        blink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
-        },
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        blink: "blink 1s infinite",
-        "fade-up": "fade-up 0.5s ease-out forwards",
       },
     },
   },

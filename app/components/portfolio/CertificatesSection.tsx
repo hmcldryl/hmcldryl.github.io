@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { portfolio } from "@/lib/portfolio";
+import { SectionHeading } from "./SectionHeading";
 
 export function CertificatesSection() {
   const { certificates } = portfolio;
@@ -8,25 +10,24 @@ export function CertificatesSection() {
   return (
     <section id="certificates" className="py-16 px-5 md:px-margin-desktop">
       <div className="max-w-container-max mx-auto">
-        <div className="mb-10" data-reveal>
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface mb-2">
-            Certificates
-          </h2>
-          <div className="w-16 h-[3px] bg-black" />
-        </div>
+        <SectionHeading title="Certificates" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {certificates.map((cert, i) => {
             const Card = (
-              <div className="brutal-press brutal-panel p-5 h-full flex flex-col">
+              <div className={`${cert.link ? "brutal-press" : ""} brutal-panel p-5 h-full flex flex-col`}>
                 {cert.image ? (
-                  <img
-                    src={`/certificates/${cert.image}`}
-                    alt={cert.name}
-                    className="w-full h-32 object-cover border-2 border-black mb-3"
-                  />
+                  <div className="relative h-32 border-2 border-black mb-3">
+                    <Image
+                      src={`/certificates/${cert.image}`}
+                      alt={cert.name}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
                 ) : (
-                  <span className="material-symbols-outlined text-2xl text-primary mb-2">
+                  <span className="icon text-[24px] text-primary-ink mb-2">
                     workspace_premium
                   </span>
                 )}
@@ -36,7 +37,7 @@ export function CertificatesSection() {
                 <p className="text-on-surface-variant text-[13px] mb-1">
                   {cert.issuer}
                 </p>
-                <p className="text-on-surface-variant text-[12px] mt-auto">
+                <p className="text-on-surface-variant text-[13px] mt-auto">
                   {cert.date}
                 </p>
               </div>
