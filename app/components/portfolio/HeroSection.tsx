@@ -40,9 +40,9 @@ export function HeroSection() {
         </div>
 
         {/* Right: photo */}
-        <div className="lg:col-span-5 relative">
-          <div className="relative flex justify-center items-end min-h-[320px]">
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-56 h-56 bg-tertiary border-2 border-black -z-10" />
+        <div className="lg:col-span-5 flex justify-center">
+          {/* The photo is a chest-up cutout, so the frame's bottom edge hides where it ends. */}
+          <div className="w-full max-w-[320px] aspect-square overflow-hidden bg-tertiary border-[3px] border-black shadow-brutal flex items-center justify-center">
             {personalInfo.photoUrl ? (
               <Image
                 src={personalInfo.photoUrl}
@@ -50,12 +50,10 @@ export function HeroSection() {
                 width={500}
                 height={500}
                 priority
-                className="relative z-10 max-h-[380px] w-auto object-contain select-none"
+                className="w-full h-full object-cover object-bottom select-none"
               />
             ) : (
-              <div className="relative z-10 w-56 h-56 border-2 border-black bg-surface flex items-center justify-center">
-                <span className="icon text-[64px] text-on-surface-variant/30">person</span>
-              </div>
+              <span className="icon text-[64px] text-on-tertiary/30">person</span>
             )}
           </div>
         </div>

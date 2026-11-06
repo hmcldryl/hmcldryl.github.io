@@ -205,6 +205,62 @@
   "certificates": [],
   "accountLinks": [
     {
+      "platform": "Spotify",
+      "handle": "nopenotdada",
+      "url": "https://open.spotify.com/user/12181107070",
+      "icon": "music_note",
+      "color": "primary"
+    },
+    {
+      "platform": "TikTok",
+      "handle": "@nopenotdada",
+      "url": "https://www.tiktok.com/@nopenotdada",
+      "icon": "smart_display",
+      "color": "secondary"
+    },
+    {
+      "platform": "DeviantArt",
+      "handle": "iamdaryl",
+      "url": "https://www.deviantart.com/iamdaryl",
+      "icon": "brush",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Discord",
+      "handle": "hmcldryl",
+      "url": null,
+      "icon": "forum",
+      "color": "secondary"
+    },
+    {
+      "platform": "Steam",
+      "handle": "nopenotdada",
+      "url": "https://steamcommunity.com/id/nopenotdada/",
+      "icon": "sports_esports",
+      "color": "primary"
+    },
+    {
+      "platform": "Steam",
+      "handle": "tylandron",
+      "url": "https://steamcommunity.com/id/tylandron",
+      "icon": "sports_esports",
+      "color": "primary"
+    },
+    {
+      "platform": "Epic Games",
+      "handle": "nopenotdada",
+      "url": null,
+      "icon": "sports_esports",
+      "color": "tertiary"
+    },
+    {
+      "platform": "Battle.net",
+      "handle": "Tylandron#1434",
+      "url": null,
+      "icon": "sports_esports",
+      "color": "secondary"
+    },
+    {
       "platform": "Nintendo Switch",
       "handle": "SW-7752-5406-7017",
       "url": null,
